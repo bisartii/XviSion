@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=JetBrains+Mono:wght@100..800&amp;family=Manrope:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-error-container":"#ffdad6","on-tertiary-fixed":"#23005c","inverse-primary":"#00687a","secondary-container":"#0566d9","surface-bright":"#353942","on-tertiary-fixed-variant":"#5516be","secondary-fixed-dim":"#adc6ff","tertiary-fixed-dim":"#d0bcff","on-secondary-container":"#e6ecff","primary":"#4cd7f6","tertiary-container":"#b395ff","inverse-on-surface":"#2c3039","surface-container-high":"#262a33","on-primary-fixed-variant":"#004e5c","error":"#ffb4ab","error-container":"#93000a","on-surface":"#dfe2ee","on-secondary":"#002e6a","tertiary-fixed":"#e9ddff","surface-variant":"#31353e","on-secondary-fixed":"#001a42","primary-fixed-dim":"#4cd7f6","on-primary-fixed":"#001f26","on-tertiary":"#3c0091","surface-container-highest":"#31353e","on-tertiary-container":"#4900ae","surface-dim":"#0f131c","on-error":"#690005","on-primary-container":"#00424f","tertiary":"#d0bcff","primary-container":"#06b6d4","secondary":"#adc6ff","on-background":"#dfe2ee","surface-container-low":"#181c24","outline":"#869397","secondary-fixed":"#d8e2ff","surface-container":"#1c2028","surface-tint":"#4cd7f6","inverse-surface":"#dfe2ee","surface":"#0f131c","primary-fixed":"#acedff","background":"#0f131c","on-primary":"#003640","on-surface-variant":"#bcc9cd","outline-variant":"#3d494c","surface-container-lowest":"#0a0e16","on-secondary-fixed-variant":"#004395"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"space-sm":"0.5rem","margin-desktop":"1.5rem","gutter-desktop":"1.5rem","margin":"1rem","space-xl":"2rem","space-md":"1rem","space-lg":"1.5rem","space-xs":"0.25rem","gutter":"1rem"},fontFamily:{"telemetry-sm":["JetBrains Mono"],"body-md":["Geist"],"telemetry-md":["JetBrains Mono"],"headline-sm":["Manrope"],"headline-md":["Manrope"],"subheading":["Geist"],"display-lg-mobile":["Manrope"],"body-sm":["Geist"],"badge-caps":["JetBrains Mono"],"display-lg":["Manrope"]},fontSize:{"telemetry-sm":["11px",{lineHeight:"14px",letterSpacing:"0.04em",fontWeight:"400"}],"body-md":["14px",{lineHeight:"20px",letterSpacing:"0em",fontWeight:"400"}],"telemetry-md":["13px",{lineHeight:"16px",letterSpacing:"0.02em",fontWeight:"500"}],"headline-sm":["18px",{lineHeight:"24px",letterSpacing:"-0.01em",fontWeight:"500"}],"headline-md":["22px",{lineHeight:"28px",letterSpacing:"-0.02em",fontWeight:"600"}],"subheading":["16px",{lineHeight:"22px",letterSpacing:"-0.005em",fontWeight:"500"}],"display-lg-mobile":["26px",{lineHeight:"32px",letterSpacing:"-0.02em",fontWeight:"600"}],"body-sm":["13px",{lineHeight:"18px",letterSpacing:"0em",fontWeight:"400"}],"badge-caps":["10px",{lineHeight:"12px",letterSpacing:"0.1em",fontWeight:"600"}],"display-lg":["32px",{lineHeight:"38px",letterSpacing:"-0.03em",fontWeight:"600"}]}}}}</script></head><body class="bg-surface text-on-surface font-body-md text-body-md antialiased selection:bg-primary-container selection:text-on-primary"><header class="fixed top-0 left-0 right-0 z-50 h-14 bg-surface-container-lowest/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.4)] flex items-center justify-between px-space-md"><div class="flex items-center gap-space-sm w-64 shrink-0"><img alt="Terra Vision Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0xEiAWbMFrw7ykPa3y4HorfZF_897042dS9X2PxlnwjjJQ_t-8nmWV-HRHb-aRSazjYXRbS9n5lz5KT3HrLnfnemY5aaakXxg5D-Y6YYCq7C6sXr41mnN6KYCytLo2MwktUTckSrbsj9v6oqy_Fm__GVcwborSy2bBYGSqrc3inMweqMuK64OiGGM_whgx1QmDrSkupcIHXaO4JcuJIdYpGA2sOWRtM5OEDoo7w4ItVxdonIci4d9"/><div class="flex items-baseline gap-space-xs"><span class="font-headline-sm text-headline-sm tracking-tight text-on-surface uppercase font-bold">TERRA<span class="text-primary">VISION</span></span><span class="font-badge-caps text-badge-caps uppercase px-1.5 py-0.5 rounded bg-surface-container-high text-primary tracking-widest">v3.8-Enterprise</span></div></div><div class="hidden xl:flex items-center gap-space-xs font-telemetry-sm text-telemetry-sm"><div class="flex items-center gap-1.5 px-space-sm py-1 rounded bg-surface-container-low text-on-surface-variant"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span><span class="tracking-wider">AI ENGINE ONLINE</span></div><div class="flex items-center gap-1.5 px-space-sm py-1 rounded bg-surface-container-low text-on-surface-variant"><span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span><span class="tracking-wider">GPU CLUSTER 42% · 38°C</span></div><div class="flex items-center gap-1.5 px-space-sm py-1 rounded bg-surface-container-low text-on-surface-variant"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span><span class="tracking-wider">CAMERAS: 18/18 ACTIVE</span></div><div class="flex items-center gap-1.5 px-space-sm py-1 rounded bg-surface-container-low text-on-surface-variant"><span class="tracking-wider">LATENCY 12ms · 60 FPS</span></div></div><div class="flex items-center gap-space-sm"><button class="flex items-center gap-space-sm bg-surface-container-low text-on-surface-variant px-space-sm py-1.5 rounded-lg hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[18px]">search</span><span class="font-telemetry-sm text-telemetry-sm hidden sm:inline text-on-surface-variant">Omni Command</span><kbd class="font-badge-caps text-badge-caps px-1 py-0.5 rounded bg-surface-container-highest text-on-surface-variant">⌘K</kbd></button><div class="relative flex items-center justify-center w-8 h-8 rounded-lg bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface cursor-pointer transition-colors"><span class="material-symbols-outlined text-[18px]">notifications</span><span class="absolute -top-1 -right-1 w-4 h-4 bg-error text-on-error font-badge-caps text-badge-caps rounded-full flex items-center justify-center font-bold">3</span></div><div class="hidden md:flex flex-col items-end px-space-xs font-telemetry-sm text-telemetry-sm"><span class="text-on-surface font-semibold">14:28:49 UTC</span><span class="text-on-surface-variant text-[9px] tracking-widest">STABLE SYNC</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><aside class="fixed left-0 top-14 bottom-0 w-64 bg-surface-container-lowest/90 backdrop-blur-xl z-40 flex flex-col justify-between py-space-md shadow-[1px_0_12px_rgba(0,0,0,0.3)]"><div class="flex flex-col gap-space-xs px-space-sm"><div class="px-space-sm pb-space-xs pt-space-xs font-badge-caps text-badge-caps uppercase tracking-widest text-on-surface-variant/70">Command Rail</div><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary font-semibold rounded-lg shadow-[0_0_16px_rgba(6,182,212,0.45)]"><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="overview" href="#"><span class="material-symbols-outlined text-[20px] text-on-surface-variant group-hover:text-primary transition-colors">dashboard</span><span class="font-body-md text-body-md">Overview</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="live-monitor" href="#"><span class="material-symbols-outlined text-[20px] text-on-surface-variant group-hover:text-primary transition-colors">videocam</span><span class="font-body-md text-body-md">Live Monitor</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="people" href="#"><span class="material-symbols-outlined text-[20px] text-on-surface-variant group-hover:text-primary transition-colors">face</span><span class="font-body-md text-body-md">People</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="events" href="#"><span class="material-symbols-outlined text-[20px] text-on-surface-variant group-hover:text-primary transition-colors">sensors</span><span class="font-body-md text-body-md">Events</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="alerts" href="#"><span class="material-symbols-outlined text-[20px] text-on-surface-variant group-hover:text-primary transition-colors">warning</span><span class="font-body-md text-body-md">Alerts</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="cameras" href="#"><span class="material-symbols-outlined text-[20px] text-on-surface-variant group-hover:text-primary transition-colors">nest_cam_wired_stand</span><span class="font-body-md text-body-md">Cameras</span></a><a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-2 transition-all group bg-primary-container text-on-primary font-semibold rounded-lg shadow-[0_0_16px_rgba(6,182,212,0.45)]" data-path="analytics" href="#"><span class="material-symbols-outlined text-[20px] text-on-primary transition-colors">insights</span><span class="font-body-md text-body-md">Analytics</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="settings" href="#"><span class="material-symbols-outlined text-[20px] text-on-surface-variant group-hover:text-primary transition-colors">tune</span><span class="font-body-md text-body-md">Settings</span></a></nav></div><div class="px-space-sm"><div class="p-space-sm rounded-xl bg-surface-container-low/60 flex flex-col gap-1.5"><div class="flex items-center justify-between text-on-surface-variant"><span class="font-badge-caps text-badge-caps uppercase tracking-wider">Node Health</span><span class="font-telemetry-sm text-telemetry-sm text-primary">NOMINAL</span></div><div class="w-full bg-surface-container-highest h-1 rounded-full overflow-hidden"><div class="bg-primary h-full rounded-full" style="width:84%"></div></div><div class="flex justify-between font-telemetry-sm text-telemetry-sm text-on-surface-variant/80 text-[10px]"><span>Inference Load</span><span>84.2%</span></div></div></div></aside><div class="pl-64"><main class="w-full pt-14 px-space-md bg-surface min-h-screen"><div class="flex flex-col w-full pb-space-xl">
+<!-- Top Ambient Glow & Grid Backdrop -->
+<div class="relative w-full overflow-hidden flex flex-col gap-space-lg">
+<div class="absolute -top-32 -left-20 w-96 h-96 rounded-full bg-primary/10 blur-[120px] pointer-events-none"></div>
+<div class="absolute top-10 right-10 w-[500px] h-80 rounded-full bg-secondary-container/10 blur-[140px] pointer-events-none"></div>
+<!-- 1. HEADER & GLOBAL CONTROLS -->
+<header class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md pt-space-xs">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-space-sm">
+<span class="font-headline-md text-headline-md tracking-tight text-on-surface uppercase font-bold">
+            Analytics &amp; <span class="text-primary font-extrabold">Neural Telemetry</span>
+</span>
+<span class="px-2 py-0.5 rounded bg-primary/10 border-0.5 text-primary font-badge-caps text-badge-caps uppercase tracking-widest shadow-[0_0_12px_rgba(76,215,246,0.3)]">
+            v3.8 ArcFace
+          </span>
+</div>
+<p class="font-subheading text-subheading text-on-surface-variant flex items-center gap-2">
+<span>Visual intelligence insights &amp; neural event telemetry synthesis</span>
+<span class="inline-block w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="font-telemetry-sm text-telemetry-sm text-primary flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+            AGX CLUSTER 04 · INFERENCE SYNTHESIS NOMINAL
+          </span>
+</p>
+</div>
+<!-- Controls & Filter Rails -->
+<div class="flex flex-wrap items-center gap-space-sm">
+<!-- Date Range Filter Pill Group -->
+<div class="flex items-center p-1 rounded-xl bg-surface-container-lowest/80 backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]" id="timeframe-picker">
+<button class="timeframe-btn px-3 py-1.5 rounded-lg font-telemetry-sm text-telemetry-sm text-on-primary bg-primary-container font-semibold shadow-[0_0_12px_rgba(6,182,212,0.4)] transition-all" data-period="today">
+            Today
+          </button>
+<button class="timeframe-btn px-3 py-1.5 rounded-lg font-telemetry-sm text-telemetry-sm text-on-surface-variant hover:text-on-surface transition-all" data-period="7d">
+            7 Days
+          </button>
+<button class="timeframe-btn px-3 py-1.5 rounded-lg font-telemetry-sm text-telemetry-sm text-on-surface-variant hover:text-on-surface transition-all" data-period="30d">
+            30 Days
+          </button>
+<button class="timeframe-btn flex items-center gap-1 px-3 py-1.5 rounded-lg font-telemetry-sm text-telemetry-sm text-on-surface-variant hover:text-on-surface transition-all" data-period="custom">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span>
+<span>Range</span>
+</button>
+</div>
+<!-- Secondary Actions -->
+<div class="flex items-center gap-space-xs">
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-telemetry-sm text-telemetry-sm transition-colors shadow-sm" title="View ArcFace 512-D Latent Embeddings" type="button">
+<span class="material-symbols-outlined text-[16px] text-primary">scatter_plot</span>
+<span class="hidden sm:inline">Model Space</span>
+</button>
+<button class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-primary hover:bg-primary-fixed text-on-primary font-telemetry-sm text-telemetry-sm font-semibold shadow-[0_0_16px_rgba(76,215,246,0.35)] transition-all" id="export-dossier-btn" type="button">
+<span class="material-symbols-outlined text-[16px]">file_download</span>
+<span>Export Dossier</span>
+</button>
+</div>
+</div>
+</header>
+<!-- 2. SUMMARY METRICS TILES -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-space-md">
+<!-- Total Events -->
+<div class="group relative rounded-xl bg-surface-container/70 backdrop-blur-xl p-space-md flex flex-col justify-between shadow-[0_8px_24px_rgba(0,0,0,0.4)] transition-all hover:bg-surface-container-high/80">
+<div class="flex items-center justify-between text-on-surface-variant mb-1">
+<span class="font-badge-caps text-badge-caps uppercase tracking-wider text-on-surface-variant/80">Total Spatial Events</span>
+<span class="material-symbols-outlined text-[18px] text-primary">sensors</span>
+</div>
+<div class="flex items-baseline gap-2 my-1">
+<span class="font-display-lg text-display-lg text-on-surface font-bold tracking-tight counter-value" data-target="1284">0</span>
+<span class="font-telemetry-sm text-telemetry-sm text-primary flex items-center">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span>14.2%
+          </span>
+</div>
+<!-- Sparkline mini -->
+<div class="w-full h-8 flex items-end pt-1">
+<svg class="w-full h-full text-primary" fill="none" preserveaspectratio="none" viewbox="0 0 100 24">
+<path d="M0 18 Q 15 22, 30 14 T 60 12 T 80 4 T 100 2" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+<path d="M0 18 Q 15 22, 30 14 T 60 12 T 80 4 T 100 2 L 100 24 L 0 24 Z" fill="currentColor" fill-opacity="0.12"></path>
+</svg>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant font-telemetry-sm text-[10px] mt-1">
+<span>Aggregate 18 nodes</span>
+<span class="text-primary font-semibold">142/hr peak</span>
+</div>
+</div>
+<!-- Recognized -->
+<div class="group relative rounded-xl bg-surface-container/70 backdrop-blur-xl p-space-md flex flex-col justify-between shadow-[0_8px_24px_rgba(0,0,0,0.4)] transition-all hover:bg-surface-container-high/80">
+<div class="flex items-center justify-between text-on-surface-variant mb-1">
+<span class="font-badge-caps text-badge-caps uppercase tracking-wider text-on-surface-variant/80">Recognized Matches</span>
+<span class="material-symbols-outlined text-[18px] text-primary">verified_user</span>
+</div>
+<div class="flex items-baseline gap-2 my-1">
+<span class="font-display-lg text-display-lg text-primary font-bold tracking-tight counter-value" data-target="942">0</span>
+<span class="font-telemetry-sm text-telemetry-sm px-1.5 py-0.2 bg-primary/10 text-primary rounded">73.4%</span>
+</div>
+<div class="w-full h-8 flex items-end pt-1">
+<svg class="w-full h-full text-primary" fill="none" preserveaspectratio="none" viewbox="0 0 100 24">
+<path d="M0 20 Q 25 18, 45 10 T 75 8 T 100 3" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+<path d="M0 20 Q 25 18, 45 10 T 75 8 T 100 3 L 100 24 L 0 24 Z" fill="currentColor" fill-opacity="0.12"></path>
+</svg>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant font-telemetry-sm text-[10px] mt-1">
+<span>Whitelist &amp; VIPs</span>
+<span class="text-primary">Nominal &gt;88%</span>
+</div>
+</div>
+<!-- Unknown / Triage -->
+<div class="group relative rounded-xl bg-surface-container/70 backdrop-blur-xl p-space-md flex flex-col justify-between shadow-[0_8px_24px_rgba(0,0,0,0.4)] transition-all hover:bg-surface-container-high/80">
+<div class="flex items-center justify-between text-on-surface-variant mb-1">
+<span class="font-badge-caps text-badge-caps uppercase tracking-wider text-on-surface-variant/80">Unenrolled POI / Queue</span>
+<span class="material-symbols-outlined text-[18px] text-secondary">person_alert</span>
+</div>
+<div class="flex items-baseline gap-2 my-1">
+<span class="font-display-lg text-display-lg text-secondary font-bold tracking-tight counter-value" data-target="342">0</span>
+<span class="font-telemetry-sm text-telemetry-sm text-secondary-fixed-dim font-medium">26.6%</span>
+</div>
+<div class="w-full h-8 flex items-end pt-1">
+<svg class="w-full h-full text-secondary" fill="none" preserveaspectratio="none" viewbox="0 0 100 24">
+<path d="M0 10 Q 20 16, 50 14 T 80 18 T 100 12" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+<path d="M0 10 Q 20 16, 50 14 T 80 18 T 100 12 L 100 24 L 0 24 Z" fill="currentColor" fill-opacity="0.12"></path>
+</svg>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant font-telemetry-sm text-[10px] mt-1">
+<span>Under triage filter</span>
+<span class="text-secondary-fixed-dim">3 pending audit</span>
+</div>
+</div>
+<!-- Avg Confidence -->
+<div class="group relative rounded-xl bg-surface-container/70 backdrop-blur-xl p-space-md flex flex-col justify-between shadow-[0_8px_24px_rgba(0,0,0,0.4)] transition-all hover:bg-surface-container-high/80">
+<div class="flex items-center justify-between text-on-surface-variant mb-1">
+<span class="font-badge-caps text-badge-caps uppercase tracking-wider text-on-surface-variant/80">Cosine Confidence</span>
+<span class="material-symbols-outlined text-[18px] text-tertiary">fingerprint</span>
+</div>
+<div class="flex items-baseline gap-2 my-1">
+<span class="font-display-lg text-display-lg text-on-surface font-bold tracking-tight">89.4<span class="text-headline-sm text-primary">%</span></span>
+<span class="font-telemetry-sm text-telemetry-sm text-tertiary-fixed-dim">0.894 Sim</span>
+</div>
+<div class="w-full h-8 flex items-end pt-1">
+<svg class="w-full h-full text-tertiary" fill="none" preserveaspectratio="none" viewbox="0 0 100 24">
+<path d="M0 16 Q 30 14, 50 6 T 80 8 T 100 4" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+<path d="M0 16 Q 30 14, 50 6 T 80 8 T 100 4 L 100 24 L 0 24 Z" fill="currentColor" fill-opacity="0.12"></path>
+</svg>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant font-telemetry-sm text-[10px] mt-1">
+<span>ArcFace R100 Margin</span>
+<span class="text-tertiary-fixed-dim">Std Dev: 0.041</span>
+</div>
+</div>
+<!-- Peak Velocity / Hour -->
+<div class="group relative rounded-xl bg-surface-container/70 backdrop-blur-xl p-space-md flex flex-col justify-between shadow-[0_8px_24px_rgba(0,0,0,0.4)] transition-all hover:bg-surface-container-high/80">
+<div class="flex items-center justify-between text-on-surface-variant mb-1">
+<span class="font-badge-caps text-badge-caps uppercase tracking-wider text-on-surface-variant/80">Temporal Surge Peak</span>
+<span class="material-symbols-outlined text-[18px] text-primary">schedule</span>
+</div>
+<div class="flex items-baseline gap-2 my-1">
+<span class="font-display-lg text-display-lg text-on-surface font-bold tracking-tight">18:00</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">UTC</span>
+</div>
+<div class="w-full h-8 flex items-center justify-between gap-1 pt-1">
+<div class="w-1.5 h-3 bg-surface-container-highest rounded-full"></div>
+<div class="w-1.5 h-4 bg-surface-container-highest rounded-full"></div>
+<div class="w-1.5 h-7 bg-primary/40 rounded-full"></div>
+<div class="w-1.5 h-5 bg-surface-container-highest rounded-full"></div>
+<div class="w-1.5 h-4 bg-surface-container-highest rounded-full"></div>
+<div class="w-1.5 h-6 bg-surface-container-highest rounded-full"></div>
+<div class="w-1.5 h-full bg-primary rounded-full shadow-[0_0_8px_rgba(76,215,246,0.5)]"></div>
+<div class="w-1.5 h-6 bg-primary/60 rounded-full"></div>
+<div class="w-1.5 h-3 bg-surface-container-highest rounded-full"></div>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant font-telemetry-sm text-[10px] mt-1">
+<span>Surge 17:30 - 18:45</span>
+<span class="text-primary font-semibold">142 evt/h</span>
+</div>
+</div>
+</section>
+<!-- 3. MAIN HERO CHART: RECOGNITIONS OVER TIME -->
+<section class="w-full rounded-2xl bg-surface-container/60 backdrop-blur-2xl p-space-md sm:p-space-lg flex flex-col gap-space-md shadow-[0_16px_40px_rgba(0,0,0,0.5)] relative overflow-hidden">
+<!-- Decorative Specular Hairline -->
+<div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
+<!-- Main Chart Control Bar -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md pb-space-xs">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-space-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-primary shadow-[0_0_10px_rgba(76,215,246,0.8)]"></span>
+<h2 class="font-headline-sm text-headline-sm font-bold text-on-surface tracking-tight">Recognitions Over Chronological Timeline</h2>
+<span class="font-badge-caps text-badge-caps uppercase tracking-wider text-primary px-2 py-0.5 rounded bg-primary/10">60 FPS Sample</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Dual-spline separation of verified identity hits against unclassified transient vector detections.</p>
+</div>
+<!-- Filter Segmented Tabs & Filters -->
+<div class="flex flex-wrap items-center gap-space-sm">
+<!-- Time scale -->
+<div class="flex items-center p-1 rounded-lg bg-surface-container-lowest text-on-surface-variant font-telemetry-sm text-telemetry-sm">
+<button class="chart-granularity px-2.5 py-1 rounded bg-surface-container-high text-on-surface font-semibold shadow" data-scale="hourly">Hourly</button>
+<button class="chart-granularity px-2.5 py-1 rounded hover:text-on-surface transition-colors" data-scale="daily">Daily</button>
+<button class="chart-granularity px-2.5 py-1 rounded hover:text-on-surface transition-colors" data-scale="weekly">Weekly</button>
+</div>
+<!-- Dataset Toggle -->
+<div class="flex items-center gap-space-xs font-telemetry-sm text-telemetry-sm text-on-surface-variant">
+<div class="flex items-center gap-1.5 px-2 py-1 rounded bg-surface-container-lowest">
+<span class="w-2 h-2 rounded-full bg-primary shadow-[0_0_6px_rgba(76,215,246,0.6)]"></span>
+<span class="text-on-surface">Recognized (942)</span>
+</div>
+<div class="flex items-center gap-1.5 px-2 py-1 rounded bg-surface-container-lowest">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-on-surface-variant">Unknown (342)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Dynamic High-Fidelity SVG Interactive Chart Area -->
+<div class="relative w-full h-80 sm:h-96 rounded-xl bg-surface-container-lowest/60 p-space-sm overflow-hidden flex flex-col justify-between">
+<!-- SVG Graphic Grid Lines & Curves -->
+<svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 1000 300">
+<defs>
+<!-- Cyan Gradient Area for Recognized -->
+<lineargradient id="cyan-area" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#4cd7f6" stop-opacity="0.32"></stop>
+<stop offset="70%" stop-color="#4cd7f6" stop-opacity="0.05"></stop>
+<stop offset="100%" stop-color="#4cd7f6" stop-opacity="0"></stop>
+</lineargradient>
+<!-- Amber/Secondary Gradient Area for Unknown -->
+<lineargradient id="amber-area" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#adc6ff" stop-opacity="0.22"></stop>
+<stop offset="80%" stop-color="#adc6ff" stop-opacity="0.02"></stop>
+<stop offset="100%" stop-color="#adc6ff" stop-opacity="0"></stop>
+</lineargradient>
+<filter height="160%" id="cyan-glow" width="160%" x="-30%" y="-30%">
+<fegaussianblur result="blur" stddeviation="4"></fegaussianblur>
+<femerge>
+<femergenode in="blur"></femergenode>
+<femergenode in="SourceGraphic"></femergenode>
+</femerge>
+</filter>
+</defs>
+<!-- Horizontal Reference Grid Lines -->
+<line stroke="#31353e" stroke-dasharray="3 3" stroke-width="0.7" x1="40" x2="980" y1="40"></line>
+<line stroke="#31353e" stroke-dasharray="3 3" stroke-width="0.7" x1="40" x2="980" y1="100"></line>
+<line stroke="#31353e" stroke-dasharray="3 3" stroke-width="0.7" x1="40" x2="980" y1="160"></line>
+<line stroke="#31353e" stroke-dasharray="3 3" stroke-width="0.7" x1="40" x2="980" y1="220"></line>
+<line stroke="#3d494c" stroke-width="1" x1="40" x2="980" y1="270"></line>
+<!-- Vertical Guides -->
+<line stroke="#1c2028" stroke-width="1" x1="160" x2="160" y1="20" y2="270"></line>
+<line stroke="#1c2028" stroke-width="1" x1="320" x2="320" y1="20" y2="270"></line>
+<line stroke="#1c2028" stroke-width="1" x1="480" x2="480" y1="20" y2="270"></line>
+<line stroke="#1c2028" stroke-width="1" x1="640" x2="640" y1="20" y2="270"></line>
+<line stroke="#1c2028" stroke-width="1" x1="800" x2="800" y1="20" y2="270"></line>
+<!-- Highlight Vertical Marker at Peak Hour 18:00 (x=760) -->
+<line stroke="#4cd7f6" stroke-dasharray="4 4" stroke-opacity="0.7" stroke-width="1.5" x1="760" x2="760" y1="20" y2="270"></line>
+<!-- Shaded Under Area: Unknowns -->
+<path d="M 40 240 C 120 235, 180 220, 240 215 C 320 210, 380 225, 460 200 C 540 180, 620 190, 700 160 C 760 145, 820 170, 880 210 C 920 230, 960 245, 980 250 L 980 270 L 40 270 Z" fill="url(#amber-area)"></path>
+<!-- Shaded Under Area: Recognized -->
+<path d="M 40 220 C 120 210, 180 180, 240 150 C 300 120, 360 135, 420 140 C 480 145, 540 115, 600 110 C 660 105, 710 60, 760 38 C 810 50, 860 90, 910 130 C 950 160, 970 190, 980 200 L 980 270 L 40 270 Z" fill="url(#cyan-area)"></path>
+<!-- Spline Line: Unknown -->
+<path d="M 40 240 C 120 235, 180 220, 240 215 C 320 210, 380 225, 460 200 C 540 180, 620 190, 700 160 C 760 145, 820 170, 880 210 C 920 230, 960 245, 980 250" fill="none" stroke="#adc6ff" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.9" stroke-width="2.5"></path>
+<!-- Spline Line: Recognized (Glowing Cyan) -->
+<path d="M 40 220 C 120 210, 180 180, 240 150 C 300 120, 360 135, 420 140 C 480 145, 540 115, 600 110 C 660 105, 710 60, 760 38 C 810 50, 860 90, 910 130 C 950 160, 970 190, 980 200" fill="none" filter="url(#cyan-glow)" stroke="#4cd7f6" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
+<!-- Key Milestone Data Points (Hover interactive styling) -->
+<!-- 09:00 Morning Peak -->
+<circle cx="240" cy="150" fill="#06b6d4" r="5" stroke="#0a0e16" stroke-width="2"></circle>
+<circle cx="240" cy="215" fill="#adc6ff" r="4" stroke="#0a0e16" stroke-width="1.5"></circle>
+<!-- Midday Steady State 14:00 -->
+<circle cx="480" cy="140" fill="#06b6d4" r="5" stroke="#0a0e16" stroke-width="2"></circle>
+<!-- 18:00 Surge Peak (Highlighted Reticle) -->
+<circle cx="760" cy="38" fill="#4cd7f6" r="6" stroke="#0a0e16" stroke-width="2.5"></circle>
+<circle cx="760" cy="38" fill="none" opacity="0.8" r="13" stroke="#4cd7f6" stroke-width="1.2">
+<animate attributename="r" dur="2s" repeatcount="indefinite" values="8;18;8"></animate>
+<animate attributename="opacity" dur="2s" repeatcount="indefinite" values="0.8;0.1;0.8"></animate>
+</circle>
+<circle cx="760" cy="145" fill="#adc6ff" r="4.5" stroke="#0a0e16" stroke-width="2"></circle>
+<!-- End Point -->
+<circle cx="980" cy="200" fill="#4cd7f6" r="4.5" stroke="#0a0e16" stroke-width="2"></circle>
+</svg>
+<!-- Floating Glass Forensic Tooltip pinned at Peak 18:00 -->
+<div class="absolute top-4 right-1/4 transform -translate-x-12 hidden md:flex flex-col gap-1.5 p-3 rounded-xl bg-surface-container-high/90 backdrop-blur-xl shadow-[0_12px_32px_rgba(0,0,0,0.7)] pointer-events-none z-10 w-64">
+<div class="flex items-center justify-between pb-1">
+<span class="font-telemetry-sm text-telemetry-sm font-bold text-primary flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-ping"></span>
+              18:00 UTC · SURGE MATRIX
+            </span>
+<span class="font-badge-caps text-badge-caps text-on-surface-variant">PEAK FOV</span>
+</div>
+<div class="flex flex-col gap-1 font-telemetry-sm text-[11px]">
+<div class="flex items-center justify-between text-on-surface">
+<span class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+                Recognized Matches:
+              </span>
+<span class="font-semibold text-primary">118 events (93.1%)</span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+                Unknown POI / Triage:
+              </span>
+<span class="font-semibold text-secondary-fixed">24 events</span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant pt-1">
+<span>Dominant Sensor:</span>
+<span class="text-on-surface">Cam 01 (Main Entry)</span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant">
+<span>Spatial Flux Density:</span>
+<span class="text-emerald-400 font-semibold">42 pers/min</span>
+</div>
+</div>
+</div>
+<!-- Axis Labels -->
+<div class="flex items-center justify-between px-4 pt-1 font-telemetry-sm text-telemetry-sm text-on-surface-variant/70">
+<span>00:00</span>
+<span>03:00</span>
+<span>06:00</span>
+<span class="text-on-surface font-semibold">09:00 (Rush)</span>
+<span>12:00</span>
+<span>15:00</span>
+<span class="text-primary font-bold">18:00 (Surge Peak)</span>
+<span>21:00</span>
+<span>23:59</span>
+</div>
+</div>
+<!-- Footer Telemetry Strip inside Hero Panel -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm pt-space-xs font-telemetry-sm text-telemetry-sm text-on-surface-variant">
+<div class="flex items-center gap-space-md">
+<span class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            Streaming inference throughput: <strong class="text-on-surface">42.8 ops/sec</strong>
+</span>
+<span class="hidden sm:inline-block">·</span>
+<span class="hidden sm:flex items-center gap-1">
+            Tracking Loss Index: <strong class="text-primary">0.002%</strong>
+</span>
+</div>
+<div class="flex items-center gap-2">
+<span>Target Re-identification Kalman Filter: <strong class="text-on-surface">Online</strong></span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-high text-primary font-badge-caps text-[9px] uppercase">R-Tree Indexed</span>
+</div>
+</div>
+</section>
+<!-- 4. SECONDARY INTELLIGENCE & TELEMETRY CHARTS (Bento Multi-Panel Grid) -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-space-md">
+<!-- 4A: Events by Hour & Heat Histogram (5 cols) -->
+<div class="lg:col-span-5 rounded-xl bg-surface-container/70 backdrop-blur-xl p-space-md flex flex-col justify-between shadow-[0_8px_24px_rgba(0,0,0,0.35)]">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex flex-col">
+<span class="font-headline-sm text-subheading font-bold text-on-surface">Temporal Density Distribution</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">24-hour event frequency histogram</span>
+</div>
+<span class="material-symbols-outlined text-primary text-[20px]">bar_chart</span>
+</div>
+<!-- 24-hr Bar Visualization -->
+<div class="h-44 w-full flex items-end gap-1.5 pt-4 pb-2 px-1">
+<!-- 00-05 Night -->
+<div class="flex-1 flex flex-col items-center gap-1 group cursor-pointer" title="00:00 - 12 events">
+<div class="w-full bg-surface-container-highest group-hover:bg-primary transition-all rounded-t-sm" style="height: 12%;"></div>
+</div>
+<div class="flex-1 flex flex-col items-center gap-1 group cursor-pointer" title="02:00 - 8 events">
+<div class="w-full bg-surface-container-highest group-hover:bg-primary transition-all rounded-t-sm" style="height: 8%;"></div>
+</div>
+<div class="flex-1 flex flex-col items-center gap-1 group cursor-pointer" title="04:00 - 6 events">
+<div class="w-full bg-surface-container-highest group-hover:bg-primary transition-all rounded-t-sm" style="height: 6%;"></div>
+</div>
+<div class="flex-1 flex flex-col items-center gap-1 group cursor-pointer" title="06:00 - 24 events">
+<div class="w-full bg-surface-container-high group-hover:bg-primary transition-all rounded-t-sm" style="height: 22%;"></div>
+</div>
+<!-- 08-10 Morning Influx -->
+<div class="flex-1 flex flex-col items-center gap-1 group cursor-pointer" title="08:00 - 78 events">
+<div class="w-full bg-primary/60 group-hover:bg-primary transition-all rounded-t-sm" style="height: 62%;"></div>
+</div>
+<div class="flex-1 flex flex-col items-center gap-1 group cursor-pointer" title="09:00 - 104 events">
+<div class="w-full bg-primary/80 group-hover:bg-primary transition-all rounded-t-sm shadow-[0_0_8px_rgba(76,215,246,0.3)]" style="height: 82%;"></div>
+</div>
+<div class="flex-1 flex flex-col items-center gap-1 group cursor-pointer" title="10:00 - 64 events">
+<div class="w-full bg-primary/50 group-hover:bg-primary transition-all rounded-t-sm" style="height: 52%;"></div>
+</div>
+<!-- 12-14 Midday -->
+<div class="flex-1 flex flex-col items-center gap-1 group cursor-pointer" title="12:00 - 72 events">
+<div class="w-full bg-primary/60 group-hover:bg-primary transition-all rounded-t-sm" style="height: 58%;"></div>
+</div>
+<div class="flex-1 flex flex-col items-center gap-1 group cursor-pointer" title="14:00 - 68 events">
+<div class="w-full bg-primary/50 group-hover:bg-primary transition-all rounded-t-sm" style="height: 54%;"></div>
+</div>
+<div class="flex-1 flex flex-col items-center gap-1 group cursor-pointer" title="16:00 - 84 events">
+<div class="w-full bg-primary/70 group-hover:bg-primary transition-all rounded-t-sm" style="height: 68%;"></div>
+</div>
+<!-- 18:00 Evening Rush Peak -->
+<div class="flex-1 flex flex-col items-center gap-1 group cursor-pointer relative" title="18:00 Peak - 142 events">
+<div class="w-full bg-primary group-hover:bg-primary-fixed shadow-[0_0_12px_rgba(76,215,246,0.7)] transition-all rounded-t-sm" style="height: 100%;"></div>
+<span class="absolute -top-5 font-badge-caps text-[9px] text-primary font-bold">142</span>
+</div>
+<!-- 20-22 Wrap up -->
+<div class="flex-1 flex flex-col items-center gap-1 group cursor-pointer" title="20:00 - 52 events">
+<div class="w-full bg-primary/40 group-hover:bg-primary transition-all rounded-t-sm" style="height: 42%;"></div>
+</div>
+<div class="flex-1 flex flex-col items-center gap-1 group cursor-pointer" title="22:00 - 28 events">
+<div class="w-full bg-surface-container-high group-hover:bg-primary transition-all rounded-t-sm" style="height: 24%;"></div>
+</div>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant font-telemetry-sm text-[10px] pt-1">
+<span>00:00 (Off-cycle)</span>
+<span>09:00 (Rush Influx)</span>
+<span class="text-primary font-bold">18:00 (Peak Egress)</span>
+<span>23:59</span>
+</div>
+</div>
+<!-- 4B: Radial Arc / Donut Classification Breakout (4 cols) -->
+<div class="lg:col-span-4 rounded-xl bg-surface-container/70 backdrop-blur-xl p-space-md flex flex-col justify-between shadow-[0_8px_24px_rgba(0,0,0,0.35)]">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex flex-col">
+<span class="font-headline-sm text-subheading font-bold text-on-surface">Target Identity Cluster</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">Classified spatial proportions</span>
+</div>
+<span class="material-symbols-outlined text-secondary text-[20px]">donut_large</span>
+</div>
+<!-- Radial Donut SVG + Center Readout -->
+<div class="relative flex items-center justify-center my-2">
+<svg class="w-36 h-36 transform -rotate-90" viewbox="0 0 120 120">
+<!-- Background circle track -->
+<circle cx="60" cy="60" fill="transparent" r="48" stroke="#1c2028" stroke-width="12"></circle>
+<!-- Verified Staff: 58% (dasharray 301.59 max) -> 174.9 -->
+<circle cx="60" cy="60" fill="transparent" r="48" stroke="#4cd7f6" stroke-dasharray="174.9 301.6" stroke-dashoffset="0" stroke-linecap="round" stroke-width="12"></circle>
+<!-- VIP/Exec: 15.4% -> 46.4 -->
+<circle cx="60" cy="60" fill="transparent" r="48" stroke="#b395ff" stroke-dasharray="46.4 301.6" stroke-dashoffset="-178" stroke-linecap="round" stroke-width="12"></circle>
+<!-- Unenrolled POI: 22% -> 66.3 -->
+<circle cx="60" cy="60" fill="transparent" r="48" stroke="#adc6ff" stroke-dasharray="66.3 301.6" stroke-dashoffset="-227" stroke-linecap="round" stroke-width="12"></circle>
+<!-- Flagged/Watchlist: 4.6% -> 13.8 -->
+<circle cx="60" cy="60" fill="transparent" r="48" stroke="#ffb4ab" stroke-dasharray="13.8 301.6" stroke-dashoffset="-295" stroke-linecap="round" stroke-width="12"></circle>
+</svg>
+<div class="absolute flex flex-col items-center justify-center text-center">
+<span class="font-headline-sm text-headline-sm font-bold text-primary leading-none">73.4%</span>
+<span class="font-badge-caps text-[9px] uppercase tracking-wider text-on-surface-variant mt-0.5">Identified</span>
+</div>
+</div>
+<!-- Metric Legend Breakdown -->
+<div class="grid grid-cols-2 gap-x-2 gap-y-1.5 font-telemetry-sm text-telemetry-sm pt-2">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary shrink-0"></span>
+<span class="truncate text-on-surface-variant">Verified (58.0%)</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-tertiary shrink-0"></span>
+<span class="truncate text-on-surface-variant">VIP Tier (15.4%)</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary shrink-0"></span>
+<span class="truncate text-on-surface-variant">Unenrolled (22.0%)</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-error shrink-0"></span>
+<span class="truncate text-error">Watchlist (4.6%)</span>
+</div>
+</div>
+</div>
+<!-- 4C: Camera Node Activity Matrix (3 cols) -->
+<div class="lg:col-span-3 rounded-xl bg-surface-container/70 backdrop-blur-xl p-space-md flex flex-col justify-between shadow-[0_8px_24px_rgba(0,0,0,0.35)]">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex flex-col">
+<span class="font-headline-sm text-subheading font-bold text-on-surface">Top Node Load</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">Sensory traffic distribution</span>
+</div>
+<span class="material-symbols-outlined text-primary text-[20px]">videocam</span>
+</div>
+<!-- Node Horizontal Progress Bars -->
+<div class="flex flex-col gap-2.5 my-1">
+<!-- Cam 01 -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-telemetry-sm text-telemetry-sm">
+<span class="text-on-surface font-semibold">Cam 01 (Main Entry)</span>
+<span class="text-primary font-bold">412 <span class="text-on-surface-variant font-normal">(32%)</span></span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full shadow-[0_0_8px_rgba(76,215,246,0.6)]" style="width: 32%"></div>
+</div>
+</div>
+<!-- Cam 04 -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-telemetry-sm text-telemetry-sm">
+<span class="text-on-surface font-semibold">Cam 04 (Concourse)</span>
+<span class="text-primary font-bold">328 <span class="text-on-surface-variant font-normal">(25.5%)</span></span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 25.5%"></div>
+</div>
+</div>
+<!-- Cam 03 -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-telemetry-sm text-telemetry-sm">
+<span class="text-on-surface font-semibold">Cam 03 (Turnstiles)</span>
+<span class="text-primary font-bold">264 <span class="text-on-surface-variant font-normal">(20.5%)</span></span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
+<div class="bg-secondary-container h-full rounded-full" style="width: 20.5%"></div>
+</div>
+</div>
+<!-- Cam 07 -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-telemetry-sm text-telemetry-sm">
+<span class="text-on-surface font-semibold">Cam 07 (Cleanroom)</span>
+<span class="text-on-surface-variant">180 (14.0%)</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
+<div class="bg-outline h-full rounded-full" style="width: 14%"></div>
+</div>
+</div>
+<!-- Cam 12 -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-telemetry-sm text-telemetry-sm">
+<span class="text-on-surface font-semibold">Cam 12 (South Gate)</span>
+<span class="text-on-surface-variant">100 (8.0%)</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
+<div class="bg-surface-bright h-full rounded-full" style="width: 8%"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant font-telemetry-sm text-[10px] pt-1">
+<span>Active Nodes: 18/18</span>
+<span class="text-primary">99.8% Uptime</span>
+</div>
+</div>
+</section>
+<!-- 4D & 4E: Secondary Telemetry Row: ArcFace Latent Calibration & Concurrent Kalman Dynamics -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- ArcFace Confidence Buckets Calibration -->
+<div class="rounded-xl bg-surface-container/70 backdrop-blur-xl p-space-md flex flex-col justify-between shadow-[0_8px_24px_rgba(0,0,0,0.35)]">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex flex-col">
+<span class="font-headline-sm text-subheading font-bold text-on-surface">ArcFace 512-D Cosine Metric Calibration</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">Embedding separation &amp; false positive immunity</span>
+</div>
+<span class="font-badge-caps text-badge-caps uppercase px-1.5 py-0.5 rounded bg-surface-container-high text-tertiary">Cosine Threshold: 0.72</span>
+</div>
+<!-- Confidence Spread Bar Ranges -->
+<div class="grid grid-cols-5 gap-2 my-2 items-end h-28 pt-2">
+<!-- <60% -->
+<div class="flex flex-col items-center gap-1.5 h-full justify-end">
+<span class="font-telemetry-sm text-[10px] text-on-surface-variant">42</span>
+<div class="w-full bg-error/30 rounded-t h-[12%]"></div>
+<span class="font-badge-caps text-[9px] text-on-surface-variant">&lt;60%</span>
+</div>
+<!-- 60-75% -->
+<div class="flex flex-col items-center gap-1.5 h-full justify-end">
+<span class="font-telemetry-sm text-[10px] text-on-surface-variant">86</span>
+<div class="w-full bg-secondary-fixed-dim/40 rounded-t h-[28%]"></div>
+<span class="font-badge-caps text-[9px] text-on-surface-variant">60-75%</span>
+</div>
+<!-- 75-90% -->
+<div class="flex flex-col items-center gap-1.5 h-full justify-end">
+<span class="font-telemetry-sm text-[10px] text-on-surface-variant">214</span>
+<div class="w-full bg-primary/60 rounded-t h-[58%]"></div>
+<span class="font-badge-caps text-[9px] text-on-surface-variant">75-90%</span>
+</div>
+<!-- 90-95% (High Precision) -->
+<div class="flex flex-col items-center gap-1.5 h-full justify-end">
+<span class="font-telemetry-sm text-[10px] text-primary font-bold">542</span>
+<div class="w-full bg-primary rounded-t h-[94%] shadow-[0_0_8px_rgba(76,215,246,0.4)]"></div>
+<span class="font-badge-caps text-[9px] text-primary font-semibold">90-95%</span>
+</div>
+<!-- 95-99.9% -->
+<div class="flex flex-col items-center gap-1.5 h-full justify-end">
+<span class="font-telemetry-sm text-[10px] text-on-surface-variant">400</span>
+<div class="w-full bg-primary/80 rounded-t h-[75%]"></div>
+<span class="font-badge-caps text-[9px] text-on-surface-variant">&gt;95%</span>
+</div>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant font-telemetry-sm text-[11px] pt-1">
+<span>Target Cluster Dispersion: <strong class="text-on-surface">Optimal</strong></span>
+<span>FAR: <strong class="text-primary">1 in 10,000,000</strong></span>
+</div>
+</div>
+<!-- Concurrent Active Tracking Trajectories -->
+<div class="rounded-xl bg-surface-container/70 backdrop-blur-xl p-space-md flex flex-col justify-between shadow-[0_8px_24px_rgba(0,0,0,0.35)]">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex flex-col">
+<span class="font-headline-sm text-subheading font-bold text-on-surface">Kalman Trajectory Velocity &amp; Tracks</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">Real-time bounding box concurrency</span>
+</div>
+<div class="flex items-center gap-1 font-telemetry-sm text-telemetry-sm text-primary">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span>12 Live Tracks</span>
+</div>
+</div>
+<!-- Trajectory stepped sparkline chart -->
+<div class="h-28 w-full flex items-center justify-center my-2">
+<svg class="w-full h-full text-secondary-container" fill="none" preserveaspectratio="none" viewbox="0 0 400 100">
+<path d="M 0 70 L 40 70 L 40 50 L 90 50 L 90 35 L 140 35 L 140 45 L 200 45 L 200 20 L 260 20 L 260 40 L 320 40 L 320 15 L 360 15 L 360 30 L 400 30" stroke="#4cd7f6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+<path d="M 0 70 L 40 70 L 40 50 L 90 50 L 90 35 L 140 35 L 140 45 L 200 45 L 200 20 L 260 20 L 260 40 L 320 40 L 320 15 L 360 15 L 360 30 L 400 30 L 400 100 L 0 100 Z" fill="#4cd7f6" fill-opacity="0.08"></path>
+<!-- Tracking Waypoints -->
+<circle cx="200" cy="20" fill="#4cd7f6" r="4"></circle>
+<circle cx="320" cy="15" fill="#4cd7f6" r="4"></circle>
+</svg>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant font-telemetry-sm text-[11px] pt-1">
+<span>Spatial Intersection Over Union (IoU): <strong class="text-on-surface">0.86</strong></span>
+<span>Vector Memory: <strong class="text-primary">128MB Cache</strong></span>
+</div>
+</div>
+</section>
+<!-- 5. PEOPLE ANALYTICS FORENSIC INTELLIGENCE DOSSIERS -->
+<section class="flex flex-col gap-space-md pt-space-xs">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-sm pb-space-xs">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[22px]">badge</span>
+<h2 class="font-headline-sm text-headline-sm font-bold text-on-surface tracking-tight">Subject Sighting Frequency &amp; Biometric Recurrence</h2>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Chronological recurrence distribution across the sensor matrix without compromising surveillance privacy controls.
+          </p>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">Filtered by: <strong class="text-primary">High-Frequency Recurrence</strong></span>
+<button class="px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-telemetry-sm text-telemetry-sm transition-colors" type="button">
+            View All Enrolled (64)
+          </button>
+</div>
+</div>
+<!-- High-Tech Intelligence Dossier Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-space-md">
+<!-- 1. Dhruv (Executive VIP · Level 4) -->
+<div class="rounded-xl bg-surface-container/70 backdrop-blur-xl p-space-md flex flex-col justify-between shadow-[0_8px_24px_rgba(0,0,0,0.35)] relative overflow-hidden group hover:bg-surface-container-high/70 transition-all">
+<div class="flex items-start gap-space-sm">
+<div class="relative w-14 h-14 rounded-lg bg-surface-container-lowest overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Close up biometric portrait of an Indian male executive with sharp posture against dark minimalist architectural backdrop, cinematic volumetric cool cyan lighting, high resolution facial keypoints." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzp3MVN6m-Ch4Vs7qfU6NxYg-WHCKSNdmgcQvU0kiUNoCNq6lMU-agImQCg9yXy0jqjhVlpsCwwsVBTMsIM-EAoMt4kjyzjyewpO7h4qPglacxFJyIOyqZusBYVOQHb6Ls7RwnQ1TaQ_VeRDkQs6Kq1GhZ10jcS1DLG1vp-kzgxADQJ-TJlGTdbcLwKofrIuwY9VpLZpoBgZtM5eT5ZSH-qF3s4ZqhtKT1z2PfQI-V8sZtGv0pWymK"/>
+<div class="absolute inset-0 bg-primary/10 mix-blend-color"></div>
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-400 rounded-tl-sm border-0.5 border-surface"></div>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-subheading font-bold text-on-surface truncate">Dhruv</span>
+<span class="px-1.5 py-0.5 rounded bg-primary/10 text-primary font-badge-caps text-[9px] uppercase tracking-wider">Level 4 VIP</span>
+</div>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">Executive Leadership · Board Access</span>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-telemetry-sm text-[11px] text-primary font-semibold">124 Appearances</span>
+<span class="text-outline-variant">·</span>
+<span class="font-telemetry-sm text-[11px] text-on-surface-variant">Last: 00:42:17 UTC</span>
+</div>
+</div>
+</div>
+<div class="my-3 pt-2 grid grid-cols-2 gap-2 font-telemetry-sm text-telemetry-sm">
+<div class="flex flex-col p-1.5 rounded bg-surface-container-lowest/60">
+<span class="text-on-surface-variant text-[10px]">Avg Match Confidence</span>
+<span class="text-primary font-bold">94.2% (ArcFace)</span>
+</div>
+<div class="flex flex-col p-1.5 rounded bg-surface-container-lowest/60">
+<span class="text-on-surface-variant text-[10px]">Primary Sensor Node</span>
+<span class="text-on-surface truncate">Cam 01 &amp; Cam 04</span>
+</div>
+</div>
+<div class="flex items-center justify-between font-telemetry-sm text-[11px] text-on-surface-variant pt-1">
+<span>Temporal: <strong class="text-on-surface">Morning (08:45) &amp; 18:15</strong></span>
+<span class="text-emerald-400 font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              Verified
+            </span>
+</div>
+</div>
+<!-- 2. Mumma (VIP Guest · Tier 1) -->
+<div class="rounded-xl bg-surface-container/70 backdrop-blur-xl p-space-md flex flex-col justify-between shadow-[0_8px_24px_rgba(0,0,0,0.35)] relative overflow-hidden group hover:bg-surface-container-high/70 transition-all">
+<div class="flex items-start gap-space-sm">
+<div class="relative w-14 h-14 rounded-lg bg-surface-container-lowest overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Portrait of an elegant mature South Asian woman with warm dignified expression, softly illuminated in low-light ambient cybernetic studio, rimmed in subtle cyan and violet light." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMittbAwQ3kEjAt1S09Or5xd7Jha6DTEEHobWrRUYhxLGRnsoX3SY5uLgcsb801rP2LOGN4lem-nRVpk9kePppBZYpGAKcYDnLlJh4_HhskUOfkXe1ySJwfqkxJwGMtA_eP-HEjuyVcZHyEklPHKcB0v0Km3jb2TqoD-1vK3gmft5YVW85tpY9BknG7EatoWOSj0cyFFkUsZEIsUfIgudlIOYqaENMjVldDFQhxeZ1SYmxH1ah3zKI"/>
+<div class="absolute inset-0 bg-tertiary/10 mix-blend-color"></div>
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-primary rounded-tl-sm border-0.5 border-surface"></div>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-subheading font-bold text-on-surface truncate">Mumma</span>
+<span class="px-1.5 py-0.5 rounded bg-tertiary-container/20 text-tertiary font-badge-caps text-[9px] uppercase tracking-wider">Tier 1 Guest</span>
+</div>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">VIP Guest Whitelist · Priority Protocol</span>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-telemetry-sm text-[11px] text-tertiary font-semibold">98 Appearances</span>
+<span class="text-outline-variant">·</span>
+<span class="font-telemetry-sm text-[11px] text-on-surface-variant">Last: 00:41:53 UTC</span>
+</div>
+</div>
+</div>
+<div class="my-3 pt-2 grid grid-cols-2 gap-2 font-telemetry-sm text-telemetry-sm">
+<div class="flex flex-col p-1.5 rounded bg-surface-container-lowest/60">
+<span class="text-on-surface-variant text-[10px]">Avg Match Confidence</span>
+<span class="text-tertiary font-bold">89.8% (ArcFace)</span>
+</div>
+<div class="flex flex-col p-1.5 rounded bg-surface-container-lowest/60">
+<span class="text-on-surface-variant text-[10px]">Primary Sensor Node</span>
+<span class="text-on-surface truncate">Cam 03 Corridor</span>
+</div>
+</div>
+<div class="flex items-center justify-between font-telemetry-sm text-[11px] text-on-surface-variant pt-1">
+<span>Temporal: <strong class="text-on-surface">Afternoon (14:10)</strong></span>
+<span class="text-primary font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+              Cleared
+            </span>
+</div>
+</div>
+<!-- 3. Dr. Elena Vance (Director, Bio-Synthetics) -->
+<div class="rounded-xl bg-surface-container/70 backdrop-blur-xl p-space-md flex flex-col justify-between shadow-[0_8px_24px_rgba(0,0,0,0.35)] relative overflow-hidden group hover:bg-surface-container-high/70 transition-all">
+<div class="flex items-start gap-space-sm">
+<div class="relative w-14 h-14 rounded-lg bg-surface-container-lowest overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Portrait of a female scientist in cleanroom lab attire with focused expression, high tech laboratory glass reflection in background, crisp blue rim lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeAvA85E54GJr3cV85e4Qq_lNNChQj6j5Erdr8IM1wpn9-Tz-vHoUe2PY6kUkjW4g1YA4KYf-fhUTXSqhIVOJsLNsh9h9WM1o3zcyuE0CW5e5LIeY_Gweqq-C54CPldpSHdkrpaqc24X1Y1KB5JRKf2L2iOG92UBl8BMCEPnASrKa8N_gfiR_G_4ydUYMxhBFN3-2OuP6gfybnELLvsTWKBtVcRQ8nLUpvZTg94ZHSD0FFiRpEIo6V"/>
+<div class="absolute inset-0 bg-primary/10 mix-blend-color"></div>
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-400 rounded-tl-sm border-0.5 border-surface"></div>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-subheading font-bold text-on-surface truncate">Dr. Elena Vance</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-high text-primary font-badge-caps text-[9px] uppercase tracking-wider">Bio-Lead L5</span>
+</div>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">Director, Bio-Synthetics Laboratory</span>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-telemetry-sm text-[11px] text-primary font-semibold">86 Appearances</span>
+<span class="text-outline-variant">·</span>
+<span class="font-telemetry-sm text-[11px] text-on-surface-variant">Last: 00:38:20 UTC</span>
+</div>
+</div>
+</div>
+<div class="my-3 pt-2 grid grid-cols-2 gap-2 font-telemetry-sm text-telemetry-sm">
+<div class="flex flex-col p-1.5 rounded bg-surface-container-lowest/60">
+<span class="text-on-surface-variant text-[10px]">Avg Match Confidence</span>
+<span class="text-emerald-400 font-bold">99.4% (Precision)</span>
+</div>
+<div class="flex flex-col p-1.5 rounded bg-surface-container-lowest/60">
+<span class="text-on-surface-variant text-[10px]">Primary Sensor Node</span>
+<span class="text-on-surface truncate">Cam 07 Cleanroom</span>
+</div>
+</div>
+<div class="flex items-center justify-between font-telemetry-sm text-[11px] text-on-surface-variant pt-1">
+<span>Biometric Signature: <strong class="text-on-surface">Dual Iris + ArcFace</strong></span>
+<span class="text-emerald-400 font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              Secure Auth
+            </span>
+</div>
+</div>
+<!-- 4. Unknown Recurring Cluster #07 -->
+<div class="rounded-xl bg-surface-container/70 backdrop-blur-xl p-space-md flex flex-col justify-between shadow-[0_8px_24px_rgba(0,0,0,0.35)] relative overflow-hidden group hover:bg-surface-container-high/70 transition-all">
+<div class="flex items-start gap-space-sm">
+<div class="relative w-14 h-14 rounded-lg bg-surface-container-lowest flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[32px] text-secondary">person_search</span>
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-secondary rounded-tl-sm border-0.5 border-surface"></div>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-subheading font-bold text-secondary truncate">Unknown Cluster #07</span>
+<span class="px-1.5 py-0.5 rounded bg-secondary/10 text-secondary font-badge-caps text-[9px] uppercase tracking-wider">Unenrolled</span>
+</div>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">Recurring Identity Without Master Token</span>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-telemetry-sm text-[11px] text-secondary font-semibold">342 Detections</span>
+<span class="text-outline-variant">·</span>
+<span class="font-telemetry-sm text-[11px] text-on-surface-variant">Last: 00:14:02 UTC</span>
+</div>
+</div>
+</div>
+<div class="my-3 pt-2 grid grid-cols-2 gap-2 font-telemetry-sm text-telemetry-sm">
+<div class="flex flex-col p-1.5 rounded bg-surface-container-lowest/60">
+<span class="text-on-surface-variant text-[10px]">Confidence Spread</span>
+<span class="text-secondary-fixed font-bold">58% - 64% (Below Lock)</span>
+</div>
+<div class="flex flex-col p-1.5 rounded bg-surface-container-lowest/60">
+<span class="text-on-surface-variant text-[10px]">Primary Sensor Node</span>
+<span class="text-on-surface truncate">Cam 02 &amp; North Gate</span>
+</div>
+</div>
+<div class="flex items-center justify-between font-telemetry-sm text-[11px] text-on-surface-variant pt-1">
+<span>Status: <strong class="text-secondary-fixed">Pending Biometric Enrolment</strong></span>
+<button class="px-2 py-0.5 rounded bg-surface-container text-primary hover:text-on-primary hover:bg-primary transition-all text-[10px] font-semibold">
+              Enroll POI
+            </button>
+</div>
+</div>
+<!-- 5. Sarah Lin (SecOps Lead · L3) -->
+<div class="rounded-xl bg-surface-container/70 backdrop-blur-xl p-space-md flex flex-col justify-between shadow-[0_8px_24px_rgba(0,0,0,0.35)] relative overflow-hidden group hover:bg-surface-container-high/70 transition-all">
+<div class="flex items-start gap-space-sm">
+<div class="relative w-14 h-14 rounded-lg bg-surface-container-lowest overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Portrait of an Asian female security operations specialist wearing tactical earpiece and dark tech tactical uniform in high tech security command center." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYIcW_HeDLOn5YAaPB9oT9xcHJ-A6q0pZJu1Fi1hP2V3H3OJ_LQOkO3tFI_D-CBIcRvO2CzDg1mU8PTB6p8orOVqinK4KKT1KoU1UQkjytf6O7KyHPVx44zJ4rqyNqYz5gDq_phV5z9XdmW0c8r1tzgwioPT-jcg8GYib_MDBBZ33APgbixNxLrrFRGHOLdLUdKS39iLjZAUhMHqI8aWm9i2Juw7Fb066PvxhKKCYTGPSGLhPhbGtF"/>
+<div class="absolute inset-0 bg-primary/10 mix-blend-color"></div>
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-400 rounded-tl-sm border-0.5 border-surface"></div>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-subheading font-bold text-on-surface truncate">Sarah Lin</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-high text-primary font-badge-caps text-[9px] uppercase tracking-wider">SecOps L3</span>
+</div>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">Security Operations Center Shift Supervisor</span>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-telemetry-sm text-[11px] text-primary font-semibold">78 Appearances</span>
+<span class="text-outline-variant">·</span>
+<span class="font-telemetry-sm text-[11px] text-on-surface-variant">Last: 00:08:12 UTC</span>
+</div>
+</div>
+</div>
+<div class="my-3 pt-2 grid grid-cols-2 gap-2 font-telemetry-sm text-telemetry-sm">
+<div class="flex flex-col p-1.5 rounded bg-surface-container-lowest/60">
+<span class="text-on-surface-variant text-[10px]">Avg Match Confidence</span>
+<span class="text-primary font-bold">99.1% (ArcFace)</span>
+</div>
+<div class="flex flex-col p-1.5 rounded bg-surface-container-lowest/60">
+<span class="text-on-surface-variant text-[10px]">Primary Sensor Node</span>
+<span class="text-on-surface truncate">Cam 05 Sec Center</span>
+</div>
+</div>
+<div class="flex items-center justify-between font-telemetry-sm text-[11px] text-on-surface-variant pt-1">
+<span>Clearance Pass: <strong class="text-on-surface">Universal Internal</strong></span>
+<span class="text-emerald-400 font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              Active Shift
+            </span>
+</div>
+</div>
+<!-- 6. Systematic Quick Forensic Audit CTA -->
+<div class="rounded-xl bg-surface-container/50 backdrop-blur-xl p-space-md flex flex-col justify-between shadow-[0_8px_24px_rgba(0,0,0,0.35)] relative overflow-hidden group">
+<div class="flex flex-col gap-1">
+<span class="font-badge-caps text-badge-caps uppercase tracking-wider text-primary">Biometric Re-Cluster</span>
+<span class="font-headline-sm text-subheading font-bold text-on-surface">Synthesize 512-D Latent Embeddings</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+              Run unsupervised HDBSCAN clustering on 342 unverified POI encounters to isolate repeated unbadged visitors across shifts.
+            </p>
+</div>
+<div class="flex flex-col gap-2 pt-4">
+<button class="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-surface-container-high hover:bg-primary hover:text-on-primary text-primary font-telemetry-sm text-telemetry-sm font-semibold transition-all shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">hub</span>
+<span>Execute HDBSCAN Re-Index</span>
+</button>
+<div class="flex justify-between items-center font-telemetry-sm text-[10px] text-on-surface-variant">
+<span>Estimated Duration: 1.4s</span>
+<span>GPU Accelerated</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+<script>
+  (function () {
+    // 1. Counter Count-Up Animation
+    const counters = document.querySelectorAll('.counter-value');
+    counters.forEach(counter => {
+      const target = +counter.getAttribute('data-target');
+      if (!target) return;
+      let count = 0;
+      const speed = target / 40;
+      const updateCount = () => {
+        count += speed;
+        if (count < target) {
+          counter.innerText = Math.ceil(count).toLocaleString();
+          requestAnimationFrame(updateCount);
+        } else {
+          counter.innerText = target.toLocaleString();
+        }
+      };
+      updateCount();
+    });
+
+    // 2. Interactive Timeframe Picker
+    const timeframePicker = document.getElementById('timeframe-picker');
+    if (timeframePicker) {
+      const buttons = timeframePicker.querySelectorAll('.timeframe-btn');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          buttons.forEach(b => {
+            b.className = 'timeframe-btn px-3 py-1.5 rounded-lg font-telemetry-sm text-telemetry-sm text-on-surface-variant hover:text-on-surface transition-all';
+          });
+          btn.className = 'timeframe-btn px-3 py-1.5 rounded-lg font-telemetry-sm text-telemetry-sm text-on-primary bg-primary-container font-semibold shadow-[0_0_12px_rgba(6,182,212,0.4)] transition-all';
+        });
+      });
+    }
+
+    // 3. Chart Granularity Switcher
+    const granButtons = document.querySelectorAll('.chart-granularity');
+    granButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        granButtons.forEach(b => {
+          b.className = 'chart-granularity px-2.5 py-1 rounded text-on-surface-variant hover:text-on-surface transition-colors';
+        });
+        btn.className = 'chart-granularity px-2.5 py-1 rounded bg-surface-container-high text-on-surface font-semibold shadow';
+      });
+    });
+
+    // 4. Dossier Export Notification Feedback
+    const exportBtn = document.getElementById('export-dossier-btn');
+    if (exportBtn) {
+      exportBtn.addEventListener('click', () => {
+        const originalText = exportBtn.innerHTML;
+        exportBtn.innerHTML = '<span class="material-symbols-outlined text-[16px] animate-spin">refresh</span><span>Compiling...</span>';
+        setTimeout(() => {
+          exportBtn.innerHTML = '<span class="material-symbols-outlined text-[16px] text-emerald-950">check</span><span>Dossier Ready</span>';
+          setTimeout(() => {
+            exportBtn.innerHTML = originalText;
+          }, 2400);
+        }, 1200);
+      });
+    }
+  })();
+</script></main></div></body></html>

@@ -1,0 +1,52 @@
+# =========================
+# Python
+# =========================
+
+backend/venv/
+backend/__pycache__/
+backend/*.py[cod]
+
+# =========================
+# Face recognition data
+# =========================
+
+backend/face_database.pkl
+backend/face_database_old.pkl
+backend/events.db
+backend/dataset/
+
+# =========================
+# Environment / secrets
+# =========================
+
+.env
+.env.*
+*.key
+*.pem
+
+# =========================
+# React / Node
+# =========================
+
+frontend/node_modules/
+frontend/dist/
+
+# =========================
+# IDE
+# =========================
+
+.vscode/
+.idea/
+
+# =========================
+# OS
+# =========================
+
+.DS_Store
+Thumbs.db
+
+# =========================
+# Logs
+# =========================
+
+*.log

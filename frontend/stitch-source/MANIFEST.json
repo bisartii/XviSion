@@ -1,0 +1,16 @@
+{
+  "source_zip": "stitch_terra_vision_design_system.zip",
+  "stitch_html_pages_found": [
+    "event_history_recognition_audit_log/code.html",
+    "live_monitor_neural_camera_matrix/code.html",
+    "analytics_visual_intelligence_neural_telemetry/code.html",
+    "people_face_recognition_identity_registry/code.html",
+    "settings_system_health_ai_engine_infrastructure/code.html",
+    "live_monitor_mission_control_ai_vision/code.html",
+    "overview_ai_command_center_2/code.html",
+    "overview_ai_command_center_1/code.html"
+  ],
+  "react_entry": "src/main.jsx",
+  "styles": "src/styles.css",
+  "backend_integration": "not connected yet"
+}

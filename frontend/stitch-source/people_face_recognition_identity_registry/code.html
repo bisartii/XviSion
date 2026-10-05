@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Manrope:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-container":"#1c2028","on-primary":"#003640","on-primary-fixed-variant":"#004e5c","on-error-container":"#ffdad6","secondary-fixed":"#d8e2ff","primary-container":"#06b6d4","on-surface-variant":"#bcc9cd","secondary-container":"#0566d9","surface-tint":"#4cd7f6","on-primary-fixed":"#001f26","tertiary":"#d0bcff","primary-fixed":"#acedff","tertiary-container":"#b395ff","surface-container-low":"#181c24","secondary":"#adc6ff","surface-bright":"#353942","secondary-fixed-dim":"#adc6ff","inverse-on-surface":"#2c3039","surface-container-high":"#262a33","on-tertiary-fixed-variant":"#5516be","error-container":"#93000a","outline-variant":"#3d494c","on-background":"#dfe2ee","background":"#0f131c","outline":"#869397","surface-dim":"#0f131c","on-tertiary-container":"#4900ae","primary-fixed-dim":"#4cd7f6","surface-container-highest":"#31353e","error":"#ffb4ab","surface-container-lowest":"#0a0e16","tertiary-fixed":"#e9ddff","tertiary-fixed-dim":"#d0bcff","on-secondary-fixed":"#001a42","primary":"#4cd7f6","on-secondary":"#002e6a","on-secondary-fixed-variant":"#004395","on-error":"#690005","on-surface":"#dfe2ee","surface":"#0f131c","surface-variant":"#31353e","on-primary-container":"#00424f","inverse-primary":"#00687a","on-secondary-container":"#e6ecff","on-tertiary":"#3c0091","inverse-surface":"#dfe2ee","on-tertiary-fixed":"#23005c"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"space-lg":"1.5rem","margin":"1rem","space-xs":"0.25rem","gutter":"1rem","space-md":"1rem","space-sm":"0.5rem","margin-desktop":"1.5rem","space-xl":"2rem","gutter-desktop":"1.5rem"},fontFamily:{"display-lg":["Manrope"],"headline-sm":["Manrope"],"headline-md":["Manrope"],"telemetry-sm":["JetBrains Mono"],"subheading":["Geist"],"display-lg-mobile":["Manrope"],"telemetry-md":["JetBrains Mono"],"body-sm":["Geist"],"badge-caps":["JetBrains Mono"],"body-md":["Geist"]},fontSize:{"display-lg":["32px",{lineHeight:"38px",letterSpacing:"-0.03em",fontWeight:"600"}],"headline-sm":["18px",{lineHeight:"24px",letterSpacing:"-0.01em",fontWeight:"500"}],"headline-md":["22px",{lineHeight:"28px",letterSpacing:"-0.02em",fontWeight:"600"}],"telemetry-sm":["11px",{lineHeight:"14px",letterSpacing:"0.04em",fontWeight:"400"}],"subheading":["16px",{lineHeight:"22px",letterSpacing:"-0.005em",fontWeight:"500"}],"display-lg-mobile":["26px",{lineHeight:"32px",letterSpacing:"-0.02em",fontWeight:"600"}],"telemetry-md":["13px",{lineHeight:"16px",letterSpacing:"0.02em",fontWeight:"500"}],"body-sm":["13px",{lineHeight:"18px",letterSpacing:"0em",fontWeight:"400"}],"badge-caps":["10px",{lineHeight:"12px",letterSpacing:"0.1em",fontWeight:"600"}],"body-md":["14px",{lineHeight:"20px",letterSpacing:"0em",fontWeight:"400"}]}}}}</script></head><body class="bg-surface text-on-surface font-body-md text-body-md antialiased selection:bg-primary-container selection:text-on-primary"><header class="fixed top-0 left-0 right-0 z-50 h-14 bg-surface-container-lowest/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.4)] flex items-center justify-between px-space-md"><div class="flex items-center gap-space-sm w-64 shrink-0"><img alt="Terra Vision Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0xEiAWbMFrw7ykPa3y4HorfZF_897042dS9X2PxlnwjjJQ_t-8nmWV-HRHb-aRSazjYXRbS9n5lz5KT3HrLnfnemY5aaakXxg5D-Y6YYCq7C6sXr41mnN6KYCytLo2MwktUTckSrbsj9v6oqy_Fm__GVcwborSy2bBYGSqrc3inMweqMuK64OiGGM_whgx1QmDrSkupcIHXaO4JcuJIdYpGA2sOWRtM5OEDoo7w4ItVxdonIci4d9"/><div class="flex items-baseline gap-space-xs"><span class="font-headline-sm text-headline-sm tracking-tight text-on-surface uppercase font-bold">TERRA<span class="text-primary">VISION</span></span><span class="font-badge-caps text-badge-caps uppercase px-1.5 py-0.5 rounded bg-surface-container-high text-primary tracking-widest">v3.8-Enterprise</span></div></div><div class="hidden xl:flex items-center gap-space-xs font-telemetry-sm text-telemetry-sm"><div class="flex items-center gap-1.5 px-space-sm py-1 rounded bg-surface-container-low text-on-surface-variant"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span><span class="tracking-wider">AI ENGINE ONLINE</span></div><div class="flex items-center gap-1.5 px-space-sm py-1 rounded bg-surface-container-low text-on-surface-variant"><span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span><span class="tracking-wider">GPU CLUSTER 42% · 38°C</span></div><div class="flex items-center gap-1.5 px-space-sm py-1 rounded bg-surface-container-low text-on-surface-variant"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span><span class="tracking-wider">CAMERAS: 18/18 ACTIVE</span></div><div class="flex items-center gap-1.5 px-space-sm py-1 rounded bg-surface-container-low text-on-surface-variant"><span class="tracking-wider">LATENCY 12ms · 60 FPS</span></div></div><div class="flex items-center gap-space-sm"><button class="flex items-center gap-space-sm bg-surface-container-low text-on-surface-variant px-space-sm py-1.5 rounded-lg hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[18px]">search</span><span class="font-telemetry-sm text-telemetry-sm hidden sm:inline text-on-surface-variant">Omni Command</span><kbd class="font-badge-caps text-badge-caps px-1 py-0.5 rounded bg-surface-container-highest text-on-surface-variant">⌘K</kbd></button><div class="relative flex items-center justify-center w-8 h-8 rounded-lg bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface cursor-pointer transition-colors"><span class="material-symbols-outlined text-[18px]">notifications</span><span class="absolute -top-1 -right-1 w-4 h-4 bg-error text-on-error font-badge-caps text-badge-caps rounded-full flex items-center justify-center font-bold">3</span></div><div class="hidden md:flex flex-col items-end px-space-xs font-telemetry-sm text-telemetry-sm"><span class="text-on-surface font-semibold">14:28:49 UTC</span><span class="text-on-surface-variant text-[9px] tracking-widest">STABLE SYNC</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><aside class="fixed left-0 top-14 bottom-0 w-64 bg-surface-container-lowest/90 backdrop-blur-xl z-40 flex flex-col justify-between py-space-md shadow-[1px_0_12px_rgba(0,0,0,0.3)]"><div class="flex flex-col gap-space-xs px-space-sm"><div class="px-space-sm pb-space-xs pt-space-xs font-badge-caps text-badge-caps uppercase tracking-widest text-on-surface-variant/70">Command Rail</div><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary-container font-semibold rounded-lg shadow-[0_0_12px_rgba(6,182,212,0.3)]"><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="overview" href="#"><span class="material-symbols-outlined text-[20px] text-on-surface-variant group-hover:text-primary transition-colors">dashboard</span><span class="font-body-md text-body-md">Overview</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="live-monitor" href="#"><span class="material-symbols-outlined text-[20px] text-on-surface-variant group-hover:text-primary transition-colors">videocam</span><span class="font-body-md text-body-md">Live Monitor</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="people" href="#"><span class="material-symbols-outlined text-[20px] text-on-surface-variant group-hover:text-primary transition-colors">face</span><span class="font-body-md text-body-md">People</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="events" href="#"><span class="material-symbols-outlined text-[20px] text-on-surface-variant group-hover:text-primary transition-colors">sensors</span><span class="font-body-md text-body-md">Events</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="alerts" href="#"><span class="material-symbols-outlined text-[20px] text-on-surface-variant group-hover:text-primary transition-colors">warning</span><span class="font-body-md text-body-md">Alerts</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="cameras" href="#"><span class="material-symbols-outlined text-[20px] text-on-surface-variant group-hover:text-primary transition-colors">nest_cam_wired_stand</span><span class="font-body-md text-body-md">Cameras</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="analytics" href="#"><span class="material-symbols-outlined text-[20px] text-on-surface-variant group-hover:text-primary transition-colors">insights</span><span class="font-body-md text-body-md">Analytics</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="settings" href="#"><span class="material-symbols-outlined text-[20px] text-on-surface-variant group-hover:text-primary transition-colors">tune</span><span class="font-body-md text-body-md">Settings</span></a></nav></div><div class="px-space-sm"><div class="p-space-sm rounded-xl bg-surface-container-low/60 flex flex-col gap-1.5"><div class="flex items-center justify-between text-on-surface-variant"><span class="font-badge-caps text-badge-caps uppercase tracking-wider">Node Health</span><span class="font-telemetry-sm text-telemetry-sm text-primary">NOMINAL</span></div><div class="w-full bg-surface-container-highest h-1 rounded-full overflow-hidden"><div class="bg-primary h-full rounded-full" style="width:84%"></div></div><div class="flex justify-between font-telemetry-sm text-telemetry-sm text-on-surface-variant/80 text-[10px]"><span>Inference Load</span><span>84.2%</span></div></div></div></aside><div class="pl-64"><main class="w-full pt-14 px-space-md bg-surface min-h-screen"><div class="flex flex-col w-full pb-space-xl">
+<!-- SECTION HEADER & HUD TELEMETRY BAR -->
+<section class="flex flex-col gap-space-md pt-space-sm mb-space-lg">
+<!-- Top Row: Page Title, Dynamic Vector Counts, and Main CTAs -->
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-md">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-space-xs text-on-surface-variant font-badge-caps text-badge-caps uppercase tracking-widest">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+<span>Biometric Entity Ledger</span>
+<span class="text-outline">/</span>
+<span>Cluster Alpha-09</span>
+</div>
+<h1 class="font-display-lg text-display-lg text-on-surface tracking-tight font-semibold flex items-baseline gap-space-sm">
+          PEOPLE
+          <span class="font-telemetry-sm text-telemetry-sm font-normal text-on-surface-variant px-space-xs py-0.5 rounded bg-surface-container-high">
+            1,420 HASHED PROFILES
+          </span>
+</h1>
+<p class="font-subheading text-subheading text-on-surface-variant">
+          Registered identities &amp; multi-vector biometric embeddings
+        </p>
+</div>
+<!-- Action Cluster -->
+<div class="flex items-center gap-space-sm flex-wrap">
+<div class="hidden sm:flex items-center gap-3 px-space-sm py-1.5 rounded-xl bg-surface-container-low shadow-sm">
+<div class="flex flex-col text-right">
+<span class="font-badge-caps text-badge-caps text-on-surface-variant uppercase">Vector Bank</span>
+<span class="font-telemetry-sm text-telemetry-sm text-primary font-medium">42,600 / 42,600</span>
+</div>
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">view_in_ar</span>
+</div>
+</div>
+<button class="flex items-center gap-space-xs px-space-md py-2.5 rounded-xl bg-primary-container text-on-primary font-headline-sm text-headline-sm font-semibold shadow-lg hover:shadow-cyan-500/20 active:scale-[0.98] transition-all cursor-pointer" id="open-register-modal-btn">
+<span class="material-symbols-outlined text-[20px]">fingerprint</span>
+<span>+ REGISTER PERSON</span>
+</button>
+</div>
+</div>
+<!-- Filter Bar, Omni Search, and Sorters -->
+<div class="flex flex-col xl:flex-row gap-space-sm items-stretch xl:items-center justify-between mt-space-xs">
+<!-- Search Input Glass Well -->
+<div class="relative flex-1 min-w-[280px]">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">search</span>
+</div>
+<input class="w-full pl-10 pr-20 py-2 rounded-xl bg-surface-container-low text-on-surface placeholder:text-on-surface-variant/60 font-body-md text-body-md focus:outline-none focus:bg-surface-container shadow-inner transition-colors" placeholder="Search people by name, track ID, embedding hash..." type="text"/>
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center gap-1 pointer-events-none">
+<kbd class="font-badge-caps text-badge-caps uppercase px-1.5 py-0.5 rounded bg-surface-container-highest text-on-surface-variant">⌘K</kbd>
+</div>
+</div>
+<!-- Segmented Category Filter Pills -->
+<div class="flex items-center gap-1 p-1 rounded-xl bg-surface-container-lowest overflow-x-auto shadow-inner">
+<button class="px-space-sm py-1.5 rounded-lg bg-surface-container-high text-primary font-body-sm text-body-sm font-medium whitespace-nowrap shadow-sm">
+          All (1,420)
+        </button>
+<button class="px-space-sm py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low font-body-sm text-body-sm transition-colors whitespace-nowrap">
+          VIP &amp; Executive (48)
+        </button>
+<button class="px-space-sm py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low font-body-sm text-body-sm transition-colors whitespace-nowrap">
+          Staff &amp; Contractors (1,180)
+        </button>
+<button class="px-space-sm py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low font-body-sm text-body-sm transition-colors whitespace-nowrap">
+          Watchlist (12)
+        </button>
+<button class="px-space-sm py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low font-body-sm text-body-sm transition-colors whitespace-nowrap">
+          Pending Enrollment (6)
+        </button>
+</div>
+<!-- Sort Selection Glass Menu -->
+<div class="flex items-center gap-space-xs shrink-0 self-end xl:self-auto">
+<div class="flex items-center gap-1.5 px-space-sm py-2 rounded-xl bg-surface-container-low text-on-surface-variant text-body-sm font-body-sm shadow-sm cursor-pointer hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[16px]">swap_vert</span>
+<span class="text-on-surface-variant">Sort:</span>
+<span class="text-on-surface font-medium">Last Seen (Recent)</span>
+<span class="material-symbols-outlined text-[16px]">expand_more</span>
+</div>
+</div>
+</div>
+</section>
+<!-- MAIN DUAL-PANE WORKSPACE: IDENTITY TILES (LEFT/CENTER) + INTERACTIVE DOSSIER DRAWER (RIGHT) -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg items-start">
+<!-- LEFT PANEL: PEOPLE CARDS GRID (7 OR 8 COLS ON DESKTOP) -->
+<div class="xl:col-span-8 flex flex-col gap-space-md">
+<!-- Telemetry Sub-strip -->
+<div class="flex items-center justify-between px-space-sm py-2 rounded-lg bg-surface-container-lowest text-on-surface-variant font-telemetry-sm text-telemetry-sm">
+<div class="flex items-center gap-space-md">
+<span class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+            ACTIVE RETRIEVAL POOL: 6 OF 1,420
+          </span>
+<span class="hidden md:inline text-outline">•</span>
+<span class="hidden md:inline">VECTOR RESOLUTION: ArcFace-R100 [512-D]</span>
+</div>
+<div class="flex items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-[14px]">bolt</span>
+<span>INDEX CACHE: 0.8ms</span>
+</div>
+</div>
+<!-- People Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- CARD 1: DHRUV (ACTIVE / SELECTED) -->
+<div class="relative group p-space-md rounded-xl bg-surface-container-high/90 hover:bg-surface-container-high shadow-lg transition-all flex flex-col gap-space-md cursor-pointer select-none">
+<!-- Specular Highlight Top Line -->
+<div class="absolute top-0 left-4 right-4 h-[1px] bg-primary/40"></div>
+<!-- Top Meta Row -->
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<!-- Avatar with Face Reticle Overlay -->
+<div class="relative w-14 h-14 rounded-xl overflow-hidden bg-surface-container-lowest shrink-0 shadow-md">
+<img class="w-full h-full object-cover" data-alt="Close-up biometric face portrait of an Indian male executive with sharp cinematic lighting, high key rim light against deep slate navy backdrop, subtle cyan geometric tracking points overlaid on cheekbones and forehead, highly detailed studio rendering" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKFHG5U7cnrwPSQJs4chjKLlQnaf9NuG_QVmq-J9I5drCcZaPKjBVYhUgK_nje1PiwcaLeeK_TI-0ZmeV_zVQlejraZIM9wQJO-0K9T96UUv8_IlM1wmSp9o1G0JYrLqTvtjhrzpmYYzL_JLKo28ZushArMTGho3hgHCAQdCvJrNfw6oGItpb8GKMtqo9MtL10kcPcXJUuVvNi3AQlIMxjh-oyUnHWG-jOoMozwNfLjH84gcCADi57"/>
+<div class="absolute inset-0 bg-primary/10 mix-blend-overlay"></div>
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-40 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-primary text-[28px]">crop_free</span>
+</div>
+</div>
+<!-- Name & Role -->
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate">DHRUV</h3>
+<span class="material-symbols-outlined text-primary text-[16px]" title="Core Administrator">verified</span>
+</div>
+<span class="font-body-sm text-body-sm text-secondary font-medium">Executive / Core Admin</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant font-mono text-[10px]">ID: TV-88419-A</span>
+</div>
+</div>
+<!-- Status Badge -->
+<div class="flex items-center gap-1.5 px-2 py-1 rounded-full bg-surface-container-lowest text-emerald-400 font-badge-caps text-badge-caps">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+<span>REGISTERED</span>
+</div>
+</div>
+<!-- Vector & Metric Grid -->
+<div class="grid grid-cols-2 gap-space-xs p-space-sm rounded-lg bg-surface-container-low/70">
+<div class="flex flex-col">
+<span class="font-badge-caps text-badge-caps text-on-surface-variant uppercase tracking-wider">Embeddings</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface font-semibold flex items-center gap-1">
+<span class="text-primary font-bold">30</span> / 30 Generated
+              </span>
+</div>
+<div class="flex flex-col">
+<span class="font-badge-caps text-badge-caps text-on-surface-variant uppercase tracking-wider">Avg Confidence</span>
+<span class="font-telemetry-sm text-telemetry-sm text-primary font-bold">92.4%</span>
+</div>
+<div class="flex flex-col pt-1">
+<span class="font-badge-caps text-badge-caps text-on-surface-variant uppercase tracking-wider">Appearances</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface">124 sightings</span>
+</div>
+<div class="flex flex-col pt-1">
+<span class="font-badge-caps text-badge-caps text-on-surface-variant uppercase tracking-wider">Fidelity</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface">Cosine 0.94</span>
+</div>
+</div>
+<!-- Last Sighted Strip -->
+<div class="flex items-center justify-between text-on-surface-variant font-body-sm text-body-sm px-1">
+<div class="flex items-center gap-1.5 truncate">
+<span class="material-symbols-outlined text-[16px] text-primary">videocam</span>
+<span class="truncate">Main Atrium (Cam 01)</span>
+</div>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface shrink-0">Today, 00:42</span>
+</div>
+<!-- Bottom Micro Actions -->
+<div class="flex items-center justify-between gap-space-sm pt-2 mt-auto">
+<button class="flex-1 py-1.5 px-space-sm rounded-lg bg-surface-container text-on-surface hover:bg-surface-bright text-body-sm font-body-sm font-medium transition-colors flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+<span>Inspect Dossier</span>
+</button>
+<button class="w-8 h-8 rounded-lg bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-bright flex items-center justify-center transition-colors" title="View Sighting History">
+<span class="material-symbols-outlined text-[16px]">history</span>
+</button>
+</div>
+</div>
+<!-- CARD 2: MUMMA -->
+<div class="relative group p-space-md rounded-xl bg-surface-container/70 hover:bg-surface-container-high shadow-md transition-all flex flex-col gap-space-md cursor-pointer select-none">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="relative w-14 h-14 rounded-xl overflow-hidden bg-surface-container-lowest shrink-0 shadow-md">
+<img class="w-full h-full object-cover" data-alt="Elegant warm portrait of a senior South Asian woman wearing silk garments in an executive glass environment with soft atmospheric cyan glow, detailed high resolution features with ambient architectural reflections" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSUFE6TFD5EgquLzZkYLpvmNJVaaAUhz8KXqv7nRR6Q8Oktwt232zegZ0h56z687fxFCZcHGQokOeFEAFVJ_-_kRiUfaxABaA8k7zlASl_xKB9U8825OhkpfK7eAt3sCqxBaqoCQN_zJrVLmq8tLfQiNzO9UQ3D-hbgymij0n1bP5RGspK57Tg0sNSlFUbyC2XZ3ecrECec6JEhCrcNePDuuzsyZeKTbMQ7tD5FxTWEMSgdRqwff4f"/>
+<div class="absolute inset-0 bg-primary/10 mix-blend-overlay"></div>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate">MUMMA</h3>
+<span class="material-symbols-outlined text-secondary text-[16px]" title="VIP Tier">star</span>
+</div>
+<span class="font-body-sm text-body-sm text-secondary font-medium">VIP Guest / Family Tier</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant font-mono text-[10px]">ID: TV-90214-F</span>
+</div>
+</div>
+<div class="flex items-center gap-1.5 px-2 py-1 rounded-full bg-surface-container-lowest text-emerald-400 font-badge-caps text-badge-caps">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+<span>REGISTERED</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-space-xs p-space-sm rounded-lg bg-surface-container-low/70">
+<div class="flex flex-col">
+<span class="font-badge-caps text-badge-caps text-on-surface-variant uppercase tracking-wider">Embeddings</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface font-semibold flex items-center gap-1">
+<span class="text-primary font-bold">30</span> / 30 Generated
+              </span>
+</div>
+<div class="flex flex-col">
+<span class="font-badge-caps text-badge-caps text-on-surface-variant uppercase tracking-wider">Avg Confidence</span>
+<span class="font-telemetry-sm text-telemetry-sm text-primary font-bold">89.8%</span>
+</div>
+<div class="flex flex-col pt-1">
+<span class="font-badge-caps text-badge-caps text-on-surface-variant uppercase tracking-wider">Appearances</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface">86 sightings</span>
+</div>
+<div class="flex flex-col pt-1">
+<span class="font-badge-caps text-badge-caps text-on-surface-variant uppercase tracking-wider">Fidelity</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface">Cosine 0.91</span>
+</div>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant font-body-sm text-body-sm px-1">
+<div class="flex items-center gap-1.5 truncate">
+<span class="material-symbols-outlined text-[16px] text-primary">videocam</span>
+<span class="truncate">Executive Lounge (Cam 03)</span>
+</div>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface shrink-0">Today, 00:39</span>
+</div>
+<div class="flex items-center justify-between gap-space-sm pt-2 mt-auto">
+<button class="flex-1 py-1.5 px-space-sm rounded-lg bg-surface-container-low text-on-surface hover:bg-surface-bright text-body-sm font-body-sm font-medium transition-colors flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+<span>Inspect Dossier</span>
+</button>
+<button class="w-8 h-8 rounded-lg bg-surface-container-low text-on-surface-variant hover:text-on-surface hover:bg-surface-bright flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-[16px]">history</span>
+</button>
+</div>
+</div>
+<!-- CARD 3: DR. ELENA VANCE -->
+<div class="relative group p-space-md rounded-xl bg-surface-container/70 hover:bg-surface-container-high shadow-md transition-all flex flex-col gap-space-md cursor-pointer select-none">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="relative w-14 h-14 rounded-xl overflow-hidden bg-surface-container-lowest shrink-0 shadow-md">
+<img class="w-full h-full object-cover" data-alt="Portrait of an intelligent female research scientist with thin titanium spectacles and laboratory cleanroom gear in the background, sharp cool lighting with subtle cyan ambient backlight, hyper realistic cinematic photography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzO0DPT1Bil_FmXxl5Q_Ghx1SyKCM_eEKuJoy3dL83JgMeQuvlO5riXD3e-3qKHvJM1bF8CO1eql7-05CzHZ2_M0a8OxA7BOAINXs39EwG9vviK6OzW5fmP2DlxBsj3tUWbaYxIG2toOoa7IZip7DQdrQJP9N84vK3dYaryy8hsShncQ4nd5k_drMS50N1gWy9r8BYtC0VqE9Ic-DfsIAGKcW64NtGr7E5s-N2xmrMvIrmwySt4AzU"/>
+</div>
+<div class="flex flex-col min-w-0">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate">DR. ELENA VANCE</h3>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Chief Scientist / Bio-Syn</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant font-mono text-[10px]">ID: TV-44102-S</span>
+</div>
+</div>
+<div class="flex items-center gap-1.5 px-2 py-1 rounded-full bg-surface-container-lowest text-emerald-400 font-badge-caps text-badge-caps">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+<span>REGISTERED</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-space-xs p-space-sm rounded-lg bg-surface-container-low/70">
+<div class="flex flex-col">
+<span class="font-badge-caps text-badge-caps text-on-surface-variant uppercase tracking-wider">Embeddings</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface font-semibold flex items-center gap-1">
+<span class="text-primary font-bold">30</span> / 30 Generated
+              </span>
+</div>
+<div class="flex flex-col">
+<span class="font-badge-caps text-badge-caps text-on-surface-variant uppercase tracking-wider">Avg Confidence</span>
+<span class="font-telemetry-sm text-telemetry-sm text-primary font-bold">98.7%</span>
+</div>
+<div class="flex flex-col pt-1">
+<span class="font-badge-caps text-badge-caps text-on-surface-variant uppercase tracking-wider">Appearances</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface">312 sightings</span>
+</div>
+<div class="flex flex-col pt-1">
+<span class="font-badge-caps text-badge-caps text-on-surface-variant uppercase tracking-wider">Fidelity</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface">Cosine 0.99</span>
+</div>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant font-body-sm text-body-sm px-1">
+<div class="flex items-center gap-1.5 truncate">
+<span class="material-symbols-outlined text-[16px] text-primary">videocam</span>
+<span class="truncate">Cleanroom Airway (Cam 12)</span>
+</div>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface shrink-0">Today, 00:15</span>
+</div>
+<div class="flex items-center justify-between gap-space-sm pt-2 mt-auto">
+<button class="flex-1 py-1.5 px-space-sm rounded-lg bg-surface-container-low text-on-surface hover:bg-surface-bright text-body-sm font-body-sm font-medium transition-colors flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+<span>Inspect Dossier</span>
+</button>
+<button class="w-8 h-8 rounded-lg bg-surface-container-low text-on-surface-variant hover:text-on-surface hover:bg-surface-bright flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-[16px]">history</span>
+</button>
+</div>
+</div>
+<!-- CARD 4: VIKTOR CHEN -->
+<div class="relative group p-space-md rounded-xl bg-surface-container/70 hover:bg-surface-container-high shadow-md transition-all flex flex-col gap-space-md cursor-pointer select-none">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="relative w-14 h-14 rounded-xl overflow-hidden bg-surface-container-lowest shrink-0 shadow-md">
+<img class="w-full h-full object-cover" data-alt="Cybersecurity operations analyst portrait of East Asian man in modern high tech dark room with low blue ambient monitors in the background, sharp focus, professional biometric headshot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUmLUH3t_jUxS6fTQYDrVo2cjKa83CHNBf1mSLYoiEm5cieg-gV4xhBTX65YB1F0sTeu8CwHwcp3VRKOr36ZRMiDlCKNMIvLJT6xalLpVhib2sGH68YphgGoi4cTsaLoxlF51u46pmMpiutRQrcH2CTJVEgGrz9vMaYIwJ3sI9IkMNIsiRya1NkryUWzsCKv_OYKPM21y4B5qHClxi9-kT6ri2QzgfhrJsm3UlW9S2Ntb_9zC-8fGZ"/>
+</div>
+<div class="flex flex-col min-w-0">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate">VIKTOR CHEN</h3>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Security Analyst</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant font-mono text-[10px]">ID: TV-11930-B</span>
+</div>
+</div>
+<div class="flex items-center gap-1.5 px-2 py-1 rounded-full bg-surface-container-lowest text-emerald-400 font-badge-caps text-badge-caps">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+<span>REGISTERED</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-space-xs p-space-sm rounded-lg bg-surface-container-low/70">
+<div class="flex flex-col">
+<span class="font-badge-caps text-badge-caps text-on-surface-variant uppercase tracking-wider">Embeddings</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface font-semibold flex items-center gap-1">
+<span class="text-primary font-bold">30</span> / 30 Generated
+              </span>
+</div>
+<div class="flex flex-col">
+<span class="font-badge-caps text-badge-caps text-on-surface-variant uppercase tracking-wider">Avg Confidence</span>
+<span class="font-telemetry-sm text-telemetry-sm text-primary font-bold">94.1%</span>
+</div>
+<div class="flex flex-col pt-1">
+<span class="font-badge-caps text-badge-caps text-on-surface-variant uppercase tracking-wider">Appearances</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface">64 sightings</span>
+</div>
+<div class="flex flex-col pt-1">
+<span class="font-badge-caps text-badge-caps text-on-surface-variant uppercase tracking-wider">Fidelity</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface">Cosine 0.95</span>
+</div>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant font-body-sm text-body-sm px-1">
+<div class="flex items-center gap-1.5 truncate">
+<span class="material-symbols-outlined text-[16px] text-primary">videocam</span>
+<span class="truncate">SOC Control Pod 02</span>
+</div>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface shrink-0">Yesterday, 22:14</span>
+</div>
+<div class="flex items-center justify-between gap-space-sm pt-2 mt-auto">
+<button class="flex-1 py-1.5 px-space-sm rounded-lg bg-surface-container-low text-on-surface hover:bg-surface-bright text-body-sm font-body-sm font-medium transition-colors flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+<span>Inspect Dossier</span>
+</button>
+<button class="w-8 h-8 rounded-lg bg-surface-container-low text-on-surface-variant hover:text-on-surface hover:bg-surface-bright flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-[16px]">history</span>
+</button>
+</div>
+</div>
+<!-- CARD 5: AMINA PATEL (ENROLLING STATE) -->
+<div class="relative group p-space-md rounded-xl bg-surface-container/70 hover:bg-surface-container-high shadow-md transition-all flex flex-col gap-space-md cursor-pointer select-none">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="relative w-14 h-14 rounded-xl overflow-hidden bg-surface-container-lowest shrink-0 shadow-md">
+<img class="w-full h-full object-cover grayscale" data-alt="Portrait of a young South Asian woman in casual modern studio lighting, slight head angle, crisp focal details with ambient soft purple rim lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsNjji54NLQGpjL-kCnuwEEHChyiVCvnM9nGlMs32DmmjzrOQcbfmvXEunHDsmGHpMq_tBF9nF72wprFhXCSCWYwjR3V0JL8FzUAEvefkMu4xV1eVUfeH5c5hQ_zeWamZ2C0akyOCo1aXOaqA-LLOCNewZ_uJSbtGz556nIaio6aT-jjALYWbxk3Al55SXhC0eMf147jVkWq0aUtVEkLfJZrb3CgBlz7kt3SQYmiDok0KEr_TUyGOL"/>
+<div class="absolute inset-0 bg-secondary-container/20 mix-blend-overlay"></div>
+</div>
+<div class="flex flex-col min-w-0">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate">AMINA PATEL</h3>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Guest Researcher</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant font-mono text-[10px]">ID: TV-PND-006</span>
+</div>
+</div>
+<!-- Warning/In-Progress Pulse Badge -->
+<div class="flex items-center gap-1.5 px-2 py-1 rounded-full bg-surface-container-lowest text-secondary font-badge-caps text-badge-caps">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-ping"></span>
+<span>ENROLLING (17/30)</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-space-xs p-space-sm rounded-lg bg-surface-container-low/70">
+<div class="flex flex-col">
+<span class="font-badge-caps text-badge-caps text-on-surface-variant uppercase tracking-wider">Embeddings</span>
+<span class="font-telemetry-sm text-telemetry-sm text-secondary font-semibold flex items-center gap-1">
+<span class="font-bold">17</span> / 30 Captured
+              </span>
+</div>
+<div class="flex flex-col">
+<span class="font-badge-caps text-badge-caps text-on-surface-variant uppercase tracking-wider">Avg Confidence</span>
+<span class="font-telemetry-sm text-telemetry-sm text-secondary font-bold">88.2%</span>
+</div>
+<div class="flex flex-col pt-1">
+<span class="font-badge-caps text-badge-caps text-on-surface-variant uppercase tracking-wider">Appearances</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface">1 sighting</span>
+</div>
+<div class="flex flex-col pt-1">
+<span class="font-badge-caps text-badge-caps text-on-surface-variant uppercase tracking-wider">Status</span>
+<span class="font-telemetry-sm text-telemetry-sm text-secondary">Awaiting YAW +25</span>
+</div>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant font-body-sm text-body-sm px-1">
+<div class="flex items-center gap-1.5 truncate">
+<span class="material-symbols-outlined text-[16px] text-secondary">sync</span>
+<span class="truncate">Biometric Studio 01</span>
+</div>
+<span class="font-telemetry-sm text-telemetry-sm text-secondary shrink-0">In Progress</span>
+</div>
+<div class="flex items-center justify-between gap-space-sm pt-2 mt-auto">
+<button class="flex-1 py-1.5 px-space-sm rounded-lg bg-secondary/10 text-secondary hover:bg-secondary/20 text-body-sm font-body-sm font-medium transition-colors flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[16px]">play_arrow</span>
+<span>Resume Enrollment</span>
+</button>
+</div>
+</div>
+<!-- CARD 6: MARCUS THORNE -->
+<div class="relative group p-space-md rounded-xl bg-surface-container/70 hover:bg-surface-container-high shadow-md transition-all flex flex-col gap-space-md cursor-pointer select-none">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="relative w-14 h-14 rounded-xl overflow-hidden bg-surface-container-lowest shrink-0 shadow-md">
+<img class="w-full h-full object-cover" data-alt="Distinguished executive male in dark minimalist corporate attire, grey beard, sharp focus on eyes, architectural tech headquarters glass reflection in background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiMj8IiiPmP8qW-N8Bm1p_W3XgJtlWT6CLeIRjaNsPx0_9fvrrCsyfBhZOkobNM5lkwqC-QUV294cBVybjfaeodpVfdRbjN1KFjmuxlqGx_2THGVHI-KP8cZk0fvs5Yd3kzy1ELwt_Y790BwpU2fra_B9HuMFgXmMN1XSGEQ9jndShnGHu2HsOBxpCT8YeLBEd9ddHFDDa0ng2LdRcX-0mx8c2dgL0rnsBtEA9JzzBY2I6SRbPMRrZ"/>
+</div>
+<div class="flex flex-col min-w-0">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate">MARCUS THORNE</h3>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">VP Infrastructure</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant font-mono text-[10px]">ID: TV-02941-K</span>
+</div>
+</div>
+<div class="flex items-center gap-1.5 px-2 py-1 rounded-full bg-surface-container-lowest text-emerald-400 font-badge-caps text-badge-caps">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+<span>REGISTERED</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-space-xs p-space-sm rounded-lg bg-surface-container-low/70">
+<div class="flex flex-col">
+<span class="font-badge-caps text-badge-caps text-on-surface-variant uppercase tracking-wider">Embeddings</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface font-semibold flex items-center gap-1">
+<span class="text-primary font-bold">30</span> / 30 Generated
+              </span>
+</div>
+<div class="flex flex-col">
+<span class="font-badge-caps text-badge-caps text-on-surface-variant uppercase tracking-wider">Avg Confidence</span>
+<span class="font-telemetry-sm text-telemetry-sm text-primary font-bold">99.2%</span>
+</div>
+<div class="flex flex-col pt-1">
+<span class="font-badge-caps text-badge-caps text-on-surface-variant uppercase tracking-wider">Appearances</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface">245 sightings</span>
+</div>
+<div class="flex flex-col pt-1">
+<span class="font-badge-caps text-badge-caps text-on-surface-variant uppercase tracking-wider">Fidelity</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface">Cosine 0.98</span>
+</div>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant font-body-sm text-body-sm px-1">
+<div class="flex items-center gap-1.5 truncate">
+<span class="material-symbols-outlined text-[16px] text-primary">videocam</span>
+<span class="truncate">Data Core Vault (Cam 08)</span>
+</div>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface shrink-0">1 hr ago</span>
+</div>
+<div class="flex items-center justify-between gap-space-sm pt-2 mt-auto">
+<button class="flex-1 py-1.5 px-space-sm rounded-lg bg-surface-container-low text-on-surface hover:bg-surface-bright text-body-sm font-body-sm font-medium transition-colors flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+<span>Inspect Dossier</span>
+</button>
+<button class="w-8 h-8 rounded-lg bg-surface-container-low text-on-surface-variant hover:text-on-surface hover:bg-surface-bright flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-[16px]">history</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT PANEL: DETAILED BIOMETRIC DOSSIER DRAWER (PERSISTENT INSPECTION OF "DHRUV") -->
+<div class="xl:col-span-4 flex flex-col gap-space-md">
+<div class="p-space-md rounded-2xl bg-surface-container-low/90 shadow-xl flex flex-col gap-space-md">
+<!-- Inspector Header -->
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">badge</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Selected Identity Dossier</span>
+</div>
+<span class="font-badge-caps text-badge-caps text-primary px-2 py-0.5 rounded bg-surface-container-high uppercase">LIVE INSPECT</span>
+</div>
+<!-- Subject Primary Card -->
+<div class="flex items-start gap-space-md p-space-sm rounded-xl bg-surface-container">
+<div class="relative w-20 h-20 rounded-xl overflow-hidden bg-surface-container-lowest shrink-0 shadow-md">
+<img class="w-full h-full object-cover" data-alt="High fidelity biometric facial identification scan portrait of Indian male Dhruv, executive tier, with cyan optical vectors and tracking crosshairs projected softly on surface, deep black and slate background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8oTWTNt1mft8Wxk0So7t2E6KAZA1LebFcD9T8HJj8KPWbYC6kkf-dhW2bFC2mnbLyuCiIIWf0Y0d1l08ITJtCtX-SrCkMIrWr2KQp_VJ9iWUSUm3VOtpDka1OoQoPYnYrYHGzg_XattxZsRCRl9lBjrjisjqEnSqOemzlh1eCksD7Tizmi65SxU08ykC2PB9bp8gWBd8JzLgoXTjPIkTbX019-q0RqhShmACjBFYm6DRrEYBAVOTV"/>
+<div class="absolute bottom-1 right-1 px-1 rounded bg-surface-container-lowest/80 font-telemetry-sm text-[9px] text-primary">512-D</div>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<h2 class="font-headline-md text-headline-md text-on-surface font-semibold tracking-tight truncate">Dhruv</h2>
+<span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+</div>
+<span class="font-body-md text-body-md text-primary font-medium">Executive Tier 1</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant font-mono mt-0.5">UID-88419-A</span>
+<div class="mt-2 flex items-center gap-1 text-[11px] text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px] text-primary">verified_user</span>
+<span>Full Access Pass Granted</span>
+</div>
+</div>
+</div>
+<!-- Core Telemetry Metric Cards -->
+<div class="grid grid-cols-2 gap-space-xs">
+<div class="p-space-sm rounded-xl bg-surface-container-high/60 flex flex-col">
+<span class="font-badge-caps text-badge-caps text-on-surface-variant uppercase">Total Vectors</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold mt-1">30 Poses</span>
+<span class="font-telemetry-sm text-telemetry-sm text-primary text-[10px]">Multi-Angle ArcFace</span>
+</div>
+<div class="p-space-sm rounded-xl bg-surface-container-high/60 flex flex-col">
+<span class="font-badge-caps text-badge-caps text-on-surface-variant uppercase">Mean Match Score</span>
+<span class="font-headline-sm text-headline-sm text-primary font-bold mt-1">92.4%</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant text-[10px]">Cosine Distance: 0.12</span>
+</div>
+<div class="p-space-sm rounded-xl bg-surface-container-high/60 flex flex-col">
+<span class="font-badge-caps text-badge-caps text-on-surface-variant uppercase">Total Appearances</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold mt-1">124</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant text-[10px]">Across 18 Nodes</span>
+</div>
+<div class="p-space-sm rounded-xl bg-surface-container-high/60 flex flex-col">
+<span class="font-badge-caps text-badge-caps text-on-surface-variant uppercase">Enrollment Date</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface font-semibold mt-1">Oct 12, 2024</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant text-[10px]">14:20 UTC · Cam 01</span>
+</div>
+</div>
+<!-- 512-D Latent Vector Embedding Heatmap Visualizer -->
+<div class="flex flex-col gap-2 p-space-sm rounded-xl bg-surface-container-high/40">
+<div class="flex items-center justify-between text-on-surface-variant font-telemetry-sm text-telemetry-sm">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary">grain</span>
+              512-D LATENT VECTOR SPECTRUM
+            </span>
+<span class="text-primary font-mono">L2_NORM = 1.000</span>
+</div>
+<!-- SVG Visual Bar Distribution -->
+<div class="w-full h-12 bg-surface-container-lowest rounded-lg p-1.5 flex items-end gap-[2px] overflow-hidden">
+<!-- Simulated Embedding Density Bars -->
+<div class="flex-1 bg-primary/40 h-[65%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/80 h-[92%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/30 h-[40%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/90 h-[85%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/60 h-[55%] rounded-t-sm"></div>
+<div class="flex-1 bg-secondary h-[78%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/70 h-[48%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/95 h-[100%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/50 h-[60%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/30 h-[25%] rounded-t-sm"></div>
+<div class="flex-1 bg-secondary h-[70%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/80 h-[88%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/40 h-[38%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/90 h-[94%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/60 h-[52%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/20 h-[18%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/75 h-[80%] rounded-t-sm"></div>
+<div class="flex-1 bg-secondary h-[66%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/90 h-[91%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/45 h-[42%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/85 h-[84%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/60 h-[58%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/30 h-[30%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/95 h-[96%] rounded-t-sm"></div>
+<div class="flex-1 bg-secondary h-[74%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/50 h-[49%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/80 h-[82%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/40 h-[36%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/90 h-[89%] rounded-t-sm"></div>
+<div class="flex-1 bg-primary/70 h-[72%] rounded-t-sm"></div>
+</div>
+<div class="flex justify-between text-on-surface-variant font-telemetry-sm text-[10px]">
+<span>DIM 001: 0.1428</span>
+<span>DIM 256: -0.0984</span>
+<span>DIM 512: 0.2201</span>
+</div>
+</div>
+<!-- Recognition Sighting Timeline -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between text-on-surface-variant font-badge-caps text-badge-caps uppercase tracking-wider">
+<span>Recent Sightings Stream</span>
+<span class="text-primary font-telemetry-sm">SYNCED</span>
+</div>
+<div class="flex flex-col gap-2">
+<!-- Timeline Item 1 -->
+<div class="p-space-sm rounded-xl bg-surface-container flex items-center justify-between gap-space-xs">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-7 h-7 rounded-lg bg-surface-container-high text-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[16px]">door_sliding</span>
+</div>
+<div class="flex flex-col truncate">
+<span class="font-body-md text-body-md text-on-surface font-medium truncate">Main Atrium Cam 01</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">Verified Entry · 92% Conf</span>
+</div>
+</div>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface font-mono shrink-0">00:42:17</span>
+</div>
+<!-- Timeline Item 2 -->
+<div class="p-space-sm rounded-xl bg-surface-container flex items-center justify-between gap-space-xs">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-7 h-7 rounded-lg bg-surface-container-high text-secondary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[16px]">elevator</span>
+</div>
+<div class="flex flex-col truncate">
+<span class="font-body-md text-body-md text-on-surface font-medium truncate">Elevator Bank Cam 04</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">Transit Upward · 94% Conf</span>
+</div>
+</div>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface font-mono shrink-0">00:39:45</span>
+</div>
+<!-- Timeline Item 3 -->
+<div class="p-space-sm rounded-xl bg-surface-container flex items-center justify-between gap-space-xs">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-7 h-7 rounded-lg bg-surface-container-high text-on-surface-variant flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[16px]">meeting_room</span>
+</div>
+<div class="flex flex-col truncate">
+<span class="font-body-md text-body-md text-on-surface font-medium truncate">Executive Suite Cam 02</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">Normal Activity · 91% Conf</span>
+</div>
+</div>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface font-mono shrink-0">23:18:04</span>
+</div>
+</div>
+</div>
+<!-- Dossier Management Actions -->
+<div class="flex flex-col gap-2 pt-space-xs">
+<div class="grid grid-cols-2 gap-2">
+<button class="py-2 px-space-sm rounded-xl bg-surface-container-high hover:bg-surface-bright text-on-surface font-body-sm text-body-sm font-medium transition-colors flex items-center justify-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+<span>Edit Metadata</span>
+</button>
+<button class="py-2 px-space-sm rounded-xl bg-surface-container-high hover:bg-surface-bright text-primary font-body-sm text-body-sm font-medium transition-colors flex items-center justify-center gap-1.5 shadow-sm" id="trigger-reenroll-btn">
+<span class="material-symbols-outlined text-[16px]">cached</span>
+<span>Re-enroll Multi-Pose</span>
+</button>
+</div>
+<button class="w-full py-2 px-space-sm rounded-xl bg-surface-container hover:bg-surface-container-high text-on-surface font-body-sm text-body-sm font-medium transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[16px]">file_download</span>
+<span>Export Dossier (JSON / Signed PDF)</span>
+</button>
+<!-- Danger Zone Trigger -->
+<div class="pt-2">
+<button class="w-full py-2 px-space-sm rounded-xl bg-error-container/20 hover:bg-error-container/40 text-error font-body-sm text-body-sm font-medium transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[16px]">delete_forever</span>
+<span>Delete Identity (Requires Dual Clearance)</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- INTERACTIVE BIOMETRIC REGISTRATION / ENROLLMENT STUDIO MODAL -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-space-md bg-surface-container-lowest/80 backdrop-blur-2xl transition-all duration-300" id="registration-modal">
+<!-- Spatial Glass Modal Window -->
+<div class="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl bg-surface-container-low shadow-2xl flex flex-col">
+<!-- Specular Highlight Top Line -->
+<div class="absolute top-0 left-8 right-8 h-[1px] bg-primary/40"></div>
+<!-- Modal Header -->
+<div class="flex items-center justify-between p-space-lg pb-space-md">
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-2">
+<span class="font-badge-caps text-badge-caps px-2 py-0.5 rounded bg-primary-container text-on-primary uppercase font-bold tracking-wider">STUDIO V4</span>
+<span class="text-on-surface-variant font-telemetry-sm text-telemetry-sm">ISO/IEC 19794-5 COMPLIANT</span>
+</div>
+<h2 class="font-display-lg text-headline-md sm:text-display-lg text-on-surface font-bold tracking-tight">
+            FACE ENROLLMENT &amp; IDENTITY REGISTRATION
+          </h2>
+</div>
+<button class="w-10 h-10 rounded-xl bg-surface-container-high hover:bg-surface-bright text-on-surface-variant hover:text-on-surface flex items-center justify-center transition-colors" id="close-register-modal-btn">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Step Process Tracker -->
+<div class="px-space-lg pb-space-md">
+<div class="flex items-center justify-between p-space-sm rounded-xl bg-surface-container">
+<div class="flex items-center gap-space-sm">
+<div class="w-6 h-6 rounded-full bg-emerald-400 text-on-primary font-badge-caps text-badge-caps flex items-center justify-center font-bold">
+              ✓
+            </div>
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm font-semibold text-on-surface">Step 1: Identity Meta</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">Completed [ Name: Dhruv ]</span>
+</div>
+</div>
+<div class="h-4 w-[1px] bg-outline-variant"></div>
+<div class="flex items-center gap-space-sm">
+<div class="w-6 h-6 rounded-full bg-primary text-on-primary font-badge-caps text-badge-caps flex items-center justify-center font-bold animate-pulse">
+              2
+            </div>
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm font-semibold text-primary">Step 2: Biometric Pose Matrix</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">Active Acquisition Mode</span>
+</div>
+</div>
+<div class="h-4 w-[1px] bg-outline-variant hidden sm:block"></div>
+<div class="hidden sm:flex items-center gap-space-sm opacity-40">
+<div class="w-6 h-6 rounded-full bg-surface-container-high text-on-surface font-badge-caps text-badge-caps flex items-center justify-center font-bold">
+              3
+            </div>
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm font-semibold text-on-surface">Step 3: Verification &amp; Commit</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">Pending Vectors</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Modal Body: Dual Column Matrix (Video Viewport & Real-time Biometric Guidance) -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-space-md px-space-lg pb-space-lg">
+<!-- Live Simulated Camera Viewport (Left 7 Cols) -->
+<div class="md:col-span-7 flex flex-col gap-space-sm">
+<div class="relative w-full aspect-[4/3] rounded-2xl bg-surface-container-lowest overflow-hidden shadow-2xl flex items-center justify-center">
+<!-- Simulated Camera Feed Background -->
+<img class="w-full h-full object-cover opacity-85" data-alt="Subject centered in high tech biometric registration camera feed looking straight ahead with serene expression, illuminated by soft blue and white key lights in modern security scanner bay, clean facial detail for facial recognition software" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3eGAg-3r1Cc02boj5WjpKFlIgsuzIL91x5fjJD5AjFTrGW8XW__oBucNDO3ik3leE3L1cZ8G0s0uTDiqemOkB_ZYiqPfmkxCPvqD5njvEilQnR1AzOVxA0uCI-Nizm5ezcun6c8ELyOz6IkIdWkYkrcfLv1aU30xmAPSN-IMfEkS5hL3TkTxQMwjcpfCv9DlnOR38av2b84P_DhDyB4chh3d0KoiwCcnf9g3inIgxIZ3UY5TR-G3I"/>
+<!-- Biometric Oval HUD Reticle & Corner Brackets -->
+<div class="absolute inset-0 pointer-events-none p-4 flex flex-col justify-between">
+<!-- Top HUD Readout -->
+<div class="flex items-center justify-between font-telemetry-sm text-telemetry-sm text-primary drop-shadow">
+<span class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-surface-container-lowest/80 backdrop-blur">
+<span class="w-2 h-2 rounded-full bg-error animate-ping"></span>
+                  REC · NODE_01 (4K 60FPS)
+                </span>
+<span class="px-2 py-0.5 rounded bg-surface-container-lowest/80 backdrop-blur font-mono">
+                  EXPOSURE: +0.2 EV
+                </span>
+</div>
+<!-- Center Oval Reticle with Neural Mesh Simulation -->
+<div class="relative mx-auto w-48 h-64 rounded-[48%] border-2 border-dashed border-primary/70 flex items-center justify-center">
+<!-- Inner Reticle Crossbars -->
+<div class="absolute top-1/2 left-0 w-3 h-[2px] bg-primary"></div>
+<div class="absolute top-1/2 right-0 w-3 h-[2px] bg-primary"></div>
+<div class="absolute top-0 left-1/2 w-[2px] h-3 bg-primary"></div>
+<div class="absolute bottom-0 left-1/2 w-[2px] h-3 bg-primary"></div>
+<!-- Animated Scan Sweep -->
+<div class="absolute inset-x-2 top-0 h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-75 animate-bounce"></div>
+<!-- Active Pose Directive Toast -->
+<div class="px-3 py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur text-primary font-badge-caps text-badge-caps uppercase tracking-wider text-center shadow-lg">
+                  HOLD POSE: YAW +25°
+                </div>
+</div>
+<!-- Bottom Real-time Metric Readout Strip -->
+<div class="flex items-center justify-between font-telemetry-sm text-telemetry-sm text-on-surface bg-surface-container-lowest/80 backdrop-blur px-3 py-1.5 rounded-xl">
+<span>SHARPNESS: <strong class="text-emerald-400">98%</strong></span>
+<span>ILLUM: <strong class="text-emerald-400">OPTIMAL</strong></span>
+<span>OCCLUSION: <strong class="text-emerald-400">NONE</strong></span>
+</div>
+</div>
+</div>
+<!-- Real-time Status Badge -->
+<div class="flex items-center justify-between p-space-sm rounded-xl bg-surface-container text-on-surface-variant font-telemetry-sm text-telemetry-sm">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary">auto_fix_high</span>
+              Auto-Alignment Engine Active
+            </span>
+<span class="text-on-surface font-mono">LATENCY: 4.2ms</span>
+</div>
+</div>
+<!-- Pose Matrix & Radial Progress (Right 5 Cols) -->
+<div class="md:col-span-5 flex flex-col justify-between gap-space-md">
+<!-- Circular Progress Ring Card -->
+<div class="p-space-md rounded-2xl bg-surface-container flex flex-col items-center justify-center text-center relative overflow-hidden">
+<!-- Inline SVG Gauge for Vector Count -->
+<div class="relative w-36 h-36 flex items-center justify-center my-2">
+<svg class="w-full h-full -rotate-90" viewbox="0 0 120 120">
+<circle class="text-surface-container-high" cx="60" cy="60" fill="transparent" r="50" stroke="currentColor" stroke-width="8"></circle>
+<!-- 17 / 30 = ~56% of 314 circum = ~175 offset -->
+<circle class="text-primary" cx="60" cy="60" fill="transparent" r="50" stroke="currentColor" stroke-dasharray="314" stroke-dashoffset="138" stroke-linecap="round" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center text-on-surface">
+<span class="font-display-lg text-headline-md font-bold leading-none text-primary">17 <span class="text-on-surface-variant text-[14px]">/ 30</span></span>
+<span class="font-badge-caps text-badge-caps text-on-surface-variant uppercase mt-1">CAPTURED</span>
+</div>
+</div>
+<div class="flex flex-col gap-0.5">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">56% Vector Synthesis</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">ArcFace 512-D L2 Normalized Vectors</span>
+</div>
+</div>
+<!-- Multi-angle Guidance Pose Checklist -->
+<div class="flex flex-col gap-1.5 p-space-sm rounded-xl bg-surface-container">
+<span class="font-badge-caps text-badge-caps text-on-surface-variant uppercase tracking-wider px-1">Acquisition Poses</span>
+<!-- Pose Item 1 (Done) -->
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-high/40 text-on-surface">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-emerald-400 text-[18px]">check_circle</span>
+<span class="font-body-sm text-body-sm font-medium">Look toward camera (Frontal)</span>
+</div>
+<span class="font-telemetry-sm text-telemetry-sm text-emerald-400 font-mono">10/10</span>
+</div>
+<!-- Pose Item 2 (Done) -->
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-high/40 text-on-surface">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-emerald-400 text-[18px]">check_circle</span>
+<span class="font-body-sm text-body-sm font-medium">Move slightly left (Yaw -25°)</span>
+</div>
+<span class="font-telemetry-sm text-telemetry-sm text-emerald-400 font-mono">7/7</span>
+</div>
+<!-- Pose Item 3 (Active / In-Progress) -->
+<div class="flex items-center justify-between p-2 rounded-lg bg-primary-container/20 text-on-surface shadow-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px] animate-spin">sync</span>
+<span class="font-body-sm text-body-sm font-semibold text-primary">Move slightly right (Yaw +25°)</span>
+</div>
+<span class="font-telemetry-sm text-telemetry-sm text-primary font-mono font-bold">0 / 7</span>
+</div>
+<!-- Pose Item 4 (Pending) -->
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-high/20 text-on-surface-variant opacity-60">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">radio_button_unchecked</span>
+<span class="font-body-sm text-body-sm">Look slightly up (Pitch +15°)</span>
+</div>
+<span class="font-telemetry-sm text-telemetry-sm font-mono">0 / 3</span>
+</div>
+<!-- Pose Item 5 (Pending) -->
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-high/20 text-on-surface-variant opacity-60">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">radio_button_unchecked</span>
+<span class="font-body-sm text-body-sm">Look slightly down (Pitch -15°)</span>
+</div>
+<span class="font-telemetry-sm text-telemetry-sm font-mono">0 / 3</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Modal Footer Controls -->
+<div class="flex items-center justify-between p-space-lg pt-space-md bg-surface-container-high/50">
+<div class="flex items-center gap-space-sm">
+<button class="px-space-md py-2 rounded-xl bg-surface-container hover:bg-surface-bright text-on-surface font-body-sm text-body-sm font-medium transition-colors">
+            Pause Capture
+          </button>
+<button class="px-space-md py-2 rounded-xl bg-surface-container hover:bg-surface-bright text-on-surface-variant hover:text-on-surface font-body-sm text-body-sm font-medium transition-colors">
+            Reset Vectors
+          </button>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="hidden sm:inline font-telemetry-sm text-telemetry-sm text-on-surface-variant">
+            Auto-Commit when 30/30 captured
+          </span>
+<button class="px-space-lg py-2.5 rounded-xl bg-primary-container text-on-primary font-headline-sm text-headline-sm font-semibold shadow-lg hover:shadow-cyan-500/20 active:scale-[0.98] transition-all cursor-pointer">
+            Complete &amp; Save Profile
+          </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Simple interactive logic for showing/hiding the registration modal
+  const registerModal = document.getElementById('registration-modal');
+  const openModalBtn = document.getElementById('open-register-modal-btn');
+  const closeModalBtn = document.getElementById('close-register-modal-btn');
+  const triggerReenrollBtn = document.getElementById('trigger-reenroll-btn');
+
+  function showModal() {
+    if (registerModal) {
+      registerModal.classList.remove('hidden');
+      registerModal.classList.add('flex');
+    }
+  }
+
+  function hideModal() {
+    if (registerModal) {
+      registerModal.classList.add('hidden');
+      registerModal.classList.remove('flex');
+    }
+  }
+
+  if (openModalBtn) openModalBtn.addEventListener('click', showModal);
+  if (triggerReenrollBtn) triggerReenrollBtn.addEventListener('click', showModal);
+  if (closeModalBtn) closeModalBtn.addEventListener('click', hideModal);
+
+  // Close on backdrop click
+  if (registerModal) {
+    registerModal.addEventListener('click', (e) => {
+      if (e.target === registerModal) {
+        hideModal();
+      }
+    });
+  }
+
+  // Keyboard escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      hideModal();
+    }
+  });
+</script></main></div></body></html>

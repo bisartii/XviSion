@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=JetBrains+Mono:wght@100..800&amp;family=Manrope:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-container":"#1c2028","on-primary":"#003640","on-primary-fixed-variant":"#004e5c","on-error-container":"#ffdad6","secondary-fixed":"#d8e2ff","primary-container":"#06b6d4","on-surface-variant":"#bcc9cd","secondary-container":"#0566d9","surface-tint":"#4cd7f6","on-primary-fixed":"#001f26","tertiary":"#d0bcff","primary-fixed":"#acedff","tertiary-container":"#b395ff","surface-container-low":"#181c24","secondary":"#adc6ff","surface-bright":"#353942","secondary-fixed-dim":"#adc6ff","inverse-on-surface":"#2c3039","surface-container-high":"#262a33","on-tertiary-fixed-variant":"#5516be","error-container":"#93000a","outline-variant":"#3d494c","on-background":"#dfe2ee","background":"#0f131c","outline":"#869397","surface-dim":"#0f131c","on-tertiary-container":"#4900ae","primary-fixed-dim":"#4cd7f6","surface-container-highest":"#31353e","error":"#ffb4ab","surface-container-lowest":"#0a0e16","tertiary-fixed":"#e9ddff","tertiary-fixed-dim":"#d0bcff","on-secondary-fixed":"#001a42","primary":"#4cd7f6","on-secondary":"#002e6a","on-secondary-fixed-variant":"#004395","on-error":"#690005","on-surface":"#dfe2ee","surface":"#0f131c","surface-variant":"#31353e","on-primary-container":"#00424f","inverse-primary":"#00687a","on-secondary-container":"#e6ecff","on-tertiary":"#3c0091","inverse-surface":"#dfe2ee","on-tertiary-fixed":"#23005c"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"space-lg":"1.5rem","margin":"1rem","space-xs":"0.25rem","gutter":"1rem","space-md":"1rem","space-sm":"0.5rem","margin-desktop":"1.5rem","space-xl":"2rem","gutter-desktop":"1.5rem"},fontFamily:{"display-lg":["Manrope"],"headline-sm":["Manrope"],"headline-md":["Manrope"],"telemetry-sm":["JetBrains Mono"],"subheading":["Geist"],"display-lg-mobile":["Manrope"],"telemetry-md":["JetBrains Mono"],"body-sm":["Geist"],"badge-caps":["JetBrains Mono"],"body-md":["Geist"]},fontSize:{"display-lg":["32px",{lineHeight:"38px",letterSpacing:"-0.03em",fontWeight:"600"}],"headline-sm":["18px",{lineHeight:"24px",letterSpacing:"-0.01em",fontWeight:"500"}],"headline-md":["22px",{lineHeight:"28px",letterSpacing:"-0.02em",fontWeight:"600"}],"telemetry-sm":["11px",{lineHeight:"14px",letterSpacing:"0.04em",fontWeight:"400"}],"subheading":["16px",{lineHeight:"22px",letterSpacing:"-0.005em",fontWeight:"500"}],"display-lg-mobile":["26px",{lineHeight:"32px",letterSpacing:"-0.02em",fontWeight:"600"}],"telemetry-md":["13px",{lineHeight:"16px",letterSpacing:"0.02em",fontWeight:"500"}],"body-sm":["13px",{lineHeight:"18px",letterSpacing:"0em",fontWeight:"400"}],"badge-caps":["10px",{lineHeight:"12px",letterSpacing:"0.1em",fontWeight:"600"}],"body-md":["14px",{lineHeight:"20px",letterSpacing:"0em",fontWeight:"400"}]}}}}</script></head><body class="bg-surface text-on-surface font-body-md text-body-md antialiased selection:bg-primary-container selection:text-on-primary"><header class="fixed top-0 left-0 right-0 z-50 h-14 bg-surface-container-lowest/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.4)] flex items-center justify-between px-space-md"><div class="flex items-center gap-space-sm w-64 shrink-0"><img alt="Terra Vision Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0xEiAWbMFrw7ykPa3y4HorfZF_897042dS9X2PxlnwjjJQ_t-8nmWV-HRHb-aRSazjYXRbS9n5lz5KT3HrLnfnemY5aaakXxg5D-Y6YYCq7C6sXr41mnN6KYCytLo2MwktUTckSrbsj9v6oqy_Fm__GVcwborSy2bBYGSqrc3inMweqMuK64OiGGM_whgx1QmDrSkupcIHXaO4JcuJIdYpGA2sOWRtM5OEDoo7w4ItVxdonIci4d9"/><div class="flex items-baseline gap-space-xs"><span class="font-headline-sm text-headline-sm tracking-tight text-on-surface uppercase font-bold">TERRA<span class="text-primary">VISION</span></span><span class="font-badge-caps text-badge-caps uppercase px-1.5 py-0.5 rounded bg-surface-container-high text-primary tracking-widest">v3.8-Enterprise</span></div></div><div class="hidden xl:flex items-center gap-space-xs font-telemetry-sm text-telemetry-sm"><div class="flex items-center gap-1.5 px-space-sm py-1 rounded bg-surface-container-low text-on-surface-variant"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span><span class="tracking-wider">AI ENGINE ONLINE</span></div><div class="flex items-center gap-1.5 px-space-sm py-1 rounded bg-surface-container-low text-on-surface-variant"><span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span><span class="tracking-wider">GPU CLUSTER 42% · 38°C</span></div><div class="flex items-center gap-1.5 px-space-sm py-1 rounded bg-surface-container-low text-on-surface-variant"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span><span class="tracking-wider">CAMERAS: 18/18 ACTIVE</span></div><div class="flex items-center gap-1.5 px-space-sm py-1 rounded bg-surface-container-low text-on-surface-variant"><span class="tracking-wider">LATENCY 12ms · 60 FPS</span></div></div><div class="flex items-center gap-space-sm"><button class="flex items-center gap-space-sm bg-surface-container-low text-on-surface-variant px-space-sm py-1.5 rounded-lg hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[18px]">search</span><span class="font-telemetry-sm text-telemetry-sm hidden sm:inline text-on-surface-variant">Omni Command</span><kbd class="font-badge-caps text-badge-caps px-1 py-0.5 rounded bg-surface-container-highest text-on-surface-variant">⌘K</kbd></button><div class="relative flex items-center justify-center w-8 h-8 rounded-lg bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface cursor-pointer transition-colors"><span class="material-symbols-outlined text-[18px]">notifications</span><span class="absolute -top-1 -right-1 w-4 h-4 bg-error text-on-error font-badge-caps text-badge-caps rounded-full flex items-center justify-center font-bold">3</span></div><div class="hidden md:flex flex-col items-end px-space-xs font-telemetry-sm text-telemetry-sm"><span class="text-on-surface font-semibold">14:28:49 UTC</span><span class="text-on-surface-variant text-[9px] tracking-widest">STABLE SYNC</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><aside class="fixed left-0 top-14 bottom-0 w-64 bg-surface-container-lowest/90 backdrop-blur-xl z-40 flex flex-col justify-between py-space-md shadow-[1px_0_12px_rgba(0,0,0,0.3)]"><div class="flex flex-col gap-space-xs px-space-sm"><div class="px-space-sm pb-space-xs pt-space-xs font-badge-caps text-badge-caps uppercase tracking-widest text-on-surface-variant/70">Command Rail</div><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary font-semibold rounded-lg shadow-[0_0_16px_rgba(6,182,212,0.45)]"><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="overview" href="#"><span class="material-symbols-outlined text-[20px] text-on-surface-variant group-hover:text-primary transition-colors">dashboard</span><span class="font-body-md text-body-md">Overview</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="live-monitor" href="#"><span class="material-symbols-outlined text-[20px] text-on-surface-variant group-hover:text-primary transition-colors">videocam</span><span class="font-body-md text-body-md">Live Monitor</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="people" href="#"><span class="material-symbols-outlined text-[20px] text-on-surface-variant group-hover:text-primary transition-colors">face</span><span class="font-body-md text-body-md">People</span></a><a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-2 transition-all group bg-primary-container text-on-primary font-semibold rounded-lg shadow-[0_0_16px_rgba(6,182,212,0.45)]" data-path="events" href="#"><span class="material-symbols-outlined text-[20px] text-on-surface-variant group-hover:text-primary transition-colors">sensors</span><span class="font-body-md text-body-md">Events</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="alerts" href="#"><span class="material-symbols-outlined text-[20px] text-on-surface-variant group-hover:text-primary transition-colors">warning</span><span class="font-body-md text-body-md">Alerts</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="cameras" href="#"><span class="material-symbols-outlined text-[20px] text-on-surface-variant group-hover:text-primary transition-colors">nest_cam_wired_stand</span><span class="font-body-md text-body-md">Cameras</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="analytics" href="#"><span class="material-symbols-outlined text-[20px] text-on-surface-variant group-hover:text-primary transition-colors">insights</span><span class="font-body-md text-body-md">Analytics</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="settings" href="#"><span class="material-symbols-outlined text-[20px] text-on-surface-variant group-hover:text-primary transition-colors">tune</span><span class="font-body-md text-body-md">Settings</span></a></nav></div><div class="px-space-sm"><div class="p-space-sm rounded-xl bg-surface-container-low/60 flex flex-col gap-1.5"><div class="flex items-center justify-between text-on-surface-variant"><span class="font-badge-caps text-badge-caps uppercase tracking-wider">Node Health</span><span class="font-telemetry-sm text-telemetry-sm text-primary">NOMINAL</span></div><div class="w-full bg-surface-container-highest h-1 rounded-full overflow-hidden"><div class="bg-primary h-full rounded-full" style="width:84%"></div></div><div class="flex justify-between font-telemetry-sm text-telemetry-sm text-on-surface-variant/80 text-[10px]"><span>Inference Load</span><span>84.2%</span></div></div></div></aside><div class="pl-64"><main class="w-full pt-14 px-space-md bg-surface min-h-screen"><div class="flex flex-col w-full pb-space-xl">
+<!-- Top Ambient Glow Field -->
+<div class="relative w-full overflow-hidden">
+<div class="absolute -top-24 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
+<div class="absolute -top-20 right-1/4 w-96 h-96 bg-tertiary-container/10 rounded-full blur-[140px] pointer-events-none"></div>
+<!-- Section 1: Page Header & Operational Status Bar -->
+<section class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md py-space-md">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<span class="font-badge-caps text-badge-caps text-primary px-2 py-0.5 rounded bg-surface-container-high tracking-widest uppercase">AUDIT SUBSYSTEM 04</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant/60">NODE: AGX-CLUSTER-PRIMARY</span>
+</div>
+<h1 class="font-display-lg text-display-lg text-on-surface tracking-tight">EVENT HISTORY</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">
+          Recognition and biometric detection records · Continuous neural audit archive and spatial track trajectory log.
+        </p>
+</div>
+<div class="flex flex-wrap items-center gap-space-sm self-start lg:self-center">
+<!-- Live Sync Pill -->
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-container-low shadow-sm">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface tracking-wide">ARCHIVE STREAMING · SYNCED</span>
+</div>
+<!-- Quick Actions -->
+<div class="relative inline-block" id="exportDropdownContainer">
+<button class="flex items-center gap-2 bg-surface-container text-on-surface hover:bg-surface-container-high px-3.5 py-1.5 rounded-lg transition-all shadow-sm" id="exportBtn" onclick="toggleExportMenu()">
+<span class="material-symbols-outlined text-[18px] text-primary">download</span>
+<span class="font-subheading text-body-sm">Export Telemetry</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">expand_more</span>
+</button>
+<div class="hidden absolute right-0 mt-1.5 w-52 rounded-xl bg-surface-container-high shadow-xl p-1 z-30" id="exportMenu">
+<button class="w-full text-left px-3 py-2 rounded-lg font-body-sm text-body-sm text-on-surface hover:bg-surface-container-highest flex items-center justify-between">
+<span>Standard CSV Record</span>
+<span class="font-telemetry-sm text-telemetry-sm text-on-surface-variant">.CSV</span>
+</button>
+<button class="w-full text-left px-3 py-2 rounded-lg font-body-sm text-body-sm text-on-surface hover:bg-surface-container-highest flex items-center justify-between">
+<span>Signed JSON Dossier</span>
+<span class="font-telemetry-sm text-telemetry-sm text-primary">.JSON</span>
+</button>
+<button class="w-full text-left px-3 py-2 rounded-lg font-body-sm text-body-sm text-on-surface hover:bg-surface-container-highest flex items-center justify-between">
+<span>Cryptographic Audit Proof</span>
+<span class="font-telemetry-sm text-telemetry-sm text-tertiary">.ED25519</span>
+</button>
+</div>
+</div>
+<button class="flex items-center gap-2 bg-primary text-on-primary font-subheading text-body-sm font-semibold px-4 py-1.5 rounded-lg hover:shadow-[0_0_20px_rgba(6,182,212,0.45)] transition-all" onclick="switchTab('audit-run')">
+<span class="material-symbols-outlined text-[18px]">rule_folder</span>
+<span>Batch Audit Logs</span>
+</button>
+</div>
+</section>
+<!-- Sub-Navigation / Filter Scope Tabs -->
+<div class="flex items-center justify-between pt-2 pb-4">
+<div class="flex items-center gap-1 p-1 rounded-xl bg-surface-container-lowest shadow-inner">
+<button class="flex items-center gap-2 px-4 py-1.5 rounded-lg font-subheading text-body-sm bg-surface-container-high text-primary shadow-sm transition-all" id="tab-all" onclick="switchViewMode('all')">
+<span class="material-symbols-outlined text-[16px]">view_timeline</span>
+<span>All Events (5,412)</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-1.5 rounded-lg font-subheading text-body-sm text-on-surface-variant hover:text-on-surface transition-all" id="tab-unknowns" onclick="switchViewMode('unknowns')">
+<span class="material-symbols-outlined text-[16px] text-amber-400">help_outline</span>
+<span>Unknown Entities Monitor</span>
+<span class="font-badge-caps text-badge-caps px-1.5 py-0.2 rounded-full bg-amber-400/20 text-amber-300">14 Active</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-1.5 rounded-lg font-subheading text-body-sm text-on-surface-variant hover:text-on-surface transition-all" id="tab-empty" onclick="switchViewMode('empty')">
+<span class="material-symbols-outlined text-[16px]">filter_alt_off</span>
+<span>Empty State Preview</span>
+</button>
+</div>
+<div class="hidden md:flex items-center gap-3 font-telemetry-sm text-telemetry-sm text-on-surface-variant">
+<span>STORAGE: <strong class="text-on-surface font-semibold">1.84 TB / 10 TB</strong></span>
+<span>•</span>
+<span>INSPECTION QUEUE: <strong class="text-primary font-semibold">0 MS LATENCY</strong></span>
+</div>
+</div>
+</div>
+<!-- Section 2: Floating Liquid-Glass Filter Rail -->
+<section class="w-full mb-space-md bg-surface-container-low rounded-xl p-space-md shadow-md backdrop-blur-xl">
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-12 gap-space-sm items-center">
+<!-- Search Input Bar -->
+<div class="xl:col-span-4 relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-on-surface-variant text-[18px]">search</span>
+<input class="w-full bg-surface-container-lowest text-on-surface pl-9 pr-14 py-2 rounded-lg font-body-sm text-body-sm placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-1 focus:ring-primary shadow-inner" id="eventSearchInput" placeholder="Search person, track ID, camera, or spatial tag..." type="text"/>
+<div class="absolute right-2.5 flex items-center gap-1 pointer-events-none">
+<kbd class="font-badge-caps text-badge-caps px-1.5 py-0.5 rounded bg-surface-container text-on-surface-variant/80">⌘K</kbd>
+</div>
+</div>
+<!-- Person Selector -->
+<div class="xl:col-span-2 relative">
+<select class="w-full bg-surface-container-lowest text-on-surface px-3 py-2 rounded-lg font-body-sm text-body-sm appearance-none focus:outline-none focus:ring-1 focus:ring-primary shadow-inner pr-8">
+<option value="all">Person: All Entities</option>
+<option value="dhruv">Dhruv (Exec VIP)</option>
+<option value="mumma">Mumma (VIP Guest)</option>
+<option value="elena">Dr. Elena Vance</option>
+<option value="viktor">Viktor Chen (Watchlist)</option>
+<option value="amina">Amina Patel</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-2.5 pointer-events-none text-on-surface-variant text-[18px]">arrow_drop_down</span>
+</div>
+<!-- Camera Selector -->
+<div class="xl:col-span-2 relative">
+<select class="w-full bg-surface-container-lowest text-on-surface px-3 py-2 rounded-lg font-body-sm text-body-sm appearance-none focus:outline-none focus:ring-1 focus:ring-primary shadow-inner pr-8">
+<option value="all">Camera: All Nodes (18)</option>
+<option value="cam-01">Cam 01 - Main Entrance (4K PTZ)</option>
+<option value="cam-02">Cam 02 - Perimeter North Gate</option>
+<option value="cam-03">Cam 03 - Atrium Floor</option>
+<option value="cam-04">Cam 04 - Elevator Concourse</option>
+<option value="cam-07">Cam 07 - Server Vault</option>
+<option value="cam-12">Cam 12 - Night Guard Turnstiles</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-2.5 pointer-events-none text-on-surface-variant text-[18px]">arrow_drop_down</span>
+</div>
+<!-- Confidence Selector -->
+<div class="xl:col-span-2 relative">
+<select class="w-full bg-surface-container-lowest text-on-surface px-3 py-2 rounded-lg font-body-sm text-body-sm appearance-none focus:outline-none focus:ring-1 focus:ring-primary shadow-inner pr-8">
+<option value="90">Confidence: ≥ 90% (High)</option>
+<option value="75">Confidence: ≥ 75% (Nominal)</option>
+<option value="any">Confidence: Any Score</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-2.5 pointer-events-none text-on-surface-variant text-[18px]">arrow_drop_down</span>
+</div>
+<!-- Toggle: Unknown Only -->
+<div class="xl:col-span-2 flex items-center justify-between bg-surface-container-lowest px-3 py-1.5 rounded-lg shadow-inner">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-amber-400"></span>
+<span class="font-body-sm text-body-sm text-on-surface">Unknown Only</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" id="unknownToggle" onchange="filterUnknownRows(this.checked)" type="checkbox"/>
+<div class="w-8 h-4.5 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-surface-container-highest after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-on-surface-variant after:rounded-full after:h-3.5 after:w-3.5 after:transition-all peer-checked:bg-amber-400 peer-checked:after:bg-surface-container-lowest"></div>
+</label>
+</div>
+</div>
+<!-- Active Filter Strip & Sorting -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm pt-3 mt-3 shadow-inner">
+<div class="flex flex-wrap items-center gap-1.5">
+<span class="font-badge-caps text-badge-caps text-on-surface-variant/70 uppercase mr-1">Active Criteria:</span>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container font-telemetry-sm text-telemetry-sm text-on-surface">
+          Status: <span class="text-primary font-semibold">All (5,412)</span>
+<button class="hover:text-primary"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</span>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container font-telemetry-sm text-telemetry-sm text-on-surface">
+          Time Range: <span class="text-on-surface font-semibold">Last 24 Hours</span>
+<button class="hover:text-primary"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</span>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container font-telemetry-sm text-telemetry-sm text-on-surface">
+          Vector Engine: <span class="text-on-surface font-semibold">ArcFace R100</span>
+</span>
+<button class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary ml-2 underline underline-offset-2" onclick="resetFilters()">Reset all</button>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-1.5 font-telemetry-sm text-telemetry-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">swap_vert</span>
+<span>Sort:</span>
+<button class="text-on-surface font-semibold hover:text-primary flex items-center gap-0.5">
+<span>Timestamp (Newest First)</span>
+<span class="material-symbols-outlined text-[14px]">expand_more</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3: Split View (Data Matrix + Right-hand Inspector Drawer) -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-md items-start" id="mainSplitView">
+<!-- LEFT PRIMARY AREA: Glass Data Table (Col span 7 or 8 on XL) -->
+<div class="xl:col-span-8 flex flex-col bg-surface-container-low rounded-xl shadow-lg overflow-hidden transition-all duration-300" id="tablePanel">
+<!-- Table Header Micro-Labels -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-lowest text-on-surface-variant font-badge-caps text-badge-caps uppercase tracking-wider">
+<th class="py-3 px-space-md">Time / UTC</th>
+<th class="py-3 px-3">Person / Identity</th>
+<th class="py-3 px-3">Track ID</th>
+<th class="py-3 px-3">Confidence</th>
+<th class="py-3 px-3">Event Type</th>
+<th class="py-3 px-3">Camera Node</th>
+<th class="py-3 px-3">Status</th>
+<th class="py-3 px-space-md text-right">Inspect</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container font-body-sm text-body-sm" id="eventTableBody">
+<!-- Row 1: Selected (Dhruv) -->
+<tr class="event-row bg-surface-container/70 hover:bg-surface-container cursor-pointer transition-colors group" id="row-1" onclick="selectEvent(1)">
+<td class="py-3 px-space-md whitespace-nowrap font-telemetry-sm text-telemetry-sm text-on-surface font-semibold">
+<span class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+                  00:42:17
+                </span>
+<span class="text-[10px] text-on-surface-variant/70 block">TODAY</span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest overflow-hidden flex items-center justify-center relative">
+<img class="w-full h-full object-cover" data-alt="Close up surveillance facial crop of Dhruv, an Indian executive wearing a dark navy blazer, sharp cinematic lighting inside modern corporate headquarters." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGlgFb8qHZ9aGE0AQmyf5PAMpz_P3rxm0jmXrYZmO6-pXZ8PIYA1Kp2wix2x6rnp-SLlH7vY4JNcaQgzvn4CuBub7nE3ePtNgIR-qzjCxub9KF3SjkraKJRZIATdADpg7rP8JX4mfUuA75T4fFLhp6IpzgEqiR7g5ggYlwYw63adUYTIchm4i014UQiQTX80irUVL1K3vBpxGXLNzwfTC-jfQIkUEyGM3SbWrAAytNBPaMLRYezpKg"/>
+<span class="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-primary ring-1 ring-surface-container"></span>
+</div>
+<div>
+<div class="font-subheading text-body-md text-on-surface font-semibold group-hover:text-primary transition-colors">Dhruv</div>
+<div class="font-telemetry-sm text-[10px] text-primary">Executive VIP · L4</div>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 whitespace-nowrap font-telemetry-sm text-telemetry-sm text-on-surface">
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-primary">TRK-04</span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<div class="flex flex-col gap-1 w-24">
+<div class="flex justify-between items-center font-telemetry-sm text-telemetry-sm">
+<span class="text-primary font-bold">92.4%</span>
+<span class="text-[10px] text-on-surface-variant">0.924 cos</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 92.4%;"></div>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 whitespace-nowrap font-telemetry-sm text-telemetry-sm text-on-surface-variant">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-primary">face_retouching_natural</span>
+                  Face Recognition
+                </span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap font-body-sm text-body-sm text-on-surface">
+<span>Cam 01 · Main Entrance</span>
+<span class="block text-[11px] font-telemetry-sm text-on-surface-variant">4K PTZ Node</span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary-container/20 text-primary font-badge-caps text-badge-caps">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                  VERIFIED
+                </span>
+</td>
+<td class="py-3 px-space-md text-right whitespace-nowrap">
+<button class="p-1 rounded bg-surface-container hover:bg-primary hover:text-on-primary text-primary transition-all">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</td>
+</tr>
+<!-- Row 2: Mumma -->
+<tr class="event-row hover:bg-surface-container/40 cursor-pointer transition-colors group" id="row-2" onclick="selectEvent(2)">
+<td class="py-3 px-space-md whitespace-nowrap font-telemetry-sm text-telemetry-sm text-on-surface">
+<span>00:41:53</span>
+<span class="text-[10px] text-on-surface-variant/70 block">TODAY</span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest overflow-hidden flex items-center justify-center relative">
+<img class="w-full h-full object-cover" data-alt="Surveillance portrait shot of Mumma, an elegant South Asian mature woman in formal attire, sharp biometric focus overlay." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhcJrKCh-9oSrrAkszuDrNKIBNxV0R3h5CZFkksun9WAUvQ9NoT3bNk49pCWuhLXtgpVpLOBHcNdfbBlExngHpw6Mr1EOz6dasguRZwxJct-Gao1-NdVPeCyMfw9RWt_tY3YQrSoJ26_h3w8a5yIwEGDVkrL1I6by_PSvoP1Qu2jtjvBXYYJKdzsBKRApxSQbNpIFlDlMYt9j5DG3BsQ3tZm1OEv6X3qZb94ZOWAaS6PsknrDRBMB5"/>
+<span class="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-primary ring-1 ring-surface-container"></span>
+</div>
+<div>
+<div class="font-subheading text-body-md text-on-surface font-semibold group-hover:text-primary transition-colors">Mumma</div>
+<div class="font-telemetry-sm text-[10px] text-tertiary">VIP Guest · Tier 1</div>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 whitespace-nowrap font-telemetry-sm text-telemetry-sm text-on-surface">
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-on-surface-variant">TRK-06</span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<div class="flex flex-col gap-1 w-24">
+<div class="flex justify-between items-center font-telemetry-sm text-telemetry-sm">
+<span class="text-primary font-bold">89.1%</span>
+<span class="text-[10px] text-on-surface-variant">0.891 cos</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 89.1%;"></div>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 whitespace-nowrap font-telemetry-sm text-telemetry-sm text-on-surface-variant">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-primary">face_retouching_natural</span>
+                  Face Recognition
+                </span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap font-body-sm text-body-sm text-on-surface">
+<span>Cam 03 · Atrium Floor</span>
+<span class="block text-[11px] font-telemetry-sm text-on-surface-variant">Wide Matrix</span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary-container/20 text-primary font-badge-caps text-badge-caps">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                  VERIFIED
+                </span>
+</td>
+<td class="py-3 px-space-md text-right whitespace-nowrap">
+<button class="p-1 rounded bg-surface-container hover:bg-primary hover:text-on-primary text-on-surface-variant transition-all">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</td>
+</tr>
+<!-- Row 3: Unknown POI #07 (Unverified / Amber) -->
+<tr class="event-row is-unknown hover:bg-surface-container/40 cursor-pointer transition-colors group" id="row-3" onclick="selectEvent(3)">
+<td class="py-3 px-space-md whitespace-nowrap font-telemetry-sm text-telemetry-sm text-on-surface">
+<span>00:41:11</span>
+<span class="text-[10px] text-on-surface-variant/70 block">TODAY</span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest overflow-hidden flex items-center justify-center relative ring-1 ring-amber-400/50">
+<span class="material-symbols-outlined text-amber-400 text-[20px]">person_off</span>
+</div>
+<div>
+<div class="font-subheading text-body-md text-amber-300 font-semibold group-hover:text-amber-200 transition-colors">Unknown POI #07</div>
+<div class="font-telemetry-sm text-[10px] text-amber-400/80">Unenrolled Face ID</div>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 whitespace-nowrap font-telemetry-sm text-telemetry-sm text-on-surface">
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-amber-400">TRK-07</span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<div class="flex flex-col gap-1 w-24">
+<div class="flex justify-between items-center font-telemetry-sm text-telemetry-sm">
+<span class="text-amber-400 font-bold">61.2%</span>
+<span class="text-[10px] text-on-surface-variant">Low match</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
+<div class="bg-amber-400 h-full rounded-full" style="width: 61.2%;"></div>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 whitespace-nowrap font-telemetry-sm text-telemetry-sm text-on-surface-variant">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-amber-400">radar</span>
+                  Spatial Detection
+                </span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap font-body-sm text-body-sm text-on-surface">
+<span>Cam 01 · Main Entrance</span>
+<span class="block text-[11px] font-telemetry-sm text-on-surface-variant">Night Sensor 4K</span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-400/10 text-amber-400 font-badge-caps text-badge-caps animate-pulse">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                  UNVERIFIED
+                </span>
+</td>
+<td class="py-3 px-space-md text-right whitespace-nowrap">
+<button class="p-1 rounded bg-surface-container hover:bg-amber-400 hover:text-on-primary text-on-surface-variant transition-all">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</td>
+</tr>
+<!-- Row 4: Dhruv (Re-Verify) -->
+<tr class="event-row hover:bg-surface-container/40 cursor-pointer transition-colors group" id="row-4" onclick="selectEvent(4)">
+<td class="py-3 px-space-md whitespace-nowrap font-telemetry-sm text-telemetry-sm text-on-surface">
+<span>00:39:45</span>
+<span class="text-[10px] text-on-surface-variant/70 block">TODAY</span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest overflow-hidden flex items-center justify-center">
+<img class="w-full h-full object-cover" data-alt="Surveillance crop of corporate leader walking along elevator corridor, ambient glass architecture reflection." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLSxd_lCaF05s6uOUfrUUBNmdZ53iMWEhKVWvZG_qQ4wpNghm-PTxIsOojASs-BsFlzNXwDeOqdflFp6ZWDYCbCGmCya-ZgBa2CDmcuYcWYCRfAmh54Pev95_pLuY5V8da1wMIdHngulyGu1gV_tsTKRGgJr4nViVEUDpq3Eb_CKacSVGoLXdqg16k-qDel9WCoBBNMup_qK3aCXovpsnjA4Zjx7uhcdAs7Rd6W0kAv6CJiA7eAEje"/>
+</div>
+<div>
+<div class="font-subheading text-body-md text-on-surface font-semibold group-hover:text-primary transition-colors">Dhruv</div>
+<div class="font-telemetry-sm text-[10px] text-primary">Executive VIP · L4</div>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 whitespace-nowrap font-telemetry-sm text-telemetry-sm text-on-surface">
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-primary">TRK-04</span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<div class="flex flex-col gap-1 w-24">
+<div class="flex justify-between items-center font-telemetry-sm text-telemetry-sm">
+<span class="text-primary font-bold">94.8%</span>
+<span class="text-[10px] text-on-surface-variant">0.948 cos</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 94.8%;"></div>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 whitespace-nowrap font-telemetry-sm text-telemetry-sm text-on-surface-variant">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-primary">sync_saved_locally</span>
+                  Biometric Re-Verify
+                </span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap font-body-sm text-body-sm text-on-surface">
+<span>Cam 04 · Elevator Concourse</span>
+<span class="block text-[11px] font-telemetry-sm text-on-surface-variant">Corridor Cam 60FPS</span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary-container/20 text-primary font-badge-caps text-badge-caps">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                  VERIFIED
+                </span>
+</td>
+<td class="py-3 px-space-md text-right whitespace-nowrap">
+<button class="p-1 rounded bg-surface-container hover:bg-primary hover:text-on-primary text-on-surface-variant transition-all">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</td>
+</tr>
+<!-- Row 5: Dr. Elena Vance -->
+<tr class="event-row hover:bg-surface-container/40 cursor-pointer transition-colors group" id="row-5" onclick="selectEvent(5)">
+<td class="py-3 px-space-md whitespace-nowrap font-telemetry-sm text-telemetry-sm text-on-surface">
+<span>00:38:20</span>
+<span class="text-[10px] text-on-surface-variant/70 block">TODAY</span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest overflow-hidden flex items-center justify-center">
+<img class="w-full h-full object-cover" data-alt="Female scientist in research attire walking into biosafety cleanroom airlock, CCTV high resolution frame." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZyDVQ8dsQw-z3jNUHIrRk11V6X-MyyqyXvJ8lf0ytwK6PG6NcVx7jszBP_B9MFuAxyeNYHV2iRX8qPConvYo0neTb5rKBNZI5SrPTvKKctu80eCXbQ5GBmmfkMIfXTaaFqTOtFEiKI8PTAUbAkS2dqmq-nDye-N5nHr9Ce74h-ZHmfjy32UGQBxPk1pkT4wNhkxD-pIIhmeP674bbzCuMbqc_UhADbuKoMuHnoya3jKbBmAAY6E52"/>
+</div>
+<div>
+<div class="font-subheading text-body-md text-on-surface font-semibold group-hover:text-primary transition-colors">Dr. Elena Vance</div>
+<div class="font-telemetry-sm text-[10px] text-tertiary">Director, Bio-Synthetics</div>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 whitespace-nowrap font-telemetry-sm text-telemetry-sm text-on-surface">
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-on-surface-variant">TRK-09</span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<div class="flex flex-col gap-1 w-24">
+<div class="flex justify-between items-center font-telemetry-sm text-telemetry-sm">
+<span class="text-primary font-bold">99.4%</span>
+<span class="text-[10px] text-on-surface-variant">High precision</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 99.4%;"></div>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 whitespace-nowrap font-telemetry-sm text-telemetry-sm text-on-surface-variant">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-secondary">verified_user</span>
+                  Clearance Auth
+                </span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap font-body-sm text-body-sm text-on-surface">
+<span>Cam 14 · Cleanroom Airway</span>
+<span class="block text-[11px] font-telemetry-sm text-on-surface-variant">Bio-Dome Interlock</span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary-container/20 text-primary font-badge-caps text-badge-caps">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                  VERIFIED
+                </span>
+</td>
+<td class="py-3 px-space-md text-right whitespace-nowrap">
+<button class="p-1 rounded bg-surface-container hover:bg-primary hover:text-on-primary text-on-surface-variant transition-all">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</td>
+</tr>
+<!-- Row 6: Viktor Chen (Watchlist Alert / Crimson) -->
+<tr class="event-row hover:bg-error-container/20 cursor-pointer transition-colors group" id="row-6" onclick="selectEvent(6)">
+<td class="py-3 px-space-md whitespace-nowrap font-telemetry-sm text-telemetry-sm text-on-surface">
+<span>00:35:12</span>
+<span class="text-[10px] text-on-surface-variant/70 block">TODAY</span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest overflow-hidden flex items-center justify-center ring-1 ring-error">
+<img class="w-full h-full object-cover" data-alt="Surveillance security camera photo of adult male with collar up looking toward perimeter barrier gate at night." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiiYBVdLMd4q80brpAuGn53mOsIPUAZrjBS7SntkZr-A5TJ9igJQM9R2_cCl-8cgoGKxAqTGRjjmRZzvxb1-QZg1KeoR7k73leQpGkLPJhv1dFEpLfCBzL4XmjmzIlX77NaKJF_GRj7zqp8jhp5dOe-PnFYIeVKg_BWeZi4YMMMsz-TNAW-WEdE028KTwpPbDedo-10G9Eup99oHCebGQ5Yelco5eSK4wD2IzZE8uka_My47aZ49DP"/>
+</div>
+<div>
+<div class="font-subheading text-body-md text-error font-semibold group-hover:text-red-300 transition-colors">Viktor Chen</div>
+<div class="font-telemetry-sm text-[10px] text-error">Watchlist Tier 2 Flag</div>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 whitespace-nowrap font-telemetry-sm text-telemetry-sm text-on-surface">
+<span class="px-2 py-0.5 rounded bg-error-container/40 text-error">TRK-02</span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<div class="flex flex-col gap-1 w-24">
+<div class="flex justify-between items-center font-telemetry-sm text-telemetry-sm">
+<span class="text-error font-bold">97.8%</span>
+<span class="text-[10px] text-error/80">Definite match</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
+<div class="bg-error h-full rounded-full" style="width: 97.8%;"></div>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 whitespace-nowrap font-telemetry-sm text-telemetry-sm text-error">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">fmd_bad</span>
+                  Watchlist Intercept
+                </span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap font-body-sm text-body-sm text-on-surface">
+<span>Cam 02 · Perimeter North Gate</span>
+<span class="block text-[11px] font-telemetry-sm text-on-surface-variant">FLIR Thermal Optical</span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-error-container text-error font-badge-caps text-badge-caps">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+                  FLAGGED
+                </span>
+</td>
+<td class="py-3 px-space-md text-right whitespace-nowrap">
+<button class="p-1 rounded bg-error/20 hover:bg-error hover:text-on-error text-error transition-all">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</td>
+</tr>
+<!-- Row 7: Unknown POI #12 -->
+<tr class="event-row is-unknown hover:bg-surface-container/40 cursor-pointer transition-colors group" id="row-7" onclick="selectEvent(7)">
+<td class="py-3 px-space-md whitespace-nowrap font-telemetry-sm text-telemetry-sm text-on-surface">
+<span>00:31:04</span>
+<span class="text-[10px] text-on-surface-variant/70 block">TODAY</span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest overflow-hidden flex items-center justify-center ring-1 ring-amber-400/50">
+<span class="material-symbols-outlined text-amber-400 text-[20px]">person_off</span>
+</div>
+<div>
+<div class="font-subheading text-body-md text-amber-300 font-semibold group-hover:text-amber-200 transition-colors">Unknown POI #12</div>
+<div class="font-telemetry-sm text-[10px] text-amber-400/80">Unenrolled Track</div>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 whitespace-nowrap font-telemetry-sm text-telemetry-sm text-on-surface">
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-amber-400">TRK-12</span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<div class="flex flex-col gap-1 w-24">
+<div class="flex justify-between items-center font-telemetry-sm text-telemetry-sm">
+<span class="text-amber-400 font-bold">58.7%</span>
+<span class="text-[10px] text-on-surface-variant">Low match</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
+<div class="bg-amber-400 h-full rounded-full" style="width: 58.7%;"></div>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 whitespace-nowrap font-telemetry-sm text-telemetry-sm text-on-surface-variant">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-amber-400">sensors</span>
+                  Perimeter Sensor
+                </span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap font-body-sm text-body-sm text-on-surface">
+<span>Cam 07 · Server Vault</span>
+<span class="block text-[11px] font-telemetry-sm text-on-surface-variant">Restricted Zone A</span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-400/10 text-amber-400 font-badge-caps text-badge-caps">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                  UNVERIFIED
+                </span>
+</td>
+<td class="py-3 px-space-md text-right whitespace-nowrap">
+<button class="p-1 rounded bg-surface-container hover:bg-amber-400 hover:text-on-primary text-on-surface-variant transition-all">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</td>
+</tr>
+<!-- Row 8: Sarah Lin -->
+<tr class="event-row hover:bg-surface-container/40 cursor-pointer transition-colors group" id="row-8" onclick="selectEvent(8)">
+<td class="py-3 px-space-md whitespace-nowrap font-telemetry-sm text-telemetry-sm text-on-surface">
+<span>00:28:40</span>
+<span class="text-[10px] text-on-surface-variant/70 block">TODAY</span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest overflow-hidden flex items-center justify-center">
+<img class="w-full h-full object-cover" data-alt="Surveillance crop of East Asian female security operations specialist with headset and security pass entering terminal room." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYkqy8wuIph0QpMcnCBRsXcZ9t5L6AniZRelbM9A_EZfsYCuIYiYArOOgW7C8q9vG51ei5kQVBmVfxszkomsft5kV_7oHDPo0emhiWtg69Id9w3C-H1_3VQB7RB43P_IdULdlAieg3w_iajq4ESyl2Vj52_Y0VbG6x1fP-EPnSOHQ5qtKryf8h20H-0M6X4P1vX3ihGDhTpgemxZKKX6J9lDxf2LSnCMHbtjjW0eDHg2Q3iLvgBgjw"/>
+</div>
+<div>
+<div class="font-subheading text-body-md text-on-surface font-semibold group-hover:text-primary transition-colors">Sarah Lin</div>
+<div class="font-telemetry-sm text-[10px] text-on-surface-variant">SecOps Lead · L3</div>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 whitespace-nowrap font-telemetry-sm text-telemetry-sm text-on-surface">
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-on-surface-variant">TRK-15</span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<div class="flex flex-col gap-1 w-24">
+<div class="flex justify-between items-center font-telemetry-sm text-telemetry-sm">
+<span class="text-primary font-bold">99.1%</span>
+<span class="text-[10px] text-on-surface-variant">0.991 cos</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 99.1%;"></div>
+</div>
+</div>
+</td>
+<td class="py-3 px-3 whitespace-nowrap font-telemetry-sm text-telemetry-sm text-on-surface-variant">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-primary">face_retouching_natural</span>
+                  Face Recognition
+                </span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap font-body-sm text-body-sm text-on-surface">
+<span>Cam 05 · SOC Access Portal</span>
+<span class="block text-[11px] font-telemetry-sm text-on-surface-variant">Turnstile Sensor</span>
+</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary-container/20 text-primary font-badge-caps text-badge-caps">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                  VERIFIED
+                </span>
+</td>
+<td class="py-3 px-space-md text-right whitespace-nowrap">
+<button class="p-1 rounded bg-surface-container hover:bg-primary hover:text-on-primary text-on-surface-variant transition-all">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer / Pagination -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm p-space-md bg-surface-container-lowest font-body-sm text-body-sm text-on-surface-variant">
+<div class="flex items-center gap-4">
+<span class="font-telemetry-sm text-telemetry-sm">
+            Showing <strong class="text-on-surface font-semibold">1–8</strong> of <strong class="text-on-surface font-semibold">5,412</strong> Events
+          </span>
+<div class="hidden sm:flex items-center gap-2 font-telemetry-sm text-telemetry-sm">
+<span>Per page:</span>
+<select class="bg-surface-container text-on-surface px-2 py-1 rounded focus:outline-none">
+<option>25</option>
+<option>50</option>
+<option>100</option>
+</select>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<button class="px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface-variant disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-[16px]">first_page</span>
+</button>
+<button class="px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface-variant disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-[16px]">chevron_left</span>
+</button>
+<button class="px-3 py-1 rounded bg-primary text-on-primary font-telemetry-sm text-telemetry-sm font-bold">1</button>
+<button class="px-3 py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-telemetry-sm text-telemetry-sm">2</button>
+<button class="px-3 py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-telemetry-sm text-telemetry-sm">3</button>
+<span class="px-1 text-on-surface-variant">...</span>
+<button class="px-3 py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-telemetry-sm text-telemetry-sm">217</button>
+<button class="px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+<button class="px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">last_page</span>
+</button>
+</div>
+</div>
+</div>
+<!-- RIGHT AREA: Slid-out Glass Event Detail Inspector Drawer (Col span 4 on XL) -->
+<div class="xl:col-span-4 flex flex-col gap-space-md sticky top-16" id="inspectorDrawer">
+<!-- Main Glass Dossier Card -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-xl flex flex-col gap-space-md relative overflow-hidden backdrop-blur-xl">
+<!-- Drawer Header -->
+<div class="flex items-center justify-between pb-3 shadow-inner">
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-badge-caps text-badge-caps text-primary tracking-widest uppercase">RECORD #EV-94021</span>
+<span class="inline-flex items-center gap-1 font-telemetry-sm text-[10px] text-primary bg-primary/10 px-1.5 py-0.2 rounded">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+                LIVE SYNC
+              </span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold tracking-tight" id="inspectorTitle">EVENT DETAILS</h2>
+</div>
+<div class="flex items-center gap-1">
+<button class="w-8 h-8 rounded-lg bg-surface-container text-on-surface-variant hover:text-on-surface flex items-center justify-center" title="Print Dossier">
+<span class="material-symbols-outlined text-[18px]">print</span>
+</button>
+<button class="w-8 h-8 rounded-lg bg-surface-container text-on-surface-variant hover:text-on-surface flex items-center justify-center" onclick="toggleInspectorFull()" title="Full Frame Toggle">
+<span class="material-symbols-outlined text-[18px]">open_in_full</span>
+</button>
+</div>
+</div>
+<!-- Event Surveillance Snapshot Viewport with AI HUD Bounding Box -->
+<div class="relative w-full h-56 rounded-xl overflow-hidden bg-surface-container-lowest group shadow-inner">
+<img class="w-full h-full object-cover" data-alt="Surveillance security camera high angle feed inside corporate headquarters glass atrium showing business people with bright cyan vector bounding boxes around targets, 4K resolution grain, CCTV timestamp overlay." id="inspectorImg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDexyJTUqugO_UIHm9utTIAltbB2DiB-54lb3kN76aRIY7F7ubc-Y7_YcLQ6UbIFw67ehiyBEope9Ag8gEgVsJC-udm_nqEKStaPecn0ZsJBOtd6vSCzxJj4dVxW2DUWCcGijVsO4qD0Ly5AXcQ42Y-hJfQ5CehLeu70fBjCygP_9C5Ql-juQV25CGhjzw8BhM4F0KK_TdW7Oky9r2UdooEEyB4tDnwq2WPaSNhgay1XSqqORx8SVka"/>
+<!-- Bounding Box Reticle Overlay (Interactive Simulation) -->
+<div class="absolute inset-0 pointer-events-none p-3 flex flex-col justify-between">
+<!-- Camera Top HUD -->
+<div class="flex items-center justify-between text-white font-telemetry-sm text-[10px] bg-surface-container-lowest/80 px-2.5 py-1 rounded backdrop-blur-md">
+<span class="font-semibold tracking-wider text-primary" id="hudCamName">CAM 01 · MAIN ENTRANCE</span>
+<span class="tracking-widest">2026-10-04 00:42:17.382 UTC</span>
+</div>
+<!-- Vector Focus Reticle -->
+<div class="absolute top-12 left-16 w-28 h-32 border-2 border-primary/90 rounded-sm shadow-[0_0_12px_rgba(6,182,212,0.6)]">
+<!-- Corner Brackets -->
+<span class="absolute -top-1 -left-1 w-2 h-2 bg-primary"></span>
+<span class="absolute -top-1 -right-1 w-2 h-2 bg-primary"></span>
+<span class="absolute -bottom-1 -left-1 w-2 h-2 bg-primary"></span>
+<span class="absolute -bottom-1 -right-1 w-2 h-2 bg-primary"></span>
+<!-- Reticle Pill Tag -->
+<div class="absolute -top-5 left-0 px-1.5 py-0.5 rounded bg-primary text-on-primary font-telemetry-sm text-[10px] font-bold whitespace-nowrap shadow-sm">
+                DHRUV · 92.4%
+              </div>
+</div>
+<!-- Bottom Camera Telemetry -->
+<div class="flex items-center justify-between text-on-surface-variant font-telemetry-sm text-[9px] bg-surface-container-lowest/80 px-2 py-0.5 rounded backdrop-blur-md">
+<span>SCRFD-10G DETECTOR · INFERENCE: 4.2ms</span>
+<span class="text-primary font-semibold">STATUS: POSITIVE_AUTH</span>
+</div>
+</div>
+</div>
+<!-- Biometric & Event Metadata Grid -->
+<div class="grid grid-cols-2 gap-2 font-telemetry-sm text-telemetry-sm">
+<div class="p-2.5 rounded-lg bg-surface-container-lowest shadow-sm flex flex-col gap-0.5">
+<span class="text-[10px] text-on-surface-variant uppercase font-badge-caps">Person Identity</span>
+<span class="text-on-surface font-semibold text-[13px]" id="metaPerson">Dhruv</span>
+<span class="text-[10px] text-primary">Clearance Level 4 (Exec)</span>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-container-lowest shadow-sm flex flex-col gap-0.5">
+<span class="text-[10px] text-on-surface-variant uppercase font-badge-caps">Track Entity</span>
+<span class="text-on-surface font-semibold text-[13px]" id="metaTrack">TRK-04</span>
+<span class="text-[10px] text-on-surface-variant">Active 42s in FOV</span>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-container-lowest shadow-sm flex flex-col gap-0.5">
+<span class="text-[10px] text-on-surface-variant uppercase font-badge-caps">Confidence Vector</span>
+<div class="flex items-baseline gap-1">
+<span class="text-primary font-bold text-[14px]" id="metaScore">92.4%</span>
+<span class="text-[10px] text-on-surface-variant">Cosine: 0.9242</span>
+</div>
+<span class="text-[10px] text-on-surface-variant">ArcFace R100 ONNX</span>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-container-lowest shadow-sm flex flex-col gap-0.5">
+<span class="text-[10px] text-on-surface-variant uppercase font-badge-caps">Node Sensor</span>
+<span class="text-on-surface font-semibold text-[12px] truncate" id="metaCamera">Camera 01</span>
+<span class="text-[10px] text-on-surface-variant">IP: 10.204.1.84</span>
+</div>
+<!-- Full Width Spatial Coordinate Vector -->
+<div class="col-span-2 p-2.5 rounded-lg bg-surface-container-lowest shadow-sm flex flex-col gap-1">
+<div class="flex items-center justify-between text-[10px] text-on-surface-variant font-badge-caps uppercase">
+<span>3D Spatial Coordinates</span>
+<span class="text-primary font-mono">VELOCITY: 1.2 M/S</span>
+</div>
+<div class="grid grid-cols-3 gap-1 font-mono text-[11px] text-on-surface">
+<div class="bg-surface-container px-2 py-1 rounded">X: <span class="text-primary font-semibold">412.8</span></div>
+<div class="bg-surface-container px-2 py-1 rounded">Y: <span class="text-primary font-semibold">198.2</span></div>
+<div class="bg-surface-container px-2 py-1 rounded">Z: <span class="text-primary font-semibold">1.42m</span></div>
+</div>
+</div>
+</div>
+<!-- Biometric Match Vector Mini-Radar / Feature Embedding -->
+<div class="p-3 rounded-lg bg-surface-container-lowest flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-badge-caps text-badge-caps text-on-surface-variant uppercase">512D Embeddings Distance</span>
+<span class="font-telemetry-sm text-[10px] text-primary font-mono">L2_DIST: 0.28</span>
+</div>
+<!-- Inline Sparkline / Feature Bar -->
+<div class="w-full h-8 flex items-end gap-1">
+<div class="flex-1 bg-primary/40 rounded-t h-[40%]"></div>
+<div class="flex-1 bg-primary/70 rounded-t h-[80%]"></div>
+<div class="flex-1 bg-primary rounded-t h-[95%]"></div>
+<div class="flex-1 bg-primary/60 rounded-t h-[55%]"></div>
+<div class="flex-1 bg-primary/90 rounded-t h-[90%]"></div>
+<div class="flex-1 bg-primary/50 rounded-t h-[45%]"></div>
+<div class="flex-1 bg-primary rounded-t h-[100%]"></div>
+<div class="flex-1 bg-primary/80 rounded-t h-[85%]"></div>
+<div class="flex-1 bg-primary/30 rounded-t h-[30%]"></div>
+<div class="flex-1 bg-primary/75 rounded-t h-[75%]"></div>
+<div class="flex-1 bg-primary rounded-t h-[92%]"></div>
+<div class="flex-1 bg-primary/60 rounded-t h-[65%]"></div>
+</div>
+</div>
+<!-- Action Button Rail -->
+<div class="flex flex-col gap-2 pt-2 shadow-inner">
+<button class="w-full flex items-center justify-center gap-2 bg-primary text-on-primary font-subheading text-body-sm font-semibold py-2.5 rounded-lg hover:shadow-[0_0_16px_rgba(6,182,212,0.4)] transition-all">
+<span class="material-symbols-outlined text-[18px]">badge</span>
+<span>View Person Profile Dossier</span>
+</button>
+<div class="grid grid-cols-2 gap-2">
+<button class="flex items-center justify-center gap-1.5 bg-surface-container text-on-surface hover:bg-surface-container-high py-2 rounded-lg font-subheading text-body-sm transition-colors">
+<span class="material-symbols-outlined text-[16px] text-primary">route</span>
+<span>Track Timeline</span>
+</button>
+<button class="flex items-center justify-center gap-1.5 bg-surface-container text-on-surface hover:bg-surface-container-high py-2 rounded-lg font-subheading text-body-sm transition-colors">
+<span class="material-symbols-outlined text-[16px] text-primary">share</span>
+<span>Export Frame</span>
+</button>
+</div>
+<button class="mt-1 flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-error hover:bg-error-container/20 font-telemetry-sm text-telemetry-sm transition-colors" onclick="confirmDeleteEvent()">
+<span class="material-symbols-outlined text-[16px]">delete_sweep</span>
+<span>Delete Event (Dual-Key Clearance Required)</span>
+</button>
+</div>
+</div>
+<!-- Secondary Mini Card: Optical Stream Info -->
+<div class="bg-surface-container-low rounded-xl p-3.5 shadow-md flex items-center justify-between font-telemetry-sm text-telemetry-sm">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">videocam</span>
+</div>
+<div>
+<div class="text-on-surface font-semibold">RTSP RTSPS-H265 STREAM</div>
+<div class="text-[10px] text-on-surface-variant">BITRATE: 8.4 Mbps · 60.0 FPS</div>
+</div>
+</div>
+<button class="px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-primary text-[11px] font-semibold">
+          LIVE FEED
+        </button>
+</div>
+</div>
+</div>
+<!-- Section 4: SUB-VIEW: Unknown Entities Monitor (Initially Hidden, Toggleable) -->
+<section class="hidden w-full flex-col gap-space-md mt-space-md" id="unknownMonitorView">
+<div class="flex items-center justify-between bg-surface-container-low p-space-md rounded-xl shadow-md">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-amber-400/20 text-amber-400 flex items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">crisis_alert</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold">UNKNOWN ENTITIES MONITOR</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Continuous cluster analysis of unassigned biometric faces and spatial traces across camera grid.</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1.5 rounded-lg bg-surface-container text-on-surface font-subheading text-body-sm hover:bg-surface-container-high">Cluster Recalculate</button>
+<button class="px-3 py-1.5 rounded-lg bg-primary text-on-primary font-subheading text-body-sm font-semibold">Enroll Bulk</button>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-xl overflow-hidden shadow-lg">
+<table class="w-full text-left border-collapse font-body-sm text-body-sm">
+<thead>
+<tr class="bg-surface-container-lowest text-on-surface-variant font-badge-caps text-badge-caps uppercase">
+<th class="py-3 px-space-md">Unknown ID</th>
+<th class="py-3 px-3">First Seen</th>
+<th class="py-3 px-3">Last Seen</th>
+<th class="py-3 px-3">Appearances</th>
+<th class="py-3 px-3">Peak Confidence</th>
+<th class="py-3 px-3">Associated Cameras</th>
+<th class="py-3 px-space-md text-right">Action Protocol</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container">
+<tr class="hover:bg-surface-container/50 transition-colors">
+<td class="py-3 px-space-md font-telemetry-sm text-telemetry-sm font-semibold text-amber-400">
+<span class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+                UNK-POI-007
+              </span>
+</td>
+<td class="py-3 px-3 font-telemetry-sm text-telemetry-sm text-on-surface-variant">00:14:02 UTC</td>
+<td class="py-3 px-3 font-telemetry-sm text-telemetry-sm text-on-surface">00:41:11 UTC (1m ago)</td>
+<td class="py-3 px-3 font-telemetry-sm text-telemetry-sm text-on-surface">
+<span class="px-2 py-0.5 rounded bg-surface-container font-bold">14 Sightings</span>
+</td>
+<td class="py-3 px-3 font-telemetry-sm text-telemetry-sm text-amber-400 font-bold">61.2% (ArcFace)</td>
+<td class="py-3 px-3 font-body-sm text-body-sm text-on-surface">Cam 01, Cam 03, Cam 04</td>
+<td class="py-3 px-space-md text-right">
+<div class="inline-flex gap-1.5">
+<button class="px-2.5 py-1 rounded bg-primary text-on-primary font-badge-caps text-badge-caps font-semibold">ENROLL</button>
+<button class="px-2.5 py-1 rounded bg-error-container text-error font-badge-caps text-badge-caps font-semibold">FLAG</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-container/50 transition-colors">
+<td class="py-3 px-space-md font-telemetry-sm text-telemetry-sm font-semibold text-amber-400">
+<span class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                UNK-POI-012
+              </span>
+</td>
+<td class="py-3 px-3 font-telemetry-sm text-telemetry-sm text-on-surface-variant">00:08:19 UTC</td>
+<td class="py-3 px-3 font-telemetry-sm text-telemetry-sm text-on-surface">00:31:04 UTC (11m ago)</td>
+<td class="py-3 px-3 font-telemetry-sm text-telemetry-sm text-on-surface">
+<span class="px-2 py-0.5 rounded bg-surface-container font-bold">6 Sightings</span>
+</td>
+<td class="py-3 px-3 font-telemetry-sm text-telemetry-sm text-amber-400 font-bold">58.7% (ArcFace)</td>
+<td class="py-3 px-3 font-body-sm text-body-sm text-on-surface">Cam 07 (Server Vault)</td>
+<td class="py-3 px-space-md text-right">
+<div class="inline-flex gap-1.5">
+<button class="px-2.5 py-1 rounded bg-primary text-on-primary font-badge-caps text-badge-caps font-semibold">ENROLL</button>
+<button class="px-2.5 py-1 rounded bg-error-container text-error font-badge-caps text-badge-caps font-semibold">FLAG</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Section 5: EMPTY STATE FALLBACK (Interactive Demonstration) -->
+<section class="hidden w-full flex flex-col items-center justify-center p-space-xl bg-surface-container-low rounded-xl shadow-lg text-center my-space-md" id="emptyStateView">
+<div class="w-20 h-20 rounded-2xl bg-surface-container flex items-center justify-center text-on-surface-variant mb-space-md shadow-inner">
+<span class="material-symbols-outlined text-[42px] text-primary">manage_search</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface font-semibold mb-2">NO EVENTS RECORDED</h3>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-md mb-space-lg">
+      Recognition and biometric events will populate in this audit stream automatically when optical nodes stream incoming track vectors.
+    </p>
+<div class="flex items-center gap-3">
+<button class="bg-primary text-on-primary px-4 py-2 rounded-lg font-subheading text-body-sm font-semibold hover:shadow-[0_0_16px_rgba(6,182,212,0.4)] transition-all" onclick="switchViewMode('all')">
+        Reset Audit Filters
+      </button>
+<button class="bg-surface-container text-on-surface px-4 py-2 rounded-lg font-subheading text-body-sm hover:bg-surface-container-high transition-colors">
+        Trigger Diagnostics Test Event
+      </button>
+</div>
+</section>
+</div>
+<!-- Interactive Client-side Scripting -->
+<script>
+  // Simulated Event Dossier Database for Instant Dynamic Inspection
+  const eventDossiers = {
+    1: {
+      name: "Dhruv",
+      role: "Executive VIP · L4",
+      track: "TRK-04",
+      score: "92.4%",
+      camera: "Cam 01 · Main Entrance",
+      status: "POSITIVE_AUTH",
+      record: "RECORD #EV-94021",
+      imgPrompt: "Close up surveillance facial crop of Dhruv, an Indian executive wearing a dark navy blazer, sharp cinematic lighting inside modern corporate headquarters."
+    },
+    2: {
+      name: "Mumma",
+      role: "VIP Guest · Tier 1",
+      track: "TRK-06",
+      score: "89.1%",
+      camera: "Cam 03 · Atrium Floor",
+      status: "POSITIVE_AUTH",
+      record: "RECORD #EV-94019",
+      imgPrompt: "Surveillance portrait shot of Mumma, an elegant South Asian mature woman in formal attire, sharp biometric focus overlay."
+    },
+    3: {
+      name: "Unknown POI #07",
+      role: "Unenrolled Face ID",
+      track: "TRK-07",
+      score: "61.2%",
+      camera: "Cam 01 · Main Entrance",
+      status: "UNVERIFIED_CLUSTER",
+      record: "RECORD #EV-94014",
+      imgPrompt: "CCTV security camera view of anonymous hooded person in turnstile corridor, amber detection bounding reticle overlay."
+    },
+    4: {
+      name: "Dhruv",
+      role: "Executive VIP · L4",
+      track: "TRK-04",
+      score: "94.8%",
+      camera: "Cam 04 · Elevator Concourse",
+      status: "POSITIVE_AUTH",
+      record: "RECORD #EV-94008",
+      imgPrompt: "Surveillance crop of corporate leader walking along elevator corridor, ambient glass architecture reflection."
+    },
+    5: {
+      name: "Dr. Elena Vance",
+      role: "Director, Bio-Synthetics",
+      track: "TRK-09",
+      score: "99.4%",
+      camera: "Cam 14 · Cleanroom Airway",
+      status: "POSITIVE_AUTH",
+      record: "RECORD #EV-93992",
+      imgPrompt: "Female scientist in research attire walking into biosafety cleanroom airlock, CCTV high resolution frame."
+    },
+    6: {
+      name: "Viktor Chen",
+      role: "Watchlist Tier 2 Flag",
+      track: "TRK-02",
+      score: "97.8%",
+      camera: "Cam 02 · Perimeter North Gate",
+      status: "THREAT_INTERCEPT",
+      record: "RECORD #EV-93980",
+      imgPrompt: "Surveillance security camera photo of adult male with collar up looking toward perimeter barrier gate at night."
+    },
+    7: {
+      name: "Unknown POI #12",
+      role: "Unenrolled Track",
+      track: "TRK-12",
+      score: "58.7%",
+      camera: "Cam 07 · Server Vault",
+      status: "UNVERIFIED_CLUSTER",
+      record: "RECORD #EV-93964",
+      imgPrompt: "Night vision infrared camera feed of dark data center server room corridor with motion tracking box."
+    },
+    8: {
+      name: "Sarah Lin",
+      role: "SecOps Lead · L3",
+      track: "TRK-15",
+      score: "99.1%",
+      camera: "Cam 05 · SOC Access Portal",
+      status: "POSITIVE_AUTH",
+      record: "RECORD #EV-93951",
+      imgPrompt: "Surveillance crop of East Asian female security operations specialist with headset and security pass entering terminal room."
+    }
+  };
+
+  function selectEvent(id) {
+    const data = eventDossiers[id];
+    if (!data) return;
+
+    // Remove active styles from other rows
+    document.querySelectorAll('.event-row').forEach(row => {
+      row.classList.remove('bg-surface-container', 'shadow-inner');
+    });
+
+    const activeRow = document.getElementById(`row-${id}`);
+    if (activeRow) {
+      activeRow.classList.add('bg-surface-container', 'shadow-inner');
+    }
+
+    // Update Inspector Drawer Fields
+    document.getElementById('inspectorTitle').innerText = `EVENT: ${data.name.toUpperCase()}`;
+    document.getElementById('metaPerson').innerText = data.name;
+    document.getElementById('metaTrack').innerText = data.track;
+    document.getElementById('metaScore').innerText = data.score;
+    document.getElementById('metaCamera').innerText = data.camera;
+    document.getElementById('hudCamName').innerText = data.camera.toUpperCase();
+    
+    const imgEl = document.getElementById('inspectorImg');
+    if (imgEl) {
+      imgEl.setAttribute('data-alt', data.imgPrompt);
+    }
+  }
+
+  function switchViewMode(mode) {
+    const mainView = document.getElementById('mainSplitView');
+    const unknownView = document.getElementById('unknownMonitorView');
+    const emptyView = document.getElementById('emptyStateView');
+
+    const tabAll = document.getElementById('tab-all');
+    const tabUnknowns = document.getElementById('tab-unknowns');
+    const tabEmpty = document.getElementById('tab-empty');
+
+    // Reset Tab Styles
+    [tabAll, tabUnknowns, tabEmpty].forEach(t => {
+      t.className = "flex items-center gap-2 px-4 py-1.5 rounded-lg font-subheading text-body-sm text-on-surface-variant hover:text-on-surface transition-all";
+    });
+
+    if (mode === 'all') {
+      mainView.classList.remove('hidden');
+      mainView.classList.add('grid');
+      unknownView.classList.add('hidden');
+      emptyView.classList.add('hidden');
+      tabAll.className = "flex items-center gap-2 px-4 py-1.5 rounded-lg font-subheading text-body-sm bg-surface-container-high text-primary shadow-sm transition-all";
+    } else if (mode === 'unknowns') {
+      mainView.classList.add('hidden');
+      mainView.classList.remove('grid');
+      unknownView.classList.remove('hidden');
+      unknownView.classList.add('flex');
+      emptyView.classList.add('hidden');
+      tabUnknowns.className = "flex items-center gap-2 px-4 py-1.5 rounded-lg font-subheading text-body-sm bg-surface-container-high text-amber-400 shadow-sm transition-all";
+    } else if (mode === 'empty') {
+      mainView.classList.add('hidden');
+      mainView.classList.remove('grid');
+      unknownView.classList.add('hidden');
+      emptyView.classList.remove('hidden');
+      emptyView.classList.add('flex');
+      tabEmpty.className = "flex items-center gap-2 px-4 py-1.5 rounded-lg font-subheading text-body-sm bg-surface-container-high text-primary shadow-sm transition-all";
+    }
+  }
+
+  function filterUnknownRows(showOnlyUnknown) {
+    const rows = document.querySelectorAll('.event-row');
+    rows.forEach(row => {
+      if (showOnlyUnknown) {
+        if (row.classList.contains('is-unknown')) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      } else {
+        row.style.display = '';
+      }
+    });
+  }
+
+  function toggleExportMenu() {
+    const menu = document.getElementById('exportMenu');
+    menu.classList.toggle('hidden');
+  }
+
+  // Close menus on outside click
+  window.addEventListener('click', function(e) {
+    const exportBtn = document.getElementById('exportBtn');
+    const exportMenu = document.getElementById('exportMenu');
+    if (!exportBtn.contains(e.target) && !exportMenu.contains(e.target)) {
+      exportMenu.classList.add('hidden');
+    }
+  });
+
+  function resetFilters() {
+    document.getElementById('eventSearchInput').value = '';
+    const toggle = document.getElementById('unknownToggle');
+    if (toggle) {
+      toggle.checked = false;
+      filterUnknownRows(false);
+    }
+    switchViewMode('all');
+  }
+
+  function confirmDeleteEvent() {
+    if (confirm("Initiate Event Purge? This action will generate a cryptographically signed tombstone record.")) {
+      alert("Tombstone EV-94021 written to immutable ledger.");
+    }
+  }
+
+  function toggleInspectorFull() {
+    const drawer = document.getElementById('inspectorDrawer');
+    const table = document.getElementById('tablePanel');
+    if (drawer.classList.contains('xl:col-span-4')) {
+      drawer.classList.remove('xl:col-span-4');
+      drawer.classList.add('xl:col-span-12');
+      table.classList.add('hidden');
+    } else {
+      drawer.classList.add('xl:col-span-4');
+      drawer.classList.remove('xl:col-span-12');
+      table.classList.remove('hidden');
+    }
+  }
+</script></main></div></body></html>
