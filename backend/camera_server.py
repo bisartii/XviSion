@@ -5,10 +5,14 @@ import supervision as sv
 import threading
 import time
 import sqlite3
+import onnxruntime as ort
+
+ort.preload_dlls(directory="")
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse, JSONResponse
+from pydantic import BaseModel
 from insightface.app import FaceAnalysis
 
 
@@ -16,7 +20,7 @@ from insightface.app import FaceAnalysis
 # FASTAPI
 # =========================
 
-app = FastAPI(title="Terra Vision Camera API")
+app = FastAPI(title="XviSion Camera API")
 
 app.add_middleware(
     CORSMiddleware,
@@ -33,7 +37,10 @@ app.add_middleware(
 
 print("Loading AI model...")
 
-face_app = FaceAnalysis(name="buffalo_l")
+face_app = FaceAnalysis(
+    name="buffalo_l",
+    providers=["CUDAExecutionProvider", "CPUExecutionProvider"]
+)
 face_app.prepare(
     ctx_id=0,
     det_size=(320, 320)
@@ -72,6 +79,7 @@ if not camera.isOpened():
 
 # Shared data
 latest_frame = None
+latest_raw_frame = None
 latest_state = {
     "running": False,
     "faces": 0,
@@ -81,6 +89,7 @@ latest_state = {
 }
 
 lock = threading.Lock()
+ai_lock = threading.Lock()
 
 last_time = time.time()
 frame_count = 0
@@ -119,29 +128,20 @@ def recognize_face(embedding):
 
 
 # =========================
-# EVENT LOGGING
+# EVENT / ALERT LOGGING
 # =========================
 
 last_logged = {}
 LOG_COOLDOWN = 10
 
+# Unknown detections are alerts, not normal events.
+# Keep this long enough to prevent one unknown person from flooding the alert center.
+last_unknown_alert = 0
+UNKNOWN_ALERT_COOLDOWN = 60
 
-def log_event(person, score, track_id):
 
-    key = (track_id, person)
-
-    now = time.time()
-
-    if key in last_logged:
-
-        if now - last_logged[key] < LOG_COOLDOWN:
-            return
-
-    last_logged[key] = now
-
-    conn = sqlite3.connect("events.db")
+def ensure_event_tables(conn):
     cursor = conn.cursor()
-
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS events (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -151,7 +151,61 @@ def log_event(person, score, track_id):
             track_id INTEGER
         )
     """)
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS alerts (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            severity TEXT,
+            title TEXT,
+            time TEXT,
+            confidence REAL,
+            track_id INTEGER,
+            acknowledged INTEGER DEFAULT 0
+        )
+    """)
+    conn.commit()
 
+
+def log_event(person, score, track_id):
+    """Log recognized people only. Unknown detections go to alerts."""
+    global last_unknown_alert
+
+    now = time.time()
+
+    # Unknown = security alert, NOT a normal event.
+    if person == "Unknown":
+        if now - last_unknown_alert < UNKNOWN_ALERT_COOLDOWN:
+            return
+
+        last_unknown_alert = now
+
+        conn = sqlite3.connect("events.db")
+        ensure_event_tables(conn)
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO alerts
+            (severity, title, time, confidence, track_id, acknowledged)
+            VALUES (?, ?, datetime('now', 'localtime'), ?, ?, 0)
+        """, (
+            "warning",
+            "Unknown person detected",
+            float(score),
+            int(track_id)
+        ))
+        conn.commit()
+        conn.close()
+
+        print(f"[ALERT] Unknown | ID:{track_id} | Score:{score:.2f}")
+        return
+
+    # Recognized people are normal events.
+    key = (track_id, person)
+    if key in last_logged and now - last_logged[key] < LOG_COOLDOWN:
+        return
+    last_logged[key] = now
+
+    conn = sqlite3.connect("events.db")
+    ensure_event_tables(conn)
+    cursor = conn.cursor()
     cursor.execute("""
         INSERT INTO events
         (person, time, confidence, track_id)
@@ -161,15 +215,10 @@ def log_event(person, score, track_id):
         float(score),
         int(track_id)
     ))
-
     conn.commit()
     conn.close()
 
-    print(
-        f"[EVENT] {person} | "
-        f"ID:{track_id} | "
-        f"Score:{score:.2f}"
-    )
+    print(f"[EVENT] {person} | ID:{track_id} | Score:{score:.2f}")
 
 
 # =========================
@@ -179,6 +228,7 @@ def log_event(person, score, track_id):
 def camera_loop():
 
     global latest_frame
+    global latest_raw_frame
     global latest_state
     global frame_count
     global last_time
@@ -190,6 +240,9 @@ def camera_loop():
         if not ret:
             time.sleep(0.1)
             continue
+
+        with lock:
+            latest_raw_frame = frame.copy()
 
         frame_count += 1
 
@@ -216,7 +269,8 @@ def camera_loop():
         # INSIGHTFACE
         # -------------------------
 
-        faces = face_app.get(frame)
+        with ai_lock:
+            faces = face_app.get(frame)
 
 
         # -------------------------
@@ -406,7 +460,7 @@ def camera_loop():
 
         cv2.putText(
             frame,
-            f"Terra Vision | FPS: {fps:.1f}",
+            f"XviSion | FPS: {fps:.1f}",
             (15, 30),
             cv2.FONT_HERSHEY_SIMPLEX,
             0.7,
@@ -519,32 +573,130 @@ def people():
 
 
 # =========================
+# PERSON MANAGEMENT
+# =========================
+
+class RegisterPersonRequest(BaseModel):
+    name: str
+
+
+def save_database():
+    """Save the face database safely to disk."""
+    temp_file = "face_database.pkl.tmp"
+    with open(temp_file, "wb") as f:
+        pickle.dump(database, f)
+    import os
+    os.replace(temp_file, "face_database.pkl")
+
+
+@app.post("/api/people/register")
+def register_person(request: RegisterPersonRequest):
+    """Capture 30 face embeddings from the live camera and save a person."""
+    name = request.name.strip()
+
+    if not name:
+        return JSONResponse(
+            status_code=400,
+            content={"error": "Person name is required"}
+        )
+
+    if name in database:
+        return JSONResponse(
+            status_code=409,
+            content={"error": f"{name} is already registered"}
+        )
+
+    embeddings = []
+    deadline = time.time() + 30
+    last_capture = 0
+
+    while len(embeddings) < 30 and time.time() < deadline:
+        with lock:
+            frame = None if latest_raw_frame is None else latest_raw_frame.copy()
+
+        if frame is None:
+            time.sleep(0.1)
+            continue
+
+        # Avoid repeatedly saving the same frame too quickly.
+        if time.time() - last_capture < 0.12:
+            time.sleep(0.03)
+            continue
+
+        with ai_lock:
+            faces = face_app.get(frame)
+
+        if faces:
+            # If multiple faces are visible, use the largest one.
+            face = max(
+                faces,
+                key=lambda f: (f.bbox[2] - f.bbox[0]) * (f.bbox[3] - f.bbox[1])
+            )
+            if face.embedding is not None:
+                embeddings.append(np.asarray(face.embedding, dtype=np.float32))
+                last_capture = time.time()
+
+        time.sleep(0.03)
+
+    if len(embeddings) < 30:
+        return JSONResponse(
+            status_code=408,
+            content={
+                "error": "Could not capture 30 clear face samples. Keep one face visible and try again.",
+                "captured": len(embeddings)
+            }
+        )
+
+    database[name] = embeddings
+    save_database()
+
+    return {
+        "success": True,
+        "name": name,
+        "embeddings": len(embeddings)
+    }
+
+
+@app.delete("/api/people/{name}")
+def delete_person(name: str):
+    name = name.strip()
+
+    if name not in database:
+        return JSONResponse(
+            status_code=404,
+            content={"error": f"{name} is not registered"}
+        )
+
+    del database[name]
+    save_database()
+
+    return {
+        "success": True,
+        "name": name,
+        "message": f"{name} removed successfully"
+    }
+
+
+# =========================
 # EVENTS
 # =========================
 
 @app.get("/api/events")
 def events():
-
-    conn = sqlite3.connect(
-        "events.db"
-    )
-
+    conn = sqlite3.connect("events.db")
+    ensure_event_tables(conn)
     cursor = conn.cursor()
 
+    # Unknown detections are intentionally excluded from the event history.
     cursor.execute("""
-        SELECT
-            id,
-            person,
-            time,
-            confidence,
-            track_id
+        SELECT id, person, time, confidence, track_id
         FROM events
+        WHERE person != 'Unknown'
         ORDER BY id DESC
         LIMIT 100
     """)
 
     rows = cursor.fetchall()
-
     conn.close()
 
     return [
@@ -555,9 +707,61 @@ def events():
             "confidence": row[3],
             "track_id": row[4]
         }
-
         for row in rows
     ]
+
+
+# =========================
+# ALERTS
+# =========================
+
+@app.get("/api/alerts")
+def alerts():
+    conn = sqlite3.connect("events.db")
+    ensure_event_tables(conn)
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT id, severity, title, time, confidence, track_id, acknowledged
+        FROM alerts
+        ORDER BY id DESC
+        LIMIT 100
+    """)
+
+    rows = cursor.fetchall()
+    conn.close()
+
+    return [
+        {
+            "id": row[0],
+            "severity": row[1],
+            "title": row[2],
+            "time": row[3],
+            "confidence": row[4],
+            "track_id": row[5],
+            "acknowledged": bool(row[6])
+        }
+        for row in rows
+    ]
+
+
+@app.patch("/api/alerts/{alert_id}/acknowledge")
+def acknowledge_alert(alert_id: int):
+    conn = sqlite3.connect("events.db")
+    ensure_event_tables(conn)
+    cursor = conn.cursor()
+    cursor.execute(
+        "UPDATE alerts SET acknowledged = 1 WHERE id = ?",
+        (alert_id,)
+    )
+    conn.commit()
+    changed = cursor.rowcount
+    conn.close()
+
+    if not changed:
+        return JSONResponse(status_code=404, content={"error": "Alert not found"})
+
+    return {"success": True, "id": alert_id}
 
 
 # =========================
@@ -573,5 +777,6 @@ def status():
         "recognition": "ArcFace",
         "face_detection": "SCRFD",
         "gpu": "RTX 3050",
-        "database": "SQLite"
+        "database": "SQLite",
+        "registered_people": len(database)
     }

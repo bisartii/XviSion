@@ -4,18 +4,30 @@ import {
   Activity, AlertTriangle, Bell, Camera, ChevronDown, ChevronLeft, ChevronRight,
   CircleUserRound, Cpu, Database, Eye, Gauge, Grid2X2, History, LayoutDashboard,
   Maximize2, Menu, Monitor, MoreHorizontal, Play, Plus, Search, Settings, Shield,
-  SlidersHorizontal, Sparkles, Target, Users, Video, Wifi, X, Zap
+  SlidersHorizontal, Sparkles, Target, Users, Video, Wifi, X, Zap, LogOut, Lock, Mail, User, ArrowRight
 } from 'lucide-react'
 import './styles.css'
+
+const API = 'http://127.0.0.1:8001'
+
+function getToken() {
+  return localStorage.getItem('xvision_token')
+}
+
+async function apiFetch(path, options = {}) {
+  const headers = { ...(options.headers || {}) }
+  const token = getToken()
+  if (token) headers.Authorization = `Bearer ${token}`
+  return fetch(`${API}${path}`, { ...options, headers })
+}
+
 
 const nav = [
   ['Overview', LayoutDashboard],
   ['Live Monitor', Monitor],
   ['People', Users],
   ['Events', History],
-  ['Alerts', AlertTriangle],
-  ['Cameras', Camera],
-  ['Analytics', Activity],
+  ['Alerts', Bell],
   ['Settings', Settings],
 ]
 
@@ -61,7 +73,7 @@ function CameraScene() {
     <div className="camera-scene">
       <img
         src="http://127.0.0.1:8001/video"
-        alt="Terra Vision Live Camera"
+        alt="XviSion Live Camera"
         style={{
           width: "100%",
           height: "100%",
@@ -80,7 +92,7 @@ function Overview() {
         <div>
           <div className="eyebrow">COMMAND CENTER</div>
           <h1>Good evening, <span>Operator.</span></h1>
-          <p>Terra Vision is actively processing visual data.</p>
+          <p>XviSion is actively processing visual data.</p>
           <div className="hero-statuses">
             <Badge>AI ENGINE ONLINE</Badge>
             <Badge>TRACKING ACTIVE</Badge>
@@ -176,46 +188,100 @@ function LiveMonitor() {
   </Page>
 }
 
-function People({ people = [] }) {
+function People({ people = [], refreshPeople }) {
   const [showRegister, setShowRegister] = useState(false)
-  return <Page title="People" eyebrow="FACE RECOGNITION REGISTRY" action={<button className="primary" onClick={()=>setShowRegister(true)}><Plus size={16}/> Register Person</button>}>
-    <div className="toolbar glass">
-      <div className="search"><Search size={16}/><input placeholder="Search registered people..."/></div>
-      <button><SlidersHorizontal size={16}/> Filter</button>
-    </div>
+  const [search, setSearch] = useState('')
+  const [deleting, setDeleting] = useState('')
+
+  const filtered = people.filter(p =>
+    p.name.toLowerCase().includes(search.toLowerCase())
+  )
+
+  async function removePerson(name) {
+    if (!window.confirm(`Remove ${name} from the face database?`)) return
+    setDeleting(name)
+    try {
+      const res = await fetch(`${API}/api/people/${encodeURIComponent(name)}`, { method: 'DELETE' })
+      if (!res.ok) throw new Error(await res.text())
+      await refreshPeople()
+    } catch (err) {
+      alert(`Could not remove ${name}. Make sure the backend has the DELETE /api/people/{name} endpoint.`)
+      console.error(err)
+    } finally {
+      setDeleting('')
+    }
+  }
+
+  return <Page title="People" eyebrow="FACE RECOGNITION REGISTRY" action={<button className="primary" onClick={()=>setShowRegister(true)}><Plus size={16}/> Add Person</button>}>
+    <Glass className="toolbar people-toolbar">
+      <div className="search"><Search size={16}/><input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search people..."/></div>
+      <span className="people-count">{filtered.length} registered</span>
+    </Glass>
+
     <div className="people-grid">
-      {people.map(p=><Glass className="person-card" key={p.name}>
-        <div className="person-top"><div className="large-avatar">{p.name[0]}</div><button><MoreHorizontal size={18}/></button></div>
-        <h3>{p.name}</h3><span className="muted">{p.embeddings} embeddings</span>
+      {filtered.map(p=><Glass className="person-card" key={p.name}>
+        <div className="person-top">
+          <div className="large-avatar">{p.name[0]?.toUpperCase()}</div>
+          <button className="danger-icon" title={`Remove ${p.name}`} onClick={()=>removePerson(p.name)} disabled={deleting===p.name}>
+            {deleting===p.name ? '…' : <X size={17}/>} 
+          </button>
+        </div>
+        <h3>{p.name}</h3>
+        <span className="muted">{p.embeddings ?? 0} embeddings</span>
         <div className="person-stats">
-  <div>
-    <span>Embeddings</span>
-    <b>{p.embeddings}</b>
-  </div>
-
-  <div>
-    <span>Status</span>
-    <b>Registered</b>
-  </div>
-
-  <div>
-    <span>Database</span>
-    <b>Active</b>
-  </div>
-</div>
+          <div><span>Embeddings</span><b>{p.embeddings ?? 0}</b></div>
+          <div><span>Status</span><b>Registered</b></div>
+        </div>
         <Badge>REGISTERED</Badge>
       </Glass>)}
+
+      {filtered.length === 0 && <Glass className="empty-state"><Users size={28}/><h3>No people found</h3><p>Add a person to the face database.</p><button className="primary" onClick={()=>setShowRegister(true)}><Plus size={16}/> Add Person</button></Glass>}
     </div>
-    {showRegister && <RegisterModal close={()=>setShowRegister(false)}/>}
+
+    {showRegister && <RegisterModal close={()=>setShowRegister(false)} refreshPeople={refreshPeople}/>} 
   </Page>
 }
 
-function RegisterModal({close}) {
-  const [count,setCount] = useState(17)
+function RegisterModal({close, refreshPeople}) {
+  const [name, setName] = useState('')
+  const [count, setCount] = useState(0)
+  const [saving, setSaving] = useState(false)
+  const [error, setError] = useState('')
+
+  async function savePerson() {
+    if (!name.trim()) return setError('Enter a name.')
+    if (count < 30) return setError('Capture all 30 embeddings first.')
+    setSaving(true); setError('')
+    try {
+      const res = await fetch(`${API}/api/people/register`, {
+        method: 'POST', headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ name: name.trim() })
+      })
+      if (!res.ok) throw new Error(await res.text())
+      await refreshPeople()
+      close()
+    } catch (err) {
+      setError('Registration endpoint is not connected yet. Add POST /api/people/register to the backend.')
+      console.error(err)
+    } finally { setSaving(false) }
+  }
+
   return <div className="modal-backdrop" onClick={close}>
     <div className="modal glass" onClick={e=>e.stopPropagation()}>
-      <div className="modal-head"><div><div className="eyebrow">FACE ENROLLMENT</div><h2>Register Person</h2></div><button onClick={close}><X/></button></div>
-      <div className="enroll-layout"><CameraScene compact/><div className="enroll-info"><div className="progress-ring"><span>{count}<small>/30</small></span></div><h3>Capture face embeddings</h3><p>Look toward the camera and move your face slightly left, right, up and down.</p><button className="primary wide" onClick={()=>setCount(Math.min(30,count+1))}>Capture embedding</button><div className="progress"><span style={{width:`${count/30*100}%`}}/></div></div></div>
+      <div className="modal-head"><div><div className="eyebrow">FACE ENROLLMENT</div><h2>Add Person</h2></div><button onClick={close}><X/></button></div>
+      <input className="modal-input" value={name} onChange={e=>setName(e.target.value)} placeholder="Person name" />
+      <div className="enroll-layout">
+        <CameraScene/>
+        <div className="enroll-info">
+          <div className="progress-ring"><span>{count}<small>/30</small></span></div>
+          <h3>Capture face embeddings</h3>
+          <p>Look at the camera and slowly move your face in different directions.</p>
+          <button className="primary wide" disabled={count>=30} onClick={()=>setCount(c=>Math.min(30,c+1))}>{count>=30?'30 Captured':'Capture embedding'}</button>
+          <div className="progress"><span style={{width:`${count/30*100}%`}}/></div>
+          {count===30 && <button className="primary wide save-person" disabled={saving} onClick={savePerson}>{saving?'Saving...':'Save Person'}</button>}
+          {error && <p className="form-error">{error}</p>}
+        </div>
+      </div>
     </div>
   </div>
 }
@@ -324,11 +390,45 @@ function Events({ events = [] }) {
   )
 }
 
-function Alerts() {
-  return <Page title="Alert Center" eyebrow="REAL-TIME SYSTEM & VISION ALERTS">
-    <div className="alert-summary"><Metric label="Active" value="03" meta="requires attention" icon={Bell}/><Metric label="Today" value="12" meta="all severities" icon={History}/></div>
-    <div className="tabs"><button className="active">All</button><button>Critical</button><button>Warning</button><button>Info</button><button>Unacknowledged</button></div>
-    <div className="alert-list">{alerts.map((a,i)=><Glass className={`alert-card ${a.severity}`} key={i}><div className="alert-icon">{a.severity==='critical'?<AlertTriangle/>:<Bell/>}</div><div className="alert-body"><div className="alert-title"><h3>{a.title}</h3><span>{a.time}</span></div><p>{a.camera} · Track {a.track} · Confidence {a.confidence}</p><div><button className="ghost">View Event</button><button className="ghost">Acknowledge</button></div></div></Glass>)}</div>
+function Alerts({ alerts = [], refreshAlerts }) {
+  const [filter, setFilter] = useState('All')
+  const visible = alerts.filter(a => {
+    if (filter === 'Unacknowledged') return !a.acknowledged
+    if (filter === 'Critical') return a.severity === 'critical'
+    if (filter === 'Warning') return a.severity === 'warning'
+    if (filter === 'Info') return a.severity === 'info'
+    return true
+  })
+
+  async function acknowledge(id) {
+    try {
+      const res = await apiFetch(`/api/alerts/${id}/acknowledge`, { method: 'PATCH' })
+      if (!res.ok) throw new Error(await res.text())
+      await refreshAlerts()
+    } catch (err) {
+      console.error('Acknowledge alert error:', err)
+    }
+  }
+
+  const active = alerts.filter(a => !a.acknowledged).length
+
+  return <Page title="Alert Center" eyebrow="UNKNOWN DETECTION & SYSTEM ALERTS">
+    <div className="alert-summary">
+      <Metric label="Active" value={String(active).padStart(2,'0')} meta="requires attention" icon={Bell}/>
+      <Metric label="Today" value={String(alerts.length).padStart(2,'0')} meta="stored alerts" icon={History}/>
+    </div>
+    <div className="tabs">{['All','Critical','Warning','Info','Unacknowledged'].map(x => <button key={x} className={filter===x?'active':''} onClick={()=>setFilter(x)}>{x}</button>)}</div>
+    <div className="alert-list">
+      {visible.map(a => <Glass className={`alert-card ${a.severity}`} key={a.id}>
+        <div className="alert-icon">{a.severity==='critical'?<AlertTriangle/>:<Bell/>}</div>
+        <div className="alert-body">
+          <div className="alert-title"><h3>{a.title}</h3><span>{a.time}</span></div>
+          <p>Camera 01 · Track {a.track_id ?? '—'} · Confidence {a.confidence != null ? `${Math.round(a.confidence * 100)}%` : '—'}</p>
+          <div>{!a.acknowledged && <button className="ghost" onClick={()=>acknowledge(a.id)}>Acknowledge</button>}{a.acknowledged && <span className="status-text">Acknowledged</span>}</div>
+        </div>
+      </Glass>)}
+      {visible.length === 0 && <Glass className="empty-state"><Bell size={28}/><h3>No alerts</h3><p>Unknown detections and system alerts will appear here.</p></Glass>}
+    </div>
   </Page>
 }
 
@@ -382,48 +482,147 @@ function SectionHead({title,action}){return <div className="section-head"><h2>{t
 function Page({title,eyebrow,action,children}) {
   return <main className="page"><div className="page-head"><div><div className="eyebrow">{eyebrow}</div><h1>{title}</h1></div>{action}</div>{children}</main>
 }
+function AuthShell({ children }) {
+  return <div className="auth-shell">
+    <div className="auth-glow"/>
+    <div className="auth-brand"><div className="brand-mark"><Sparkles size={18}/></div><strong>XviSion</strong></div>
+    {children}
+  </div>
+}
+
+function Login({ onLogin, goSignup }) {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  async function submit(e) {
+    e.preventDefault(); setError(''); setLoading(true)
+    try {
+      const res = await fetch(`${API}/api/auth/login`, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ email: email.trim(), password })
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.detail || 'Login failed')
+      localStorage.setItem('xvision_token', data.token)
+      localStorage.setItem('xvision_user', JSON.stringify(data.user))
+      onLogin(data.user)
+    } catch (err) { setError(err.message) }
+    finally { setLoading(false) }
+  }
+
+  return <AuthShell><div className="auth-card glass">
+    <div className="eyebrow">SECURE ACCESS</div><h1>Welcome back</h1><p className="auth-subtitle">Sign in to your XviSion command center.</p>
+    <form onSubmit={submit}>
+      <label>Email</label><div className="auth-input"><Mail size={17}/><input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="operator@example.com" required/></div>
+      <label>Password</label><div className="auth-input"><Lock size={17}/><input type="password" value={password} onChange={e=>setPassword(e.target.value)} placeholder="Enter password" required/></div>
+      {error && <div className="form-error">{error}</div>}
+      <button className="primary auth-submit" disabled={loading}>{loading?'Signing in...':<>Sign in <ArrowRight size={16}/></>}</button>
+    </form>
+    <p className="auth-switch">Don't have an account? <button onClick={goSignup}>Create account</button></p>
+  </div></AuthShell>
+}
+
+function Signup({ onSignup, goLogin }) {
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirm, setConfirm] = useState('')
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  async function submit(e) {
+    e.preventDefault(); setError('')
+    if (password !== confirm) return setError('Passwords do not match.')
+    if (password.length < 6) return setError('Password must be at least 6 characters.')
+    setLoading(true)
+    try {
+      const res = await fetch(`${API}/api/auth/signup`, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ name: name.trim(), email: email.trim(), password })
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.detail || 'Sign up failed')
+      localStorage.setItem('xvision_token', data.token)
+      localStorage.setItem('xvision_user', JSON.stringify(data.user))
+      onSignup(data.user)
+    } catch (err) { setError(err.message) }
+    finally { setLoading(false) }
+  }
+
+  return <AuthShell><div className="auth-card glass">
+    <div className="eyebrow">OPERATOR REGISTRATION</div><h1>Create account</h1><p className="auth-subtitle">Create a local XviSion operator account.</p>
+    <form onSubmit={submit}>
+      <label>Name</label><div className="auth-input"><User size={17}/><input value={name} onChange={e=>setName(e.target.value)} placeholder="Operator name" required/></div>
+      <label>Email</label><div className="auth-input"><Mail size={17}/><input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="operator@example.com" required/></div>
+      <label>Password</label><div className="auth-input"><Lock size={17}/><input type="password" value={password} onChange={e=>setPassword(e.target.value)} placeholder="Minimum 6 characters" required/></div>
+      <label>Confirm password</label><div className="auth-input"><Lock size={17}/><input type="password" value={confirm} onChange={e=>setConfirm(e.target.value)} placeholder="Repeat password" required/></div>
+      {error && <div className="form-error">{error}</div>}
+      <button className="primary auth-submit" disabled={loading}>{loading?'Creating account':<>Create account <ArrowRight size={16}/></>}</button>
+    </form>
+    <p className="auth-switch">Already have an account? <button onClick={goLogin}>Sign in</button></p>
+  </div></AuthShell>
+}
+
 function App() {
+  const [authMode, setAuthMode] = useState('login')
+  const [user, setUser] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('xvision_user') || 'null') } catch { return null }
+  })
   const [page, setPage] = useState('Overview')
   const [collapsed, setCollapsed] = useState(false)
   const [time, setTime] = useState(new Date())
-
   const [backendPeople, setBackendPeople] = useState([])
   const [backendEvents, setBackendEvents] = useState([])
-useEffect(() => {
-  const id = setInterval(() => setTime(new Date()), 1000)
+  const [backendAlerts, setBackendAlerts] = useState([])
 
-  fetch("http://127.0.0.1:8000/api/people")
-    .then(res => res.json())
-    .then(data => setBackendPeople(data))
-    .catch(err => console.error("People API error:", err))
+  const refreshPeople = async () => {
+    try { const res=await apiFetch('/api/people'); if(res.status===401) return logout(); if(!res.ok) throw new Error(await res.text()); setBackendPeople(await res.json()) }
+    catch(err){ console.error('People API error:',err) }
+  }
+  const refreshEvents = async () => {
+    try { const res=await apiFetch('/api/events'); if(res.status===401) return logout(); if(!res.ok) throw new Error(await res.text()); setBackendEvents(await res.json()) }
+    catch(err){ console.error('Events API error:',err) }
+  }
+  const refreshAlerts = async () => {
+    try { const res=await apiFetch('/api/alerts'); if(res.status===401) return logout(); if(!res.ok) throw new Error(await res.text()); setBackendAlerts(await res.json()) }
+    catch(err){ console.error('Alerts API error:',err) }
+  }
+  function logout(){ localStorage.removeItem('xvision_token'); localStorage.removeItem('xvision_user'); setUser(null); setAuthMode('login') }
 
-  fetch("http://127.0.0.1:8000/api/events")
-    .then(res => res.json())
-    .then(data => setBackendEvents(data))
-    .catch(err => console.error("Events API error:", err))
+  useEffect(()=>{
+    const id=setInterval(()=>setTime(new Date()),1000)
+    if(!user) return ()=>clearInterval(id)
+    refreshPeople(); refreshEvents(); refreshAlerts()
+    const poll=setInterval(()=>{ refreshPeople(); refreshEvents(); refreshAlerts() },1000)
+    return ()=>{ clearInterval(id); clearInterval(poll) }
+  },[user])
 
-  return () => clearInterval(id)
-}, [])
-  const content = useMemo(() => ({
-  Overview: <Overview events={backendEvents} />,
-  'Live Monitor': <LiveMonitor />,
-  People: <People people={backendPeople} />,
-  Events: <Events events={backendEvents} />,
-  Alerts: <Alerts />,
-  Cameras: <Cameras />,
-  Analytics: <Analytics />,
-  Settings: <SettingsPage />
-}[page]), [page, backendPeople, backendEvents])
-  return <div className={`app ${collapsed ? 'collapsed' : ''}`}>
+  if(!user) {
+    if(authMode==='signup') return <Signup onSignup={setUser} goLogin={()=>setAuthMode('login')}/>
+    return <Login onLogin={setUser} goSignup={()=>setAuthMode('signup')}/>
+  }
+
+  const content = {
+    Overview: <Overview events={backendEvents}/>,
+    'Live Monitor': <LiveMonitor/>,
+    People: <People people={backendPeople} refreshPeople={refreshPeople}/>,
+    Events: <Events events={backendEvents}/>,
+    Alerts: <Alerts alerts={backendAlerts} refreshAlerts={refreshAlerts}/>,
+    Settings: <SettingsPage/>
+  }[page]
+
+  return <div className={`app ${collapsed?'collapsed':''}`}>
     <aside className="sidebar">
-      <div className="brand"><div className="brand-mark"><Sparkles size={17}/></div><div><strong>TERRA</strong><span>VISION</span></div></div>
+      <div className="brand"><div className="brand-mark"><Sparkles size={17}/></div><div><strong>XviSion</strong></div></div>
       <button className="collapse" onClick={()=>setCollapsed(!collapsed)}>{collapsed?<ChevronRight/>:<ChevronLeft/>}</button>
       <nav>{nav.map(([name,Icon])=><button className={page===name?'active':''} key={name} onClick={()=>setPage(name)}><Icon size={19}/><span>{name}</span></button>)}</nav>
-      <div className="sidebar-bottom"><div className="system-pill"><span className="live-dot"/> <span>AI ENGINE ONLINE</span></div><div className="profile"><div className="avatar">O</div><div><b>Operator</b><span>Command access</span></div></div></div>
+      <div className="sidebar-bottom"><div className="system-pill"><span className="live-dot"/> <span>AI ENGINE ONLINE</span></div><div className="profile"><div className="avatar">{user.name?.[0]?.toUpperCase() || 'O'}</div><div><b>{user.name || 'Operator'}</b><span>{user.email}</span></div><button className="logout-btn" title="Logout" onClick={logout}><LogOut size={16}/></button></div></div>
     </aside>
     <div className="main">
-      <header className="topbar"><div className="mobile-title"><Menu size={20}/><b>TERRA VISION</b></div><div className="top-search"><Search size={16}/><span>Search people, events, cameras...</span><kbd>⌘ K</kbd></div><div className="top-actions"><div className="top-status"><span className="live-dot"/> AI ENGINE <b>ONLINE</b></div><div className="top-status"><Wifi size={14}/> CAM 01 <b>ONLINE</b></div><button><Bell size={18}/></button><button><CircleUserRound size={19}/></button></div></header>
-      {content}
+      <header className="topbar"><div className="mobile-title"><Menu size={20}/><b>XviSion</b></div><div className="top-actions"><div className="top-status"><span className="live-dot"/> AI ENGINE <b>ONLINE</b></div></div></header>
+      {content[page]}
     </div>
   </div>
 }
