@@ -5,11 +5,14 @@ import supervision as sv
 import threading
 import time
 import sqlite3
+import hashlib
+import secrets
+from datetime import datetime, timedelta
 import onnxruntime as ort
 
 ort.preload_dlls(directory="")
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse, JSONResponse
 from pydantic import BaseModel
@@ -29,6 +32,186 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+# =========================
+# AUTHENTICATION DATABASE
+# =========================
+
+AUTH_DB = "auth.db"
+SESSION_DAYS = 7
+
+def auth_connection():
+    return sqlite3.connect(AUTH_DB)
+
+
+def init_auth_db():
+    conn = auth_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            email TEXT NOT NULL UNIQUE,
+            password_hash TEXT NOT NULL,
+            salt TEXT NOT NULL,
+            created_at TEXT NOT NULL
+        )
+    """)
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS sessions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            token_hash TEXT NOT NULL UNIQUE,
+            expires_at TEXT NOT NULL,
+            FOREIGN KEY(user_id) REFERENCES users(id)
+        )
+    """)
+    conn.commit()
+    conn.close()
+
+
+def hash_password(password, salt):
+    return hashlib.pbkdf2_hmac(
+        "sha256", password.encode("utf-8"), salt.encode("utf-8"), 310000
+    ).hex()
+
+
+def create_session(user_id):
+    token = secrets.token_urlsafe(48)
+    token_hash = hashlib.sha256(token.encode("utf-8")).hexdigest()
+    expires = (datetime.utcnow() + timedelta(days=SESSION_DAYS)).isoformat()
+    conn = auth_connection()
+    conn.execute(
+        "INSERT INTO sessions (user_id, token_hash, expires_at) VALUES (?, ?, ?)",
+        (user_id, token_hash, expires)
+    )
+    conn.commit()
+    conn.close()
+    return token
+
+
+def current_user(authorization: str | None):
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="Authentication required")
+
+    token = authorization.split(" ", 1)[1].strip()
+    token_hash = hashlib.sha256(token.encode("utf-8")).hexdigest()
+
+    conn = auth_connection()
+    row = conn.execute("""
+        SELECT users.id, users.name, users.email, sessions.expires_at
+        FROM sessions JOIN users ON users.id = sessions.user_id
+        WHERE sessions.token_hash = ?
+    """, (token_hash,)).fetchone()
+
+    if not row:
+        conn.close()
+        raise HTTPException(status_code=401, detail="Invalid session")
+
+    try:
+        expired = datetime.fromisoformat(row[3]) <= datetime.utcnow()
+    except ValueError:
+        expired = True
+
+    if expired:
+        conn.execute("DELETE FROM sessions WHERE token_hash = ?", (token_hash,))
+        conn.commit()
+        conn.close()
+        raise HTTPException(status_code=401, detail="Session expired")
+
+    conn.close()
+    return {"id": row[0], "name": row[1], "email": row[2]}
+
+
+def auth_user_response(user):
+    return {"id": user[0], "name": user[1], "email": user[2]}
+
+
+init_auth_db()
+
+
+# =========================
+# AUTH API
+# =========================
+
+class SignupRequest(BaseModel):
+    name: str
+    email: str
+    password: str
+
+
+class LoginRequest(BaseModel):
+    email: str
+    password: str
+
+
+@app.post("/api/auth/signup")
+def signup(request: SignupRequest):
+    name = request.name.strip()
+    email = request.email.strip().lower()
+    password = request.password
+
+    if not name:
+        raise HTTPException(status_code=400, detail="Name is required")
+    if not email or "@" not in email:
+        raise HTTPException(status_code=400, detail="Enter a valid email")
+    if len(password) < 6:
+        raise HTTPException(status_code=400, detail="Password must be at least 6 characters")
+
+    salt = secrets.token_hex(16)
+    password_hash = hash_password(password, salt)
+
+    conn = auth_connection()
+    try:
+        cursor = conn.cursor()
+        cursor.execute(
+            "INSERT INTO users (name, email, password_hash, salt, created_at) VALUES (?, ?, ?, ?, ?)",
+            (name, email, password_hash, salt, datetime.now().isoformat(timespec="seconds"))
+        )
+        user_id = cursor.lastrowid
+        conn.commit()
+    except sqlite3.IntegrityError:
+        conn.close()
+        raise HTTPException(status_code=409, detail="An account with this email already exists")
+    conn.close()
+
+    token = create_session(user_id)
+    return {"token": token, "user": {"id": user_id, "name": name, "email": email}}
+
+
+@app.post("/api/auth/login")
+def login(request: LoginRequest):
+    email = request.email.strip().lower()
+    conn = auth_connection()
+    row = conn.execute(
+        "SELECT id, name, email, password_hash, salt FROM users WHERE email = ?",
+        (email,)
+    ).fetchone()
+    conn.close()
+
+    if not row or not secrets.compare_digest(hash_password(request.password, row[4]), row[3]):
+        raise HTTPException(status_code=401, detail="Invalid email or password")
+
+    token = create_session(row[0])
+    return {"token": token, "user": auth_user_response(row)}
+
+
+@app.get("/api/auth/me")
+def me(authorization: str | None = Header(default=None)):
+    return current_user(authorization)
+
+
+@app.post("/api/auth/logout")
+def logout(authorization: str | None = Header(default=None)):
+    if authorization and authorization.startswith("Bearer "):
+        token = authorization.split(" ", 1)[1].strip()
+        token_hash = hashlib.sha256(token.encode("utf-8")).hexdigest()
+        conn = auth_connection()
+        conn.execute("DELETE FROM sessions WHERE token_hash = ?", (token_hash,))
+        conn.commit()
+        conn.close()
+    return {"success": True}
 
 
 # =========================
@@ -545,7 +728,9 @@ def video():
 # =========================
 
 @app.get("/api/camera/state")
-def camera_state():
+def camera_state(authorization: str | None = Header(default=None)):
+
+    current_user(authorization)
 
     with lock:
         return JSONResponse(
@@ -558,7 +743,9 @@ def camera_state():
 # =========================
 
 @app.get("/api/people")
-def people():
+def people(authorization: str | None = Header(default=None)):
+
+    current_user(authorization)
 
     result = []
 
@@ -590,7 +777,8 @@ def save_database():
 
 
 @app.post("/api/people/register")
-def register_person(request: RegisterPersonRequest):
+def register_person(request: RegisterPersonRequest, authorization: str | None = Header(default=None)):
+    current_user(authorization)
     """Capture 30 face embeddings from the live camera and save a person."""
     name = request.name.strip()
 
@@ -658,7 +846,8 @@ def register_person(request: RegisterPersonRequest):
 
 
 @app.delete("/api/people/{name}")
-def delete_person(name: str):
+def delete_person(name: str, authorization: str | None = Header(default=None)):
+    current_user(authorization)
     name = name.strip()
 
     if name not in database:
@@ -682,7 +871,8 @@ def delete_person(name: str):
 # =========================
 
 @app.get("/api/events")
-def events():
+def events(authorization: str | None = Header(default=None)):
+    current_user(authorization)
     conn = sqlite3.connect("events.db")
     ensure_event_tables(conn)
     cursor = conn.cursor()
@@ -716,7 +906,8 @@ def events():
 # =========================
 
 @app.get("/api/alerts")
-def alerts():
+def alerts(authorization: str | None = Header(default=None)):
+    current_user(authorization)
     conn = sqlite3.connect("events.db")
     ensure_event_tables(conn)
     cursor = conn.cursor()
@@ -746,7 +937,8 @@ def alerts():
 
 
 @app.patch("/api/alerts/{alert_id}/acknowledge")
-def acknowledge_alert(alert_id: int):
+def acknowledge_alert(alert_id: int, authorization: str | None = Header(default=None)):
+    current_user(authorization)
     conn = sqlite3.connect("events.db")
     ensure_event_tables(conn)
     cursor = conn.cursor()
@@ -769,7 +961,8 @@ def acknowledge_alert(alert_id: int):
 # =========================
 
 @app.get("/api/status")
-def status():
+def status(authorization: str | None = Header(default=None)):
+    current_user(authorization)
 
     return {
         "ai_engine": "ONLINE",
