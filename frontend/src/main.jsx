@@ -31,25 +31,6 @@ const nav = [
   ['Settings', Settings],
 ]
 
-const people = [
-  { name: 'Dhruv', embeddings: 30, seen: '00:42', appearances: 124, confidence: 92, initials: 'D' },
-  { name: 'Mumma', embeddings: 30, seen: '00:39', appearances: 98, confidence: 89, initials: 'M' },
-]
-
-const events = [
-  { time: '00:42:17', person: 'Dhruv', id: '04', confidence: 92, type: 'Recognition', camera: 'Camera 01', status: 'Verified' },
-  { time: '00:41:53', person: 'Mumma', id: '06', confidence: 89, type: 'Recognition', camera: 'Camera 01', status: 'Verified' },
-  { time: '00:41:11', person: 'Unknown', id: '07', confidence: 61, type: 'Detection', camera: 'Camera 01', status: 'Unverified' },
-  { time: '00:39:52', person: 'Dhruv', id: '03', confidence: 94, type: 'Recognition', camera: 'Camera 01', status: 'Verified' },
-  { time: '00:38:20', person: 'Mumma', id: '02', confidence: 91, type: 'Recognition', camera: 'Camera 01', status: 'Verified' },
-]
-
-const alerts = [
-  { severity: 'warning', title: 'Unknown person detected', camera: 'Camera 01', track: '07', time: '00:42:11', confidence: '61%' },
-  { severity: 'info', title: 'AI engine heartbeat received', camera: 'System', track: '—', time: '00:41:58', confidence: '100%' },
-  { severity: 'critical', title: 'Camera 02 disconnected', camera: 'Camera 02', track: '—', time: '00:39:52', confidence: '—' },
-]
-
 function Glass({ children, className='' }) {
   return <div className={`glass ${className}`}>{children}</div>
 }
@@ -85,16 +66,20 @@ function CameraScene() {
   )
 }
 
-function Overview() {
+function Overview({ stats, events = [], detections = [] }) {
+  const recognizedPct = (stats.faces_detected + stats.unknown_today) > 0
+    ? Math.round((stats.recognized_today / Math.max(stats.recognized_today + stats.unknown_today, 1)) * 100)
+    : 0
+
   return <Page title="Overview" eyebrow="REAL-TIME VISUAL INTELLIGENCE">
     <div className="hero-grid">
       <Glass className="hero-panel">
         <div>
           <div className="eyebrow">COMMAND CENTER</div>
           <h1>Good evening, <span>Operator.</span></h1>
-          <p>XviSion is actively processing visual data.</p>
+          <p>XviSion is actively processing live camera data.</p>
           <div className="hero-statuses">
-            <Badge>AI ENGINE ONLINE</Badge>
+            <Badge>{stats.camera_running ? 'AI ENGINE ONLINE' : 'CAMERA OFFLINE'}</Badge>
             <Badge>TRACKING ACTIVE</Badge>
             <Badge>DATABASE CONNECTED</Badge>
           </div>
@@ -104,44 +89,44 @@ function Overview() {
     </div>
 
     <div className="metrics">
-      <Metric label="Faces Detected" value="128" meta="+12% today" icon={Eye}/>
-      <Metric label="Recognized" value="94" meta="73.4% of detections" icon={Shield}/>
-      <Metric label="Unknown" value="34" meta="8 in the last hour" icon={Target}/>
-      <Metric label="Active Tracks" value="07" meta="3 currently visible" icon={Activity}/>
-      <Metric label="Events Today" value="56" meta="+8 since morning" icon={History}/>
-      <Metric label="Alerts" value="03" meta="1 requires attention" icon={Bell}/>
+      <Metric label="Faces Detected" value={String(stats.faces_detected)} meta="currently visible" icon={Eye}/>
+      <Metric label="Recognized Today" value={String(stats.recognized_today)} meta={`${recognizedPct}% of logged detections`} icon={Shield}/>
+      <Metric label="Unknown Today" value={String(stats.unknown_today)} meta="security alerts" icon={Target}/>
+      <Metric label="Active Tracks" value={String(stats.active_tracks).padStart(2,'0')} meta="currently visible" icon={Activity}/>
+      <Metric label="Events Today" value={String(stats.events_today)} meta="recognized events" icon={History}/>
+      <Metric label="Active Alerts" value={String(stats.active_alerts).padStart(2,'0')} meta={`${stats.alerts_today} alerts today`} icon={Bell}/>
     </div>
 
     <div className="two-col">
       <Glass>
         <SectionHead title="Live Activity" action="View all"/>
-        <Timeline />
+        <Timeline events={events}/>
       </Glass>
       <Glass>
         <SectionHead title="Active Tracks" action="Monitor"/>
-        <TrackList />
+        <TrackList detections={detections}/>
       </Glass>
     </div>
 
-    <SystemHealth />
+    <SystemHealth stats={stats}/>
   </Page>
 }
 
-function Timeline() {
+function Timeline({ events = [] }) {
   return <div className="timeline">
-    {events.slice(0,4).map((e,i)=><div className="timeline-row" key={i}>
+    {events.slice(0,4).map((e,i)=><div className="timeline-row" key={e.id ?? i}>
       <div className="timeline-time">{e.time}</div>
-      <div className={`timeline-marker ${e.person==='Unknown'?'amber':''}`} />
-      <div className="timeline-copy"><strong>{e.person} {e.person==='Unknown'?'detected':'recognized'}</strong><span>Track ID {e.id} · {e.confidence}% confidence</span></div>
+      <div className="timeline-marker" />
+      <div className="timeline-copy"><strong>{e.person} recognized</strong><span>Track ID {e.track_id} · {Math.round((e.confidence ?? 0) * 100)}% confidence</span></div>
     </div>)}
+    {events.length === 0 && <div className="empty-state"><p>No recognition events yet.</p></div>}
   </div>
 }
 
-function TrackList() {
+function TrackList({ detections = [] }) {
   return <div className="track-list">
-    <Track name="Dhruv" id="04" confidence="92%" initials="D"/>
-    <Track name="Mumma" id="06" confidence="89%" initials="M"/>
-    <Track name="Unknown" id="07" confidence="61%" initials="?" unknown/>
+    {detections.map(d=><Track key={d.track_id} name={d.name} id={d.track_id} confidence={`${Math.round((d.confidence ?? 0) * 100)}%`} initials={d.name === 'Unknown' ? '?' : d.name?.[0]?.toUpperCase()} unknown={d.name === 'Unknown'}/>)}
+    {detections.length === 0 && <div className="empty-state"><p>No active tracks.</p></div>}
   </div>
 }
 
@@ -153,36 +138,36 @@ function Track({name,id,confidence,initials,unknown=false}) {
   </div>
 }
 
-function LiveMonitor() {
+function LiveMonitor({ stats }) {
   const [selected, setSelected] = useState('Camera 01')
   return <Page title="Live Monitor" eyebrow="MISSION CONTROL">
     <div className="monitor-layout">
       <Glass className="camera-list">
         <SectionHead title="Cameras" action={<Plus size={15}/>}/>
-        {['Camera 01','Camera 02','Camera 03'].map((c,i)=><button key={c} className={`camera-item ${selected===c?'active':''}`} onClick={()=>setSelected(c)}>
+        <button className="camera-item active">
           <div className="mini-camera"><Video size={15}/></div>
-          <div><strong>{c}</strong><span>{i===1?'OFFLINE':'Main Entrance'}</span></div>
-          <span className={`camera-status ${i===1?'off':''}`}/>
-        </button>)}
+          <div><strong>Camera 01</strong><span>{stats.camera_running ? 'ONLINE' : 'OFFLINE'}</span></div>
+          <span className={`camera-status ${stats.camera_running ? '' : 'off'}`}/>
+        </button>
       </Glass>
 
       <Glass className="monitor-main">
         <div className="monitor-toolbar">
-          <div><strong>{selected}</strong><Badge>{selected==='Camera 02'?'OFFLINE':'ONLINE'}</Badge></div>
+          <div><strong>{selected}</strong><Badge>{stats.camera_running ? 'ONLINE' : 'OFFLINE'}</Badge></div>
           <div className="toolbar-actions"><button><Maximize2 size={16}/></button><button><MoreHorizontal size={16}/></button></div>
         </div>
         <CameraScene/>
         <div className="telemetry">
-          <span>FPS <b>28</b></span><span>LATENCY <b>36ms</b></span><span>GPU <b>42%</b></span><span>VRAM <b>2.1GB</b></span><span>FACES <b>03</b></span><span>TRACKS <b>03</b></span>
+          <span>FPS <b>{stats.fps}</b></span><span>FACES <b>{stats.faces_detected}</b></span><span>TRACKS <b>{stats.active_tracks}</b></span><span>REGISTERED <b>{stats.registered_people}</b></span>
         </div>
       </Glass>
 
       <Glass className="intelligence">
         <SectionHead title="Live Intelligence" action={<Zap size={16}/>}/>
-        <TrackList/>
+        <TrackList detections={stats.detections || []}/>
         <div className="divider"/>
         <SectionHead title="Live Events"/>
-        <Timeline/>
+        <Timeline events={stats.recent_events || []}/>
       </Glass>
     </div>
   </Page>
@@ -458,12 +443,12 @@ function Donut(){return <div className="donut-wrap"><div className="donut"><div>
 function Bars(){return <div className="bars">{[40,55,32,70,82,60,88,68,44,76,90,72].map((h,i)=><span key={i} style={{height:`${h}%`}}/>)}</div>}
 function Performance(){return <div className="perf"><div><span>GPU</span><b>42%</b><i><em style={{width:'42%'}}/></i></div><div><span>VRAM</span><b>2.1 / 4 GB</b><i><em style={{width:'52%'}}/></i></div><div><span>FPS</span><b>28</b><i><em style={{width:'93%'}}/></i></div><div><span>Latency</span><b>36ms</b><i><em style={{width:'28%'}}/></i></div></div>}
 
-function SettingsPage() {
+function SettingsPage({ stats }) {
   return <Page title="Settings" eyebrow="SYSTEM CONFIGURATION & AI ENGINE">
     <div className="settings-layout">
       <Glass className="settings-nav">{['General','Recognition','Tracking','Camera','Events','Notifications','System'].map((x,i)=><button className={i===0?'active':''} key={x}>{x}</button>)}</Glass>
       <div className="settings-content">
-        <Glass><SectionHead title="Recognition" action="AI ENGINE"/><Setting label="Recognition threshold" desc="Higher values make recognition stricter." value="0.45" slider/><Setting label="Embedding database" desc="Registered identities and embeddings." value="CONNECTED" good/><Setting label="Registered people" desc="Current identities in the database." value="2"/></Glass>
+        <Glass><SectionHead title="Recognition" action="AI ENGINE"/><Setting label="Recognition threshold" desc="Higher values make recognition stricter." value="0.45" slider/><Setting label="Embedding database" desc="Registered identities and embeddings." value="CONNECTED" good/><Setting label="Registered people" desc="Current identities in the database." value={String(stats.registered_people)}/></Glass>
         <Glass><SectionHead title="Tracking" action="ByteTrack"/><Setting label="Tracking engine" desc="Real-time object association." value="ACTIVE" good/><Setting label="Track timeout" desc="How long an inactive track is retained." value="10s"/></Glass>
         <Glass><SectionHead title="System Health"/><div className="health-grid"><Health icon={Cpu} label="AI Engine" value="ONLINE"/><Health icon={Eye} label="Face Detection" value="SCRFD"/><Health icon={Shield} label="Recognition" value="ArcFace"/><Health icon={Activity} label="Tracking" value="ByteTrack"/><Health icon={Database} label="Database" value="SQLite"/><Health icon={Zap} label="GPU" value="RTX 3050"/></div></Glass>
         <Glass><SectionHead title="Future Modules"/><div className="future-grid">{['YOLO Object Detection','ANPR','Vehicle Detection','Virtual Fence','Suspicious Activity','Multi-Camera Tracking'].map(x=><div className="future" key={x}><Sparkles size={16}/><span>{x}</span><small>COMING SOON</small></div>)}</div></Glass>
@@ -475,7 +460,7 @@ function SettingsPage() {
 function Setting({label,desc,value,slider,good}) { return <div className="setting"><div><b>{label}</b><span>{desc}</span></div><div className="setting-value">{slider?<><span>{value}</span><input type="range" min="0" max="1" step=".01" defaultValue=".45"/></>:<span className={good?'good':''}>{value}</span>}</div></div>}
 function Health({icon:Icon,label,value}) { return <div className="health"><Icon size={18}/><span>{label}</span><b>{value}</b><i className="health-dot"/></div> }
 
-function SystemHealth(){return <Glass className="system-health"><SectionHead title="System Health" action="LIVE"/><div className="health-row"><Health icon={Cpu} label="AI Engine" value="ONLINE"/><Health icon={Eye} label="Face Detection" value="SCRFD"/><Health icon={Shield} label="Recognition" value="ArcFace"/><Health icon={Activity} label="Tracking" value="ByteTrack"/><Health icon={Database} label="Database" value="SQLite"/><Health icon={Zap} label="GPU" value="RTX 3050"/></div></Glass>}
+function SystemHealth({ stats }){return <Glass className="system-health"><SectionHead title="System Health" action={stats.camera_running ? "LIVE" : "OFFLINE"}/><div className="health-row"><Health icon={Cpu} label="AI Engine" value={stats.camera_running ? "ONLINE" : "OFFLINE"}/><Health icon={Eye} label="Face Detection" value="SCRFD"/><Health icon={Shield} label="Recognition" value="ArcFace"/><Health icon={Activity} label="Tracking" value="ByteTrack"/><Health icon={Database} label="Database" value="SQLite"/><Health icon={Zap} label="GPU" value="RTX 3050"/></div></Glass>}
 
 function SectionHead({title,action}){return <div className="section-head"><h2>{title}</h2>{action&&<button className="text-btn">{action}</button>}</div>}
 
@@ -576,6 +561,7 @@ function App() {
   const [backendPeople, setBackendPeople] = useState([])
   const [backendEvents, setBackendEvents] = useState([])
   const [backendAlerts, setBackendAlerts] = useState([])
+  const [dashboard, setDashboard] = useState({faces_detected:0, recognized_today:0, unknown_today:0, active_tracks:0, events_today:0, alerts_today:0, active_alerts:0, fps:0, detections:[], camera_running:false, registered_people:0, recent_events:[]})
 
   const refreshPeople = async () => {
     try { const res=await apiFetch('/api/people'); if(res.status===401) return logout(); if(!res.ok) throw new Error(await res.text()); setBackendPeople(await res.json()) }
@@ -584,6 +570,10 @@ function App() {
   const refreshEvents = async () => {
     try { const res=await apiFetch('/api/events'); if(res.status===401) return logout(); if(!res.ok) throw new Error(await res.text()); setBackendEvents(await res.json()) }
     catch(err){ console.error('Events API error:',err) }
+  }
+  const refreshDashboard = async () => {
+    try { const res=await apiFetch('/api/dashboard'); if(res.status===401) return logout(); if(!res.ok) throw new Error(await res.text()); setDashboard(await res.json()) }
+    catch(err){ console.error('Dashboard API error:',err) }
   }
   const refreshAlerts = async () => {
     try { const res=await apiFetch('/api/alerts'); if(res.status===401) return logout(); if(!res.ok) throw new Error(await res.text()); setBackendAlerts(await res.json()) }
@@ -594,8 +584,8 @@ function App() {
   useEffect(()=>{
     const id=setInterval(()=>setTime(new Date()),1000)
     if(!user) return ()=>clearInterval(id)
-    refreshPeople(); refreshEvents(); refreshAlerts()
-    const poll=setInterval(()=>{ refreshPeople(); refreshEvents(); refreshAlerts() },1000)
+    refreshPeople(); refreshEvents(); refreshAlerts(); refreshDashboard()
+    const poll=setInterval(()=>{ refreshPeople(); refreshEvents(); refreshAlerts(); refreshDashboard() },1000)
     return ()=>{ clearInterval(id); clearInterval(poll) }
   },[user])
 
@@ -605,12 +595,12 @@ function App() {
   }
 
   const content = {
-    Overview: <Overview events={backendEvents}/>,
-    'Live Monitor': <LiveMonitor/>,
+    Overview: <Overview stats={dashboard} events={backendEvents} detections={dashboard.detections}/>,
+    'Live Monitor': <LiveMonitor stats={dashboard}/>,
     People: <People people={backendPeople} refreshPeople={refreshPeople}/>,
     Events: <Events events={backendEvents}/>,
     Alerts: <Alerts alerts={backendAlerts} refreshAlerts={refreshAlerts}/>,
-    Settings: <SettingsPage/>
+    Settings: <SettingsPage stats={dashboard}/>
   }[page]
 
   return <div className={`app ${collapsed?'collapsed':''}`}>
@@ -622,7 +612,7 @@ function App() {
     </aside>
     <div className="main">
       <header className="topbar"><div className="mobile-title"><Menu size={20}/><b>XviSion</b></div><div className="top-actions"><div className="top-status"><span className="live-dot"/> AI ENGINE <b>ONLINE</b></div></div></header>
-      {content[page]}
+      {content}
     </div>
   </div>
 }
