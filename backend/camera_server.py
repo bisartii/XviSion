@@ -11,11 +11,13 @@ import os
 import json
 import urllib.request
 import urllib.parse
+import urllib.error
 from datetime import datetime, timedelta
 import onnxruntime as ort
 
 ort.preload_dlls(directory="")
-
+from pathlib import Path
+from dotenv import load_dotenv
 from fastapi import FastAPI, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse, JSONResponse
@@ -313,7 +315,6 @@ def recognize_face(embedding):
 
     return best_name, best_score
 
-
 # =========================
 # EVENT / ALERT LOGGING
 # =========================
@@ -321,21 +322,25 @@ def recognize_face(embedding):
 last_logged = {}
 LOG_COOLDOWN = 10
 
-# Unknown detections are alerts, not normal events.
-# Keep this long enough to prevent one unknown person from flooding the alert center.
 last_unknown_alerts = {}
 UNKNOWN_ALERT_COOLDOWN = 60
 
-# Phone notifications: Telegram
-# Set these in Windows before starting XviSion:
-#   $env:XVISION_TELEGRAM_BOT_TOKEN = "..."
-#   $env:XVISION_TELEGRAM_CHAT_ID = "..."
+
+# =========================
+# TELEGRAM
+# =========================
+
+load_dotenv(Path(__file__).resolve().parent / ".env")
+
 TELEGRAM_BOT_TOKEN = os.getenv("XVISION_TELEGRAM_BOT_TOKEN", "").strip()
 TELEGRAM_CHAT_ID = os.getenv("XVISION_TELEGRAM_CHAT_ID", "").strip()
 
+print(f"[TELEGRAM] configured: {bool(TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID)}")
+
 def send_telegram_alert(track_id, score):
-    """Send one unknown-person alert to the configured Telegram phone chat."""
+    """Send one unknown-person alert to the configured Telegram chat."""
     if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
+        print("[TELEGRAM] Not configured.")
         return False
 
     message = (
@@ -356,7 +361,21 @@ def send_telegram_alert(track_id, score):
     try:
         request = urllib.request.Request(url, data=payload, method="POST")
         with urllib.request.urlopen(request, timeout=5) as response:
-            return 200 <= response.status < 300
+            body = response.read().decode("utf-8", errors="replace")
+            data = json.loads(body)
+
+            if 200 <= response.status < 300 and data.get("ok"):
+                print("[TELEGRAM] Alert sent successfully.")
+                return True
+
+            print(f"[TELEGRAM ERROR] {body}")
+            return False
+
+    except urllib.error.HTTPError as exc:
+        body = exc.read().decode("utf-8", errors="replace")
+        print(f"[TELEGRAM ERROR] HTTP {exc.code}: {body}")
+        return False
+
     except Exception as exc:
         print(f"[TELEGRAM ERROR] {exc}")
         return False
@@ -1000,6 +1019,20 @@ def acknowledge_alert(alert_id: int, authorization: str | None = Header(default=
 
 
 # =========================
+# NOTIFICATIONS
+# =========================
+
+@app.get("/api/notifications/status")
+def notification_status(authorization: str | None = Header(default=None)):
+    current_user(authorization)
+    return {
+        "configured": bool(TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID),
+        "provider": "Telegram",
+        "chat_id_configured": bool(TELEGRAM_CHAT_ID),
+    }
+
+
+# =========================
 # STATUS
 # =========================
 
@@ -1091,8 +1124,17 @@ def dashboard(authorization: str | None = Header(default=None)):
 @app.get("/api/notifications/test")
 def test_notification(authorization: str | None = Header(default=None)):
     current_user(authorization)
+
     if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
-        raise HTTPException(status_code=400, detail="Telegram notification settings are not configured")
+        raise HTTPException(
+            status_code=400,
+            detail="Telegram notification settings are not configured"
+        )
+
     if not send_telegram_alert(0, 1.0):
-        raise HTTPException(status_code=502, detail="Telegram notification failed")
-    return {"success": True}
+        raise HTTPException(
+            status_code=502,
+            detail="Telegram notification failed. Check the backend console for the exact Telegram error."
+        )
+
+    return {"success": True, "message": "Test notification sent"}

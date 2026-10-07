@@ -468,11 +468,20 @@ function Page({title,eyebrow,action,children}) {
   return <main className="page"><div className="page-head"><div><div className="eyebrow">{eyebrow}</div><h1>{title}</h1></div>{action}</div>{children}</main>
 }
 function AuthShell({ children }) {
-  return <div className="auth-shell">
-    <div className="auth-glow"/>
-    <div className="auth-brand"><div className="brand-mark"><Sparkles size={18}/></div><strong>XviSion</strong></div>
-    {children}
-  </div>
+  return (
+    <div className="auth-shell">
+      <div className="auth-glow" />
+
+      <div className="auth-brand">
+        <div className="brand-mark">
+          <img src="/xvisionlogo.png" alt="XviSion Logo" />
+        </div>
+        <strong>XviSion</strong>
+      </div>
+
+      {children}
+    </div>
+  );
 }
 
 function Login({ onLogin, goSignup }) {
