@@ -337,7 +337,120 @@ TELEGRAM_CHAT_ID = os.getenv("XVISION_TELEGRAM_CHAT_ID", "").strip()
 
 print(f"[TELEGRAM] configured: {bool(TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID)}")
 
-def send_telegram_alert(track_id, score):
+def send_telegram_alert(track_id, score, frame=None):
+    """Send unknown-person alert with optional CCTV snapshot."""
+
+    if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
+        return False
+
+    message = (
+        "🚨 *XviSion Security Alert*\n\n"
+        "⚠️ Unknown person detected.\n"
+        f"📷 Camera: `CAM-01`\n"
+        f"🆔 Track ID: `{int(track_id)}`\n"
+        f"🎯 Confidence: `{float(score) * 100:.1f}%`\n"
+        f"🕐 Time: `{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}`"
+    )
+
+    try:
+
+        # --------------------------------
+        # If no frame → send normal message
+        # --------------------------------
+        if frame is None:
+
+            url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+
+            payload = urllib.parse.urlencode({
+                "chat_id": TELEGRAM_CHAT_ID,
+                "text": message,
+                "parse_mode": "Markdown"
+            }).encode("utf-8")
+
+            request = urllib.request.Request(
+                url,
+                data=payload,
+                method="POST"
+            )
+
+            with urllib.request.urlopen(request, timeout=5) as response:
+                return 200 <= response.status < 300
+
+        # --------------------------------
+        # Convert OpenCV frame → JPEG
+        # --------------------------------
+        success, encoded = cv2.imencode(
+            ".jpg",
+            frame,
+            [cv2.IMWRITE_JPEG_QUALITY, 80]
+        )
+
+        if not success:
+            print("[TELEGRAM] Could not encode snapshot")
+            return False
+
+        # --------------------------------
+        # Send photo to Telegram
+        # --------------------------------
+        url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendPhoto"
+
+        boundary = "----XviSionBoundary"
+
+        body = bytearray()
+
+        # chat_id
+        body.extend(
+            f"--{boundary}\r\n"
+            f'Content-Disposition: form-data; name="chat_id"\r\n\r\n'
+            f"{TELEGRAM_CHAT_ID}\r\n".encode()
+        )
+
+        # caption
+        body.extend(
+            f"--{boundary}\r\n"
+            f'Content-Disposition: form-data; name="caption"\r\n\r\n'
+            f"{message}\r\n".encode()
+        )
+
+        body.extend(
+            f"--{boundary}\r\n"
+            f'Content-Disposition: form-data; name="parse_mode"\r\n\r\n'
+            f"Markdown\r\n".encode()
+        )
+
+        # photo
+        body.extend(
+            f"--{boundary}\r\n"
+            f'Content-Disposition: form-data; name="photo"; filename="xvision_alert.jpg"\r\n'
+            f"Content-Type: image/jpeg\r\n\r\n".encode()
+        )
+
+        body.extend(encoded.tobytes())
+        body.extend(f"\r\n--{boundary}--\r\n".encode())
+
+        request = urllib.request.Request(
+            url,
+            data=bytes(body),
+            method="POST",
+            headers={
+                "Content-Type": f"multipart/form-data; boundary={boundary}"
+            }
+        )
+
+        with urllib.request.urlopen(request, timeout=10) as response:
+
+            success = 200 <= response.status < 300
+
+            if success:
+                print("[TELEGRAM] Snapshot alert sent")
+
+            return success
+
+    except Exception as exc:
+
+        print(f"[TELEGRAM ERROR] {exc}")
+
+        return False
     """Send one unknown-person alert to the configured Telegram chat."""
     if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
         print("[TELEGRAM] Not configured.")
@@ -405,8 +518,7 @@ def ensure_event_tables(conn):
     """)
     conn.commit()
 
-
-def log_event(person, score, track_id):
+def log_event(person, score, track_id, frame=None):
     """Log recognized people only. Unknown detections go to alerts."""
     now = time.time()
 
@@ -437,7 +549,7 @@ def log_event(person, score, track_id):
         conn.close()
 
         # Phone notification is sent only after the alert is stored.
-        send_telegram_alert(track_id, score)
+        send_telegram_alert(track_id, score, frame)
 
         print(f"[ALERT] Unknown | ID:{track_id} | Score:{score:.2f}")
         return
@@ -636,10 +748,11 @@ def camera_loop():
             # -------------------------
 
             log_event(
-                name,
-                score,
-                track_id
-            )
+    name,
+    score,
+    track_id,
+    frame.copy()
+)
 
 
             # -------------------------
