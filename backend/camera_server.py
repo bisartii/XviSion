@@ -5,10 +5,17 @@ import supervision as sv
 import threading
 import time
 import sqlite3
+import hashlib
+import secrets
+from datetime import datetime, timedelta
+import onnxruntime as ort
 
-from fastapi import FastAPI
+ort.preload_dlls(directory="")
+
+from fastapi import FastAPI, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse, JSONResponse
+from pydantic import BaseModel
 from insightface.app import FaceAnalysis
 
 
@@ -16,7 +23,7 @@ from insightface.app import FaceAnalysis
 # FASTAPI
 # =========================
 
-app = FastAPI(title="Terra Vision Camera API")
+app = FastAPI(title="XviSion Camera API")
 
 app.add_middleware(
     CORSMiddleware,
@@ -28,12 +35,195 @@ app.add_middleware(
 
 
 # =========================
+# AUTHENTICATION DATABASE
+# =========================
+
+AUTH_DB = "auth.db"
+SESSION_DAYS = 7
+
+def auth_connection():
+    return sqlite3.connect(AUTH_DB)
+
+
+def init_auth_db():
+    conn = auth_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            email TEXT NOT NULL UNIQUE,
+            password_hash TEXT NOT NULL,
+            salt TEXT NOT NULL,
+            created_at TEXT NOT NULL
+        )
+    """)
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS sessions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            token_hash TEXT NOT NULL UNIQUE,
+            expires_at TEXT NOT NULL,
+            FOREIGN KEY(user_id) REFERENCES users(id)
+        )
+    """)
+    conn.commit()
+    conn.close()
+
+
+def hash_password(password, salt):
+    return hashlib.pbkdf2_hmac(
+        "sha256", password.encode("utf-8"), salt.encode("utf-8"), 310000
+    ).hex()
+
+
+def create_session(user_id):
+    token = secrets.token_urlsafe(48)
+    token_hash = hashlib.sha256(token.encode("utf-8")).hexdigest()
+    expires = (datetime.utcnow() + timedelta(days=SESSION_DAYS)).isoformat()
+    conn = auth_connection()
+    conn.execute(
+        "INSERT INTO sessions (user_id, token_hash, expires_at) VALUES (?, ?, ?)",
+        (user_id, token_hash, expires)
+    )
+    conn.commit()
+    conn.close()
+    return token
+
+
+def current_user(authorization: str | None):
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="Authentication required")
+
+    token = authorization.split(" ", 1)[1].strip()
+    token_hash = hashlib.sha256(token.encode("utf-8")).hexdigest()
+
+    conn = auth_connection()
+    row = conn.execute("""
+        SELECT users.id, users.name, users.email, sessions.expires_at
+        FROM sessions JOIN users ON users.id = sessions.user_id
+        WHERE sessions.token_hash = ?
+    """, (token_hash,)).fetchone()
+
+    if not row:
+        conn.close()
+        raise HTTPException(status_code=401, detail="Invalid session")
+
+    try:
+        expired = datetime.fromisoformat(row[3]) <= datetime.utcnow()
+    except ValueError:
+        expired = True
+
+    if expired:
+        conn.execute("DELETE FROM sessions WHERE token_hash = ?", (token_hash,))
+        conn.commit()
+        conn.close()
+        raise HTTPException(status_code=401, detail="Session expired")
+
+    conn.close()
+    return {"id": row[0], "name": row[1], "email": row[2]}
+
+
+def auth_user_response(user):
+    return {"id": user[0], "name": user[1], "email": user[2]}
+
+
+init_auth_db()
+
+
+# =========================
+# AUTH API
+# =========================
+
+class SignupRequest(BaseModel):
+    name: str
+    email: str
+    password: str
+
+
+class LoginRequest(BaseModel):
+    email: str
+    password: str
+
+
+@app.post("/api/auth/signup")
+def signup(request: SignupRequest):
+    name = request.name.strip()
+    email = request.email.strip().lower()
+    password = request.password
+
+    if not name:
+        raise HTTPException(status_code=400, detail="Name is required")
+    if not email or "@" not in email:
+        raise HTTPException(status_code=400, detail="Enter a valid email")
+    if len(password) < 6:
+        raise HTTPException(status_code=400, detail="Password must be at least 6 characters")
+
+    salt = secrets.token_hex(16)
+    password_hash = hash_password(password, salt)
+
+    conn = auth_connection()
+    try:
+        cursor = conn.cursor()
+        cursor.execute(
+            "INSERT INTO users (name, email, password_hash, salt, created_at) VALUES (?, ?, ?, ?, ?)",
+            (name, email, password_hash, salt, datetime.now().isoformat(timespec="seconds"))
+        )
+        user_id = cursor.lastrowid
+        conn.commit()
+    except sqlite3.IntegrityError:
+        conn.close()
+        raise HTTPException(status_code=409, detail="An account with this email already exists")
+    conn.close()
+
+    token = create_session(user_id)
+    return {"token": token, "user": {"id": user_id, "name": name, "email": email}}
+
+
+@app.post("/api/auth/login")
+def login(request: LoginRequest):
+    email = request.email.strip().lower()
+    conn = auth_connection()
+    row = conn.execute(
+        "SELECT id, name, email, password_hash, salt FROM users WHERE email = ?",
+        (email,)
+    ).fetchone()
+    conn.close()
+
+    if not row or not secrets.compare_digest(hash_password(request.password, row[4]), row[3]):
+        raise HTTPException(status_code=401, detail="Invalid email or password")
+
+    token = create_session(row[0])
+    return {"token": token, "user": auth_user_response(row)}
+
+
+@app.get("/api/auth/me")
+def me(authorization: str | None = Header(default=None)):
+    return current_user(authorization)
+
+
+@app.post("/api/auth/logout")
+def logout(authorization: str | None = Header(default=None)):
+    if authorization and authorization.startswith("Bearer "):
+        token = authorization.split(" ", 1)[1].strip()
+        token_hash = hashlib.sha256(token.encode("utf-8")).hexdigest()
+        conn = auth_connection()
+        conn.execute("DELETE FROM sessions WHERE token_hash = ?", (token_hash,))
+        conn.commit()
+        conn.close()
+    return {"success": True}
+
+
+# =========================
 # FACE AI
 # =========================
 
 print("Loading AI model...")
 
-face_app = FaceAnalysis(name="buffalo_l")
+face_app = FaceAnalysis(
+    name="buffalo_l",
+    providers=["CUDAExecutionProvider", "CPUExecutionProvider"]
+)
 face_app.prepare(
     ctx_id=0,
     det_size=(320, 320)
@@ -72,6 +262,7 @@ if not camera.isOpened():
 
 # Shared data
 latest_frame = None
+latest_raw_frame = None
 latest_state = {
     "running": False,
     "faces": 0,
@@ -81,6 +272,7 @@ latest_state = {
 }
 
 lock = threading.Lock()
+ai_lock = threading.Lock()
 
 last_time = time.time()
 frame_count = 0
@@ -119,29 +311,20 @@ def recognize_face(embedding):
 
 
 # =========================
-# EVENT LOGGING
+# EVENT / ALERT LOGGING
 # =========================
 
 last_logged = {}
 LOG_COOLDOWN = 10
 
+# Unknown detections are alerts, not normal events.
+# Keep this long enough to prevent one unknown person from flooding the alert center.
+last_unknown_alert = 0
+UNKNOWN_ALERT_COOLDOWN = 60
 
-def log_event(person, score, track_id):
 
-    key = (track_id, person)
-
-    now = time.time()
-
-    if key in last_logged:
-
-        if now - last_logged[key] < LOG_COOLDOWN:
-            return
-
-    last_logged[key] = now
-
-    conn = sqlite3.connect("events.db")
+def ensure_event_tables(conn):
     cursor = conn.cursor()
-
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS events (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -151,7 +334,61 @@ def log_event(person, score, track_id):
             track_id INTEGER
         )
     """)
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS alerts (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            severity TEXT,
+            title TEXT,
+            time TEXT,
+            confidence REAL,
+            track_id INTEGER,
+            acknowledged INTEGER DEFAULT 0
+        )
+    """)
+    conn.commit()
 
+
+def log_event(person, score, track_id):
+    """Log recognized people only. Unknown detections go to alerts."""
+    global last_unknown_alert
+
+    now = time.time()
+
+    # Unknown = security alert, NOT a normal event.
+    if person == "Unknown":
+        if now - last_unknown_alert < UNKNOWN_ALERT_COOLDOWN:
+            return
+
+        last_unknown_alert = now
+
+        conn = sqlite3.connect("events.db")
+        ensure_event_tables(conn)
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO alerts
+            (severity, title, time, confidence, track_id, acknowledged)
+            VALUES (?, ?, datetime('now', 'localtime'), ?, ?, 0)
+        """, (
+            "warning",
+            "Unknown person detected",
+            float(score),
+            int(track_id)
+        ))
+        conn.commit()
+        conn.close()
+
+        print(f"[ALERT] Unknown | ID:{track_id} | Score:{score:.2f}")
+        return
+
+    # Recognized people are normal events.
+    key = (track_id, person)
+    if key in last_logged and now - last_logged[key] < LOG_COOLDOWN:
+        return
+    last_logged[key] = now
+
+    conn = sqlite3.connect("events.db")
+    ensure_event_tables(conn)
+    cursor = conn.cursor()
     cursor.execute("""
         INSERT INTO events
         (person, time, confidence, track_id)
@@ -161,15 +398,10 @@ def log_event(person, score, track_id):
         float(score),
         int(track_id)
     ))
-
     conn.commit()
     conn.close()
 
-    print(
-        f"[EVENT] {person} | "
-        f"ID:{track_id} | "
-        f"Score:{score:.2f}"
-    )
+    print(f"[EVENT] {person} | ID:{track_id} | Score:{score:.2f}")
 
 
 # =========================
@@ -179,6 +411,7 @@ def log_event(person, score, track_id):
 def camera_loop():
 
     global latest_frame
+    global latest_raw_frame
     global latest_state
     global frame_count
     global last_time
@@ -190,6 +423,9 @@ def camera_loop():
         if not ret:
             time.sleep(0.1)
             continue
+
+        with lock:
+            latest_raw_frame = frame.copy()
 
         frame_count += 1
 
@@ -216,7 +452,8 @@ def camera_loop():
         # INSIGHTFACE
         # -------------------------
 
-        faces = face_app.get(frame)
+        with ai_lock:
+            faces = face_app.get(frame)
 
 
         # -------------------------
@@ -406,7 +643,7 @@ def camera_loop():
 
         cv2.putText(
             frame,
-            f"Terra Vision | FPS: {fps:.1f}",
+            f"XviSion | FPS: {fps:.1f}",
             (15, 30),
             cv2.FONT_HERSHEY_SIMPLEX,
             0.7,
@@ -491,7 +728,9 @@ def video():
 # =========================
 
 @app.get("/api/camera/state")
-def camera_state():
+def camera_state(authorization: str | None = Header(default=None)):
+
+    current_user(authorization)
 
     with lock:
         return JSONResponse(
@@ -504,7 +743,9 @@ def camera_state():
 # =========================
 
 @app.get("/api/people")
-def people():
+def people(authorization: str | None = Header(default=None)):
+
+    current_user(authorization)
 
     result = []
 
@@ -519,32 +760,133 @@ def people():
 
 
 # =========================
+# PERSON MANAGEMENT
+# =========================
+
+class RegisterPersonRequest(BaseModel):
+    name: str
+
+
+def save_database():
+    """Save the face database safely to disk."""
+    temp_file = "face_database.pkl.tmp"
+    with open(temp_file, "wb") as f:
+        pickle.dump(database, f)
+    import os
+    os.replace(temp_file, "face_database.pkl")
+
+
+@app.post("/api/people/register")
+def register_person(request: RegisterPersonRequest, authorization: str | None = Header(default=None)):
+    current_user(authorization)
+    """Capture 30 face embeddings from the live camera and save a person."""
+    name = request.name.strip()
+
+    if not name:
+        return JSONResponse(
+            status_code=400,
+            content={"error": "Person name is required"}
+        )
+
+    if name in database:
+        return JSONResponse(
+            status_code=409,
+            content={"error": f"{name} is already registered"}
+        )
+
+    embeddings = []
+    deadline = time.time() + 30
+    last_capture = 0
+
+    while len(embeddings) < 30 and time.time() < deadline:
+        with lock:
+            frame = None if latest_raw_frame is None else latest_raw_frame.copy()
+
+        if frame is None:
+            time.sleep(0.1)
+            continue
+
+        # Avoid repeatedly saving the same frame too quickly.
+        if time.time() - last_capture < 0.12:
+            time.sleep(0.03)
+            continue
+
+        with ai_lock:
+            faces = face_app.get(frame)
+
+        if faces:
+            # If multiple faces are visible, use the largest one.
+            face = max(
+                faces,
+                key=lambda f: (f.bbox[2] - f.bbox[0]) * (f.bbox[3] - f.bbox[1])
+            )
+            if face.embedding is not None:
+                embeddings.append(np.asarray(face.embedding, dtype=np.float32))
+                last_capture = time.time()
+
+        time.sleep(0.03)
+
+    if len(embeddings) < 30:
+        return JSONResponse(
+            status_code=408,
+            content={
+                "error": "Could not capture 30 clear face samples. Keep one face visible and try again.",
+                "captured": len(embeddings)
+            }
+        )
+
+    database[name] = embeddings
+    save_database()
+
+    return {
+        "success": True,
+        "name": name,
+        "embeddings": len(embeddings)
+    }
+
+
+@app.delete("/api/people/{name}")
+def delete_person(name: str, authorization: str | None = Header(default=None)):
+    current_user(authorization)
+    name = name.strip()
+
+    if name not in database:
+        return JSONResponse(
+            status_code=404,
+            content={"error": f"{name} is not registered"}
+        )
+
+    del database[name]
+    save_database()
+
+    return {
+        "success": True,
+        "name": name,
+        "message": f"{name} removed successfully"
+    }
+
+
+# =========================
 # EVENTS
 # =========================
 
 @app.get("/api/events")
-def events():
-
-    conn = sqlite3.connect(
-        "events.db"
-    )
-
+def events(authorization: str | None = Header(default=None)):
+    current_user(authorization)
+    conn = sqlite3.connect("events.db")
+    ensure_event_tables(conn)
     cursor = conn.cursor()
 
+    # Unknown detections are intentionally excluded from the event history.
     cursor.execute("""
-        SELECT
-            id,
-            person,
-            time,
-            confidence,
-            track_id
+        SELECT id, person, time, confidence, track_id
         FROM events
+        WHERE person != 'Unknown'
         ORDER BY id DESC
         LIMIT 100
     """)
 
     rows = cursor.fetchall()
-
     conn.close()
 
     return [
@@ -555,9 +897,63 @@ def events():
             "confidence": row[3],
             "track_id": row[4]
         }
-
         for row in rows
     ]
+
+
+# =========================
+# ALERTS
+# =========================
+
+@app.get("/api/alerts")
+def alerts(authorization: str | None = Header(default=None)):
+    current_user(authorization)
+    conn = sqlite3.connect("events.db")
+    ensure_event_tables(conn)
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT id, severity, title, time, confidence, track_id, acknowledged
+        FROM alerts
+        ORDER BY id DESC
+        LIMIT 100
+    """)
+
+    rows = cursor.fetchall()
+    conn.close()
+
+    return [
+        {
+            "id": row[0],
+            "severity": row[1],
+            "title": row[2],
+            "time": row[3],
+            "confidence": row[4],
+            "track_id": row[5],
+            "acknowledged": bool(row[6])
+        }
+        for row in rows
+    ]
+
+
+@app.patch("/api/alerts/{alert_id}/acknowledge")
+def acknowledge_alert(alert_id: int, authorization: str | None = Header(default=None)):
+    current_user(authorization)
+    conn = sqlite3.connect("events.db")
+    ensure_event_tables(conn)
+    cursor = conn.cursor()
+    cursor.execute(
+        "UPDATE alerts SET acknowledged = 1 WHERE id = ?",
+        (alert_id,)
+    )
+    conn.commit()
+    changed = cursor.rowcount
+    conn.close()
+
+    if not changed:
+        return JSONResponse(status_code=404, content={"error": "Alert not found"})
+
+    return {"success": True, "id": alert_id}
 
 
 # =========================
@@ -565,7 +961,8 @@ def events():
 # =========================
 
 @app.get("/api/status")
-def status():
+def status(authorization: str | None = Header(default=None)):
+    current_user(authorization)
 
     return {
         "ai_engine": "ONLINE",
@@ -573,5 +970,6 @@ def status():
         "recognition": "ArcFace",
         "face_detection": "SCRFD",
         "gpu": "RTX 3050",
-        "database": "SQLite"
+        "database": "SQLite",
+        "registered_people": len(database)
     }
