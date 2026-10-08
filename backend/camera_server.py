@@ -7,11 +7,17 @@ import time
 import sqlite3
 import hashlib
 import secrets
+import os
+import json
+import urllib.request
+import urllib.parse
+import urllib.error
 from datetime import datetime, timedelta
 import onnxruntime as ort
 
 ort.preload_dlls(directory="")
-
+from pathlib import Path
+from dotenv import load_dotenv
 from fastapi import FastAPI, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse, JSONResponse
@@ -309,7 +315,6 @@ def recognize_face(embedding):
 
     return best_name, best_score
 
-
 # =========================
 # EVENT / ALERT LOGGING
 # =========================
@@ -317,10 +322,176 @@ def recognize_face(embedding):
 last_logged = {}
 LOG_COOLDOWN = 10
 
-# Unknown detections are alerts, not normal events.
-# Keep this long enough to prevent one unknown person from flooding the alert center.
-last_unknown_alert = 0
+last_unknown_alerts = {}
 UNKNOWN_ALERT_COOLDOWN = 60
+
+
+# =========================
+# TELEGRAM
+# =========================
+
+load_dotenv(Path(__file__).resolve().parent / ".env")
+
+TELEGRAM_BOT_TOKEN = os.getenv("XVISION_TELEGRAM_BOT_TOKEN", "").strip()
+TELEGRAM_CHAT_ID = os.getenv("XVISION_TELEGRAM_CHAT_ID", "").strip()
+
+print(f"[TELEGRAM] configured: {bool(TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID)}")
+
+def send_telegram_alert(track_id, score, frame=None):
+    """Send unknown-person alert with optional CCTV snapshot."""
+
+    if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
+        return False
+
+    message = (
+        "🚨 *XviSion Security Alert*\n\n"
+        "⚠️ Unknown person detected.\n"
+        f"📷 Camera: `CAM-01`\n"
+        f"🆔 Track ID: `{int(track_id)}`\n"
+        f"🎯 Confidence: `{float(score) * 100:.1f}%`\n"
+        f"🕐 Time: `{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}`"
+    )
+
+    try:
+
+        # --------------------------------
+        # If no frame → send normal message
+        # --------------------------------
+        if frame is None:
+
+            url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+
+            payload = urllib.parse.urlencode({
+                "chat_id": TELEGRAM_CHAT_ID,
+                "text": message,
+                "parse_mode": "Markdown"
+            }).encode("utf-8")
+
+            request = urllib.request.Request(
+                url,
+                data=payload,
+                method="POST"
+            )
+
+            with urllib.request.urlopen(request, timeout=5) as response:
+                return 200 <= response.status < 300
+
+        # --------------------------------
+        # Convert OpenCV frame → JPEG
+        # --------------------------------
+        success, encoded = cv2.imencode(
+            ".jpg",
+            frame,
+            [cv2.IMWRITE_JPEG_QUALITY, 80]
+        )
+
+        if not success:
+            print("[TELEGRAM] Could not encode snapshot")
+            return False
+
+        # --------------------------------
+        # Send photo to Telegram
+        # --------------------------------
+        url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendPhoto"
+
+        boundary = "----XviSionBoundary"
+
+        body = bytearray()
+
+        # chat_id
+        body.extend(
+            f"--{boundary}\r\n"
+            f'Content-Disposition: form-data; name="chat_id"\r\n\r\n'
+            f"{TELEGRAM_CHAT_ID}\r\n".encode()
+        )
+
+        # caption
+        body.extend(
+            f"--{boundary}\r\n"
+            f'Content-Disposition: form-data; name="caption"\r\n\r\n'
+            f"{message}\r\n".encode()
+        )
+
+        body.extend(
+            f"--{boundary}\r\n"
+            f'Content-Disposition: form-data; name="parse_mode"\r\n\r\n'
+            f"Markdown\r\n".encode()
+        )
+
+        # photo
+        body.extend(
+            f"--{boundary}\r\n"
+            f'Content-Disposition: form-data; name="photo"; filename="xvision_alert.jpg"\r\n'
+            f"Content-Type: image/jpeg\r\n\r\n".encode()
+        )
+
+        body.extend(encoded.tobytes())
+        body.extend(f"\r\n--{boundary}--\r\n".encode())
+
+        request = urllib.request.Request(
+            url,
+            data=bytes(body),
+            method="POST",
+            headers={
+                "Content-Type": f"multipart/form-data; boundary={boundary}"
+            }
+        )
+
+        with urllib.request.urlopen(request, timeout=10) as response:
+
+            success = 200 <= response.status < 300
+
+            if success:
+                print("[TELEGRAM] Snapshot alert sent")
+
+            return success
+
+    except Exception as exc:
+
+        print(f"[TELEGRAM ERROR] {exc}")
+
+        return False
+    """Send one unknown-person alert to the configured Telegram chat."""
+    if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
+        print("[TELEGRAM] Not configured.")
+        return False
+
+    message = (
+        "🚨 *XviSion Security Alert*\n\n"
+        "Unknown person detected.\n"
+        f"Track ID: `{int(track_id)}`\n"
+        f"Confidence: `{float(score) * 100:.1f}%`\n"
+        f"Time: `{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}`"
+    )
+
+    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+    payload = urllib.parse.urlencode({
+        "chat_id": TELEGRAM_CHAT_ID,
+        "text": message,
+        "parse_mode": "Markdown"
+    }).encode("utf-8")
+
+    try:
+        request = urllib.request.Request(url, data=payload, method="POST")
+        with urllib.request.urlopen(request, timeout=5) as response:
+            body = response.read().decode("utf-8", errors="replace")
+            data = json.loads(body)
+
+            if 200 <= response.status < 300 and data.get("ok"):
+                print("[TELEGRAM] Alert sent successfully.")
+                return True
+
+            print(f"[TELEGRAM ERROR] {body}")
+            return False
+
+    except urllib.error.HTTPError as exc:
+        body = exc.read().decode("utf-8", errors="replace")
+        print(f"[TELEGRAM ERROR] HTTP {exc.code}: {body}")
+        return False
+
+    except Exception as exc:
+        print(f"[TELEGRAM ERROR] {exc}")
+        return False
 
 
 def ensure_event_tables(conn):
@@ -347,19 +518,19 @@ def ensure_event_tables(conn):
     """)
     conn.commit()
 
-
-def log_event(person, score, track_id):
+def log_event(person, score, track_id, frame=None):
     """Log recognized people only. Unknown detections go to alerts."""
-    global last_unknown_alert
-
     now = time.time()
 
     # Unknown = security alert, NOT a normal event.
+    # Each new track can trigger an alert. The same track is rate-limited
+    # so one person standing in front of the camera does not flood the system.
     if person == "Unknown":
-        if now - last_unknown_alert < UNKNOWN_ALERT_COOLDOWN:
+        last_alert = last_unknown_alerts.get(int(track_id), 0)
+        if now - last_alert < UNKNOWN_ALERT_COOLDOWN:
             return
 
-        last_unknown_alert = now
+        last_unknown_alerts[int(track_id)] = now
 
         conn = sqlite3.connect("events.db")
         ensure_event_tables(conn)
@@ -376,6 +547,9 @@ def log_event(person, score, track_id):
         ))
         conn.commit()
         conn.close()
+
+        # Phone notification is sent only after the alert is stored.
+        send_telegram_alert(track_id, score, frame)
 
         print(f"[ALERT] Unknown | ID:{track_id} | Score:{score:.2f}")
         return
@@ -574,10 +748,11 @@ def camera_loop():
             # -------------------------
 
             log_event(
-                name,
-                score,
-                track_id
-            )
+    name,
+    score,
+    track_id,
+    frame.copy()
+)
 
 
             # -------------------------
@@ -957,12 +1132,28 @@ def acknowledge_alert(alert_id: int, authorization: str | None = Header(default=
 
 
 # =========================
+# NOTIFICATIONS
+# =========================
+
+@app.get("/api/notifications/status")
+def notification_status(authorization: str | None = Header(default=None)):
+    current_user(authorization)
+    return {
+        "configured": bool(TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID),
+        "provider": "Telegram",
+        "chat_id_configured": bool(TELEGRAM_CHAT_ID),
+    }
+
+
+# =========================
 # STATUS
 # =========================
 
 @app.get("/api/status")
 def status(authorization: str | None = Header(default=None)):
     current_user(authorization)
+    with lock:
+        state = dict(latest_state)
 
     return {
         "ai_engine": "ONLINE",
@@ -971,5 +1162,92 @@ def status(authorization: str | None = Header(default=None)):
         "face_detection": "SCRFD",
         "gpu": "RTX 3050",
         "database": "SQLite",
+        "registered_people": len(database),
+        "camera_running": bool(state.get("running")),
+        "fps": state.get("fps", 0),
+        "faces": state.get("faces", 0),
+        "tracks": state.get("tracks", 0),
+        "detections": state.get("detections", []),
+        "phone_notifications": bool(TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID)
+    }
+
+
+@app.get("/api/dashboard")
+def dashboard(authorization: str | None = Header(default=None)):
+    """Real dashboard numbers from the camera state and SQLite event database."""
+    current_user(authorization)
+
+    conn = sqlite3.connect("events.db")
+    ensure_event_tables(conn)
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT COUNT(*) FROM events WHERE date(time, 'localtime') = date('now', 'localtime')")
+    events_today = cursor.fetchone()[0]
+
+    cursor.execute("SELECT COUNT(*) FROM alerts WHERE date(time, 'localtime') = date('now', 'localtime')")
+    alerts_today = cursor.fetchone()[0]
+
+    cursor.execute("SELECT COUNT(*) FROM alerts WHERE acknowledged = 0")
+    active_alerts = cursor.fetchone()[0]
+
+    cursor.execute("SELECT COUNT(*) FROM alerts WHERE date(time, 'localtime') = date('now', 'localtime')")
+    unknown_today = cursor.fetchone()[0]
+
+    cursor.execute("SELECT COUNT(*) FROM events WHERE date(time, 'localtime') = date('now', 'localtime')")
+    recognized_today = cursor.fetchone()[0]
+
+    cursor.execute("""
+        SELECT id, person, time, confidence, track_id
+        FROM events
+        ORDER BY id DESC
+        LIMIT 6
+    """)
+    recent_rows = cursor.fetchall()
+
+    conn.close()
+
+    with lock:
+        state = dict(latest_state)
+
+    return {
+        "faces_detected": state.get("faces", 0),
+        "recognized_today": recognized_today,
+        "unknown_today": unknown_today,
+        "active_tracks": state.get("tracks", 0),
+        "events_today": events_today,
+        "alerts_today": alerts_today,
+        "active_alerts": active_alerts,
+        "fps": state.get("fps", 0),
+        "detections": state.get("detections", []),
+        "recent_events": [
+            {
+                "id": row[0],
+                "person": row[1],
+                "time": row[2],
+                "confidence": row[3],
+                "track_id": row[4]
+            }
+            for row in recent_rows
+        ],
+        "camera_running": bool(state.get("running")),
         "registered_people": len(database)
     }
+
+
+@app.get("/api/notifications/test")
+def test_notification(authorization: str | None = Header(default=None)):
+    current_user(authorization)
+
+    if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
+        raise HTTPException(
+            status_code=400,
+            detail="Telegram notification settings are not configured"
+        )
+
+    if not send_telegram_alert(0, 1.0):
+        raise HTTPException(
+            status_code=502,
+            detail="Telegram notification failed. Check the backend console for the exact Telegram error."
+        )
+
+    return {"success": True, "message": "Test notification sent"}
